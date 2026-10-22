@@ -1,0 +1,12 @@
+{
+  "name": "racines-davenir-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site vitrine de Racines d'Avenir — centre de formation aux métiers et d'insertion professionnelle (Yaoundé).",
+  "scripts": {
+    "build": "node scripts/build.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

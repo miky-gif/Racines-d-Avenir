@@ -1,0 +1,122 @@
+<!-- title: Racines d'Avenir — Le parcours vers l'emploi
+     description: Former, accompagner, transformer : le parcours Racines d'Avenir mène de la formation au stage, puis à l'emploi ou à la création d'activité. -->
+<div style="background: #F7F5EC; color: #253A30; font-family: 'Poppins', sans-serif; overflow-x: clip; min-height: 100vh;">
+  <dc-import name="Header" active="parcours"></dc-import>
+  <main id="contenu">
+
+  <section data-hero style="position: relative; min-height: clamp(640px, 88vh, 920px); display: flex; flex-direction: column; justify-content: flex-end; background: #0F4D35;">
+    <div class="hero-media" style="position: absolute; inset: 0;"><image-slot id="parcours-hero" shape="rect" placeholder="Photo plein cadre — ancienne apprenante dans son entreprise, en tenue de travail"></image-slot></div>
+    <p class="hero-tag" style="position: absolute; right: clamp(16px, 4vw, 56px); top: clamp(96px, 12vw, 120px); padding: 10px 16px; border-radius: 999px; background: rgba(255,253,247,.88); font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.1em; color: #0F4D35; pointer-events: none;">FORMER → ACCOMPAGNER → TRANSFORMER</p>
+    <div class="hero-card" style="position: relative; width: min(940px, calc(100% - 16px)); margin-top: 240px; padding: clamp(32px, 5vw, 72px) clamp(24px, 5vw, 80px) clamp(32px, 4vw, 56px) clamp(20px, 4vw, 56px); background: #F7F5EC; border-radius: 0 clamp(56px, 8vw, 112px) 0 0;">
+      <nav aria-label="Fil d'Ariane" style="display: flex; gap: 8px; font-size: 13px; color: #4E7F68; margin-bottom: 20px;"><a href="index.html" style="color: #4E7F68; text-decoration: none;">Accueil</a><span>/</span><span style="color: #0F4D35; font-weight: 600;">Le parcours vers l'emploi</span></nav>
+      <h1 style="font-size: clamp(42px, 7vw, 104px); line-height: 0.95; letter-spacing: -0.05em; font-weight: 700; color: #0F4D35;">Un parcours concret <span style="font-weight: 200; color: #4E7F68;">vers l'emploi.</span></h1>
+    </div>
+  </section>
+
+  <section style="padding: clamp(80px, 10vw, 150px) clamp(20px, 4vw, 56px) clamp(64px, 8vw, 112px);">
+    <div data-reveal="" style="max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px;">
+      <div style="width: 60px; height: 4px; border-radius: 4px; background: #F2B134;"></div>
+      <p style="font-size: clamp(26px, 3.4vw, 46px); line-height: 1.25; letter-spacing: -0.025em; font-weight: 500; color: #0F4D35; text-wrap: pretty;">Chaque étape est pensée pour donner <span style="font-weight: 300; color: #4E7F68;">les compétences, les outils et le réseau</span> nécessaires à l'insertion ou à la création d'activité.</p>
+    </div>
+  </section>
+
+  <section style="padding: 0 clamp(20px, 4vw, 56px) clamp(80px, 9vw, 128px);">
+    <div style="position: relative; max-width: 1320px; margin: 0 auto;">
+      <div class="only-desktop">
+        <div aria-hidden="true" style="position: absolute; left: 50%; top: 60px; bottom: 60px; border-left: 4px dotted #4E7F68; transform: translateX(-2px);"></div>
+        <div class="tl-progress" aria-hidden="true" style="position: absolute; left: 50%; top: 60px; bottom: 60px; width: 4px; margin-left: -2px;"></div>
+        <div style="position: relative; display: flex; flex-direction: column; gap: 96px;">
+          <sc-for list="{{ steps }}" as="s">
+            <div data-reveal="" style="display: grid; grid-template-columns: minmax(0, 1fr) 140px minmax(0, 1fr); align-items: center;">
+              <div>
+                <sc-if value="{{ s.textLeft }}">
+                  <div style="display: flex; flex-direction: column; align-items: flex-end; text-align: right; gap: 18px;">
+                    <span style="width: 64px; height: 64px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="{{ s.icon }}" size="30"></dc-import></span>
+                    <h2 style="font-size: clamp(44px, 5.4vw, 84px); line-height: 0.95; letter-spacing: -0.045em; font-weight: 800; color: #0F4D35;">{{ s.title }}</h2>
+                    <p style="font-size: clamp(17px, 1.6vw, 21px); line-height: 1.55; max-width: 460px;">{{ s.text }}</p>
+                    <div style="display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px;"><sc-for list="{{ s.tags }}" as="t"><span style="padding: 8px 16px; border-radius: 999px; border: 1.5px solid #CFDCCF; font-size: 14px; font-weight: 500; color: #0F4D35; white-space: nowrap;">{{ t }}</span></sc-for></div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ !s.textLeft }}">
+                  <div style="position: relative; width: 86%; margin-left: auto; aspect-ratio: 4 / 5; border-radius: 999px 999px 0 999px / 400px 400px 0 400px; overflow: hidden; background: #E6EDE6;"><image-slot id="{{ s.slot }}" shape="rect" placeholder="{{ s.photo }}"></image-slot></div>
+                </sc-if>
+              </div>
+              <div style="display: flex; justify-content: center;"><span class="tl-num" style="width: 96px; height: 96px; border-radius: 999px; background: #F2B134; color: #0F4D35; font-weight: 800; font-size: 28px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 12px #F7F5EC;">{{ s.num }}</span></div>
+              <div>
+                <sc-if value="{{ !s.textLeft }}">
+                  <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 18px;">
+                    <span style="width: 64px; height: 64px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="{{ s.icon }}" size="30"></dc-import></span>
+                    <h2 style="font-size: clamp(44px, 5.4vw, 84px); line-height: 0.95; letter-spacing: -0.045em; font-weight: 800; color: #0F4D35;">{{ s.title }}</h2>
+                    <p style="font-size: clamp(17px, 1.6vw, 21px); line-height: 1.55; max-width: 460px;">{{ s.text }}</p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;"><sc-for list="{{ s.tags }}" as="t"><span style="padding: 8px 16px; border-radius: 999px; border: 1.5px solid #CFDCCF; font-size: 14px; font-weight: 500; color: #0F4D35; white-space: nowrap;">{{ t }}</span></sc-for></div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ s.textLeft }}">
+                  <div style="position: relative; width: 86%; aspect-ratio: 4 / 5; border-radius: 999px 999px 999px 0 / 400px 400px 400px 0; overflow: hidden; background: #E6EDE6;"><image-slot id="{{ s.slot }}" shape="rect" placeholder="{{ s.photo }}"></image-slot></div>
+                </sc-if>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div class="only-mobile">
+        <div aria-hidden="true" style="position: absolute; left: 29px; top: 30px; bottom: 30px; border-left: 4px dotted #4E7F68;"></div>
+        <div class="tl-progress" aria-hidden="true" style="position: absolute; left: 29px; top: 30px; bottom: 30px; width: 4px;"></div>
+        <div style="position: relative; display: flex; flex-direction: column; gap: 40px;">
+          <sc-for list="{{ steps }}" as="s">
+            <div data-reveal="" style="display: flex; gap: 18px; align-items: flex-start;">
+              <span class="tl-num" style="width: 62px; height: 62px; flex-shrink: 0; border-radius: 999px; background: #F2B134; color: #0F4D35; font-weight: 800; font-size: 19px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 8px #F7F5EC;">{{ s.num }}</span>
+              <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 12px; padding-top: 6px;">
+                <h2 style="font-size: 38px; line-height: 1; letter-spacing: -0.04em; font-weight: 800; color: #0F4D35;">{{ s.title }}</h2>
+                <p style="font-size: 16px; line-height: 1.6;">{{ s.text }}</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 6px;"><sc-for list="{{ s.tags }}" as="t"><span style="padding: 6px 12px; border-radius: 999px; border: 1.5px solid #CFDCCF; font-size: 13px; font-weight: 500; color: #0F4D35; white-space: nowrap;">{{ t }}</span></sc-for></div>
+                <div style="position: relative; margin-top: 8px; aspect-ratio: 4 / 3; border-radius: 160px 160px 160px 0; overflow: hidden; background: #E6EDE6;"><image-slot id="{{ s.slot }}" shape="rect" placeholder="{{ s.photo }}"></image-slot></div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    <div data-reveal="" style="display: flex; flex-direction: column; align-items: center; margin-top: clamp(72px, 9vw, 128px); text-align: center;">
+      <p style="font-family: 'Caveat', cursive; font-size: clamp(36px, 5vw, 68px); font-weight: 700; color: #0F4D35; line-height: 1; transform: rotate(-2deg);">Des compétences aujourd'hui, des opportunités demain.</p>
+      <svg sc-camel-view-box="0 0 300 16" aria-hidden="true" style="display: block; width: min(60%, 480px); height: auto; margin-top: 10px; transform: rotate(-2deg);"><path d="M3 11 C 80 3, 200 3, 297 9" fill="none" stroke="#F2B134" stroke-width="4.5" stroke-linecap="round"></path></svg>
+    </div>
+  </section>
+
+  <section data-testimonials style="position: relative; overflow: hidden; background: #0F4D35; color: #FFFDF7; padding: clamp(80px, 10vw, 140px) clamp(20px, 4vw, 56px);">
+    <div aria-hidden="true" style="position: absolute; left: -140px; bottom: -140px; width: clamp(260px, 36vw, 520px); height: clamp(260px, 36vw, 520px); background: #4E7F68; border-radius: 0 100% 0 100%;"></div>
+    <div style="position: relative; max-width: 1320px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(40px, 5vw, 64px);">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px;">
+        <div style="display: flex; flex-direction: column; gap: 18px;"><p style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #F2B134;">TÉMOIGNAGES · <span data-slide-index>1</span> / {{ temoignages.length }}</p><h2 style="font-size: clamp(36px, 4.4vw, 64px); line-height: 0.98; letter-spacing: -0.045em; font-weight: 700;">Ils racontent <span style="font-weight: 200;">leur parcours.</span></h2></div>
+        <div style="display: flex; gap: 10px;">
+          <button type="button" data-slide-prev aria-label="Témoignage précédent" style="width: 56px; height: 56px; border-radius: 999px; border: 2px solid #FFFDF7; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer;"><dc-import name="Icon" icon="ArrowLeft" size="22" stroke="#FFFDF7" accent="#FFFDF7" sw="2"></dc-import></button>
+          <button type="button" data-slide-next aria-label="Témoignage suivant" style="width: 56px; height: 56px; border-radius: 999px; border: none; background: #F2B134; display: flex; align-items: center; justify-content: center; cursor: pointer;"><dc-import name="Icon" icon="ArrowRight" size="22" stroke="#0F4D35" accent="#0F4D35" sw="2"></dc-import></button>
+        </div>
+      </div>
+      <figure aria-live="polite" style="margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: clamp(32px, 5vw, 80px);">
+        <div style="flex: 0 0 auto; width: clamp(160px, 22vw, 300px); aspect-ratio: 1 / 1; border-radius: 999px; overflow: hidden; background: #4E7F68; box-shadow: 0 0 0 6px #0F4D35, 0 0 0 9px #F2B134;"><sc-for list="{{ temoignages }}" as="x"><div data-slide-photo style="width: 100%; height: 100%; display: {{ $index === 0 ? 'block' : 'none' }};"><image-slot id="{{ x.slot }}" shape="circle" placeholder="Portrait — {{ x.name }}"></image-slot></div></sc-for></div>
+        <div style="flex: 1 1 420px; display: flex; flex-direction: column; gap: 28px;">
+          <dc-import name="Icon" icon="Quote" size="48" stroke="#F2B134" accent="#F2B134"></dc-import>
+          <sc-for list="{{ temoignages }}" as="t"><div data-slide hidden="{{ $index !== 0 }}" style="display: flex; flex-direction: column; gap: 28px;"><blockquote style="font-size: clamp(26px, 3.2vw, 44px); line-height: 1.25; letter-spacing: -0.025em; font-weight: 300; text-wrap: pretty;">{{ t.quote }}</blockquote><p style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px;"><span style="font-size: 20px; font-weight: 700;">{{ t.name }}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.1em; color: #E6EDE6;">{{ t.meta }}</span></p></div></sc-for>
+        </div>
+      </figure>
+      <div role="tablist" aria-label="Choisir un témoignage" style="display: flex; gap: 8px;">
+        <sc-for list="{{ temoignages }}" as="d"><button type="button" class="dot" data-slide-dot role="tab" aria-selected="{{ $index === 0 }}" aria-label="Témoignage de {{ d.name }}" style="width: 44px; height: 44px; border: none; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0;"><span style="display: block; height: 6px; border-radius: 6px; transition: all .3s;"></span></button></sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: clamp(80px, 9vw, 128px) clamp(20px, 4vw, 56px);">
+    <div data-reveal="" style="max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 28px;">
+      <h2 style="font-size: clamp(40px, 6vw, 92px); line-height: 0.95; letter-spacing: -0.05em; font-weight: 700; color: #0F4D35;">Prêt pour l'étape 01 ? <span style="font-weight: 200; color: #4E7F68;">Elle commence ici.</span></h2>
+      <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;">
+        <a href="contact.html" style="min-height: 60px; padding: 0 32px; border-radius: 999px; background: #F2B134; color: #0F4D35; font-weight: 700; font-size: 16px; text-decoration: none; display: inline-flex; align-items: center;" style-hover="transform: translateY(-2px); color: #0F4D35;">Je me préinscris</a>
+        <a href="nos-formations.html" style="min-height: 60px; padding: 0 32px; border-radius: 999px; border: 2px solid #0F4D35; color: #0F4D35; font-weight: 600; font-size: 16px; text-decoration: none; display: inline-flex; align-items: center;" style-hover="background: #E6EDE6; color: #0F4D35;">Voir les formations</a>
+      </div>
+    </div>
+  </section>
+  </main>
+
+
+  <dc-import name="Footer"></dc-import>
+</div>

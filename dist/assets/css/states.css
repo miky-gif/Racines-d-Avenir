@@ -1,0 +1,14 @@
+/* Généré par scripts/build.js à partir des attributs style-hover / style-focus. */
+.h1:hover { background: #F7F5EC !important; color: #0F4D35 !important; }
+.h2:hover { transform: translateY(-1px) !important; color: #0F4D35 !important; }
+.h3:hover { background: #E6EDE6 !important; color: #0F4D35 !important; }
+.h4:hover { color: #253A30 !important; }
+.f5:focus { border-color: #F2B134 !important; }
+.h6:hover { color: #F2B134 !important; }
+.h7:hover { background: #F2B134 !important; }
+.f8:focus { border-color: #F2B134 !important; background: #FFFDF7 !important; }
+.h9:hover { transform: translateY(-2px) !important; }
+.h10:hover { transform: translateY(-2px) !important; color: #0F4D35 !important; }
+.h11:hover { transform: translateY(-2px) !important; color: #FFFDF7 !important; }
+.h12:hover { transform: translateY(-6px) !important; }
+.h13:hover { transform: translateY(-6px) !important; border-color: #F2B134 !important; box-shadow: 0 28px 50px -30px rgba(15,77,53,.5) !important; color: #0F4D35 !important; }
