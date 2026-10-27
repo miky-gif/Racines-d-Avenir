@@ -1,5 +1,5 @@
-<!-- title: Racines d'Avenir — Entreprises &amp; partenaires
-     description: Entreprises et partenaires : accueillez des stagiaires, recrutez des jeunes formés et soutenez la Fondation Racines d'Avenir. -->
+<!-- title: Entreprises & partenaires | {{ site.nom }}
+     description: Entreprises et partenaires : accueillez des stagiaires, recrutez des apprenants formés, contribuez aux formations, soutenez les jeunes entrepreneurs et la Fondation {{ site.nom }}. -->
 <div style="background: #F7F5EC; color: #253A30; font-family: 'Poppins', sans-serif; overflow-x: clip; min-height: 100vh;">
   <dc-import name="Header" active="partenaires"></dc-import>
   <main id="contenu">
@@ -15,18 +15,48 @@
     </div>
   </section>
 
-  <section style="padding: clamp(80px, 10vw, 150px) clamp(20px, 4vw, 56px);">
+  <section id="engagements" class="ancre" style="padding: clamp(80px, 10vw, 150px) clamp(20px, 4vw, 56px);">
     <div style="max-width: 1320px; margin: 0 auto;">
-      <div data-reveal="" style="display: flex; flex-direction: column; gap: 18px; margin-bottom: clamp(32px, 4vw, 56px);">
-        <div style="width: 60px; height: 4px; border-radius: 4px; background: #F2B134;"></div>
-        <p style="font-size: 12px; font-weight: 600; letter-spacing: 0.2em; line-height: 1.8; color: #4E7F68;">VOS ENGAGEMENTS PEUVENT PRENDRE PLUSIEURS FORMES</p>
+      <div data-reveal="" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: clamp(32px, 4vw, 56px);">
+        <div style="display: flex; flex-direction: column; gap: 18px;">
+          <div style="width: 60px; height: 4px; border-radius: 4px; background: #F2B134;"></div>
+          <p style="font-size: 12px; font-weight: 600; letter-spacing: 0.2em; line-height: 1.8; color: #4E7F68;">VOS ENGAGEMENTS PEUVENT PRENDRE PLUSIEURS FORMES</p>
+          <h2 style="font-size: clamp(40px, 5.4vw, 80px); line-height: 0.96; letter-spacing: -0.045em; font-weight: 700; color: #0F4D35;">Cinq façons <span style="font-weight: 200; color: #4E7F68;">d'agir avec nous.</span></h2>
+        </div>
+        <a href="#formulaire" style="display: inline-flex; align-items: center; gap: 10px; min-height: 44px; font-weight: 600; color: #0F4D35; text-decoration: none; box-shadow: inset 0 -2px 0 #F2B134;">Proposer un partenariat <dc-import name="Icon" icon="ArrowRight" size="18" accent="#0F4D35" sw="2"></dc-import></a>
       </div>
       <div data-stagger style="display: flex; flex-direction: column; border-top: 1px solid #CFDCCF;">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(max(260px, calc((100% - 40px) / 2)), 1fr)); gap: 12px 40px; align-items: center; padding: clamp(24px, 3vw, 36px) 0; border-bottom: 1px solid #CFDCCF;"><div style="display: flex; align-items: center; gap: 20px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #4E7F68;">01</span><span style="width: 72px; height: 72px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><dc-import name="Icon" icon="Briefcase" size="32"></dc-import></span><h3 style="font-size: clamp(28px, 3.4vw, 48px); line-height: 1; letter-spacing: -0.035em; font-weight: 700; color: #0F4D35;">Accueillir des stagiaires</h3></div><p style="font-size: clamp(17px, 1.6vw, 20px); line-height: 1.5;">Pour leur faire découvrir vos métiers.</p></div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(max(260px, calc((100% - 40px) / 2)), 1fr)); gap: 12px 40px; align-items: center; padding: clamp(24px, 3vw, 36px) 0; border-bottom: 1px solid #CFDCCF;"><div style="display: flex; align-items: center; gap: 20px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #4E7F68;">02</span><span style="width: 72px; height: 72px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><dc-import name="Icon" icon="Handshake" size="32"></dc-import></span><h3 style="font-size: clamp(28px, 3.4vw, 48px); line-height: 1; letter-spacing: -0.035em; font-weight: 700; color: #0F4D35;">Proposer des emplois</h3></div><p style="font-size: clamp(17px, 1.6vw, 20px); line-height: 1.5;">Proposer des opportunités d'emploi aux jeunes formés et qualifiés.</p></div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(max(260px, calc((100% - 40px) / 2)), 1fr)); gap: 12px 40px; align-items: center; padding: clamp(24px, 3vw, 36px) 0; border-bottom: 1px solid #CFDCCF;"><div style="display: flex; align-items: center; gap: 20px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #4E7F68;">03</span><span style="width: 72px; height: 72px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><dc-import name="Icon" icon="Lightbulb" size="32"></dc-import></span><h3 style="font-size: clamp(28px, 3.4vw, 48px); line-height: 1; letter-spacing: -0.035em; font-weight: 700; color: #0F4D35;">Contribuer aux formations</h3></div><p style="font-size: clamp(17px, 1.6vw, 20px); line-height: 1.5;">Contribuer aux formations pratiques en partageant expertises et ressources.</p></div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(max(260px, calc((100% - 40px) / 2)), 1fr)); gap: 12px 40px; align-items: center; padding: clamp(24px, 3vw, 36px) 0; border-bottom: 1px solid #CFDCCF;"><div style="display: flex; align-items: center; gap: 20px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #4E7F68;">04</span><span style="width: 72px; height: 72px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><dc-import name="Icon" icon="Rocket" size="32"></dc-import></span><h3 style="font-size: clamp(28px, 3.4vw, 48px); line-height: 1; letter-spacing: -0.035em; font-weight: 700; color: #0F4D35;">Soutenir les entrepreneurs</h3></div><p style="font-size: clamp(17px, 1.6vw, 20px); line-height: 1.5;">Soutenir les jeunes entrepreneurs en les accompagnant dans leurs projets.</p></div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(max(260px, calc((100% - 40px) / 2)), 1fr)); gap: 12px 40px; align-items: center; padding: clamp(24px, 3vw, 36px) 0; border-bottom: 1px solid #CFDCCF;"><div style="display: flex; align-items: center; gap: 20px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #4E7F68;">05</span><span style="width: 72px; height: 72px; border-radius: 999px; background: #F2B134; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><dc-import name="Icon" icon="Gift" size="32" accent="#0F4D35"></dc-import></span><h3 style="font-size: clamp(28px, 3.4vw, 48px); line-height: 1; letter-spacing: -0.035em; font-weight: 700; color: #0F4D35;">Appuyer la Fondation</h3></div><p style="font-size: clamp(17px, 1.6vw, 20px); line-height: 1.5;">Appuyer les initiatives de la Fondation (bourses, équipements, dons).</p></div>
+        <sc-for list="{{ engagements }}" as="e">
+          <div id="{{ e.id }}" class="ancre engagement" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(max(280px, calc((100% - 48px) / 2)), 1fr)); gap: 16px 48px; align-items: start; padding: clamp(28px, 3.4vw, 44px) 0; border-bottom: 1px solid #CFDCCF;">
+            <div style="display: flex; align-items: center; gap: 20px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #4E7F68;">{{ String($index + 1).padStart(2, '0') }}</span><span style="width: 72px; height: 72px; border-radius: 999px; background: {{ e.or ? '#F2B134' : '#E6EDE6' }}; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><dc-import name="Icon" icon="{{ e.icon }}" size="32" accent="{{ e.or ? '#0F4D35' : '#F2B134' }}"></dc-import></span><h3 style="font-size: clamp(28px, 3.2vw, 44px); line-height: 1; letter-spacing: -0.035em; font-weight: 700; color: #0F4D35;">{{ e.titre }}</h3></div>
+            <p style="font-size: clamp(16px, 1.4vw, 18px); line-height: 1.7; text-wrap: pretty;">{{ e.texte }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="fondation" class="ancre" style="position: relative; overflow: hidden; background: #0F4D35; color: #FFFDF7; padding: clamp(80px, 10vw, 140px) clamp(20px, 4vw, 56px);">
+    <div aria-hidden="true" style="position: absolute; right: -160px; top: -140px; width: clamp(300px, 44vw, 620px); height: clamp(300px, 44vw, 620px); background: #F2B134; border-radius: 0 100% 0 100%; transform: rotate(-12deg);"></div>
+    <div aria-hidden="true" style="position: absolute; left: -100px; bottom: -120px; width: 280px; height: 280px; background: #4E7F68; border-radius: 100% 0 100% 0;"></div>
+    <div style="position: relative; max-width: 1320px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(32px, 4vw, 56px);">
+      <div data-reveal="" style="display: flex; flex-direction: column; gap: 20px; max-width: 780px;">
+        <p style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #F2B134;">LA FONDATION {{ site.nom.toUpperCase() }}</p>
+        <h2 style="font-size: clamp(40px, 5.6vw, 84px); line-height: 0.96; letter-spacing: -0.045em; font-weight: 700;">Aucun talent ne doit rester <span style="font-weight: 200; color: #F2B134;">faute de moyens.</span></h2>
+        <p style="font-size: clamp(17px, 1.6vw, 20px); line-height: 1.7; color: #E6EDE6;">{{ fondation.mission }}</p>
+      </div>
+      <div data-stagger style="display: grid; grid-template-columns: repeat(auto-fit, minmax(max(280px, calc((100% - 20px) / 2)), 1fr)); gap: 20px;">
+        <div style="display: flex; flex-direction: column; gap: 18px; padding: clamp(28px, 3vw, 40px); border-radius: 36px 36px 36px 0; background: #FFFDF7; color: #253A30;">
+          <div style="display: flex; align-items: center; gap: 14px;"><span style="width: 56px; height: 56px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="Target" size="26"></dc-import></span><h3 style="font-size: 24px; font-weight: 700; color: #0F4D35;">Ses objectifs</h3></div>
+          <ul style="padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: 16px; line-height: 1.5;"><sc-for list="{{ fondation.objectifs }}" as="o"><li style="display: flex; gap: 12px;"><span style="width: 8px; height: 8px; border-radius: 999px; background: #F2B134; margin-top: 9px; flex-shrink: 0;"></span>{{ o }}</li></sc-for></ul>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 18px; padding: clamp(28px, 3vw, 40px); border-radius: 36px 36px 36px 0; background: #FFFDF7; color: #253A30;">
+          <div style="display: flex; align-items: center; gap: 14px;"><span style="width: 56px; height: 56px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="HeartHandshake" size="26"></dc-import></span><h3 style="font-size: 24px; font-weight: 700; color: #0F4D35;">Ses actions</h3></div>
+          <ul style="padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: 16px; line-height: 1.5;"><sc-for list="{{ fondation.actions }}" as="o"><li style="display: flex; gap: 12px;"><span style="width: 8px; height: 8px; border-radius: 999px; background: #F2B134; margin-top: 9px; flex-shrink: 0;"></span>{{ o }}</li></sc-for></ul>
+        </div>
+      </div>
+      <div data-reveal="" style="display: flex; flex-wrap: wrap; gap: 14px;">
+        <a href="?engagement=Fondation#formulaire" style="min-height: 64px; padding: 0 36px; border-radius: 999px; background: #F2B134; color: #0F4D35; font-weight: 700; font-size: 17px; text-decoration: none; display: inline-flex; align-items: center; box-shadow: 0 0 0 6px #0F4D35;" style-hover="transform: translateY(-2px); color: #0F4D35;">Soutenir la Fondation</a>
       </div>
     </div>
   </section>
@@ -37,6 +67,11 @@
         <p style="font-size: 12px; font-weight: 600; letter-spacing: 0.2em; color: #4E7F68;">DEVENIR PARTENAIRE</p>
         <h2 style="font-size: clamp(40px, 5.4vw, 80px); line-height: 0.96; letter-spacing: -0.045em; font-weight: 700; color: #0F4D35;">Parlons de <span style="font-weight: 200; color: #4E7F68;">votre engagement.</span></h2>
         <p style="font-size: 17px; line-height: 1.7; max-width: 440px;">Notre chargée des partenariats vous recontacte sous 5 jours ouvrés pour définir ensemble la forme d'engagement la plus adaptée.</p>
+        <div style="display: flex; flex-direction: column; gap: 10px; padding: 20px 0; border-top: 1px solid #CFDCCF; border-bottom: 1px solid #CFDCCF; max-width: 440px;">
+          <p style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #0F4D35;">VOUS PRÉFÉREZ ÉCHANGER DIRECTEMENT ?</p>
+          <a href="{{ site.whatsappLien }}" target="_blank" rel="noopener" style="display: flex; gap: 12px; align-items: center; min-height: 40px; font-weight: 600; color: #0F4D35; text-decoration: none;"><dc-import name="Icon" icon="WhatsApp" size="22" fill="#0F4D35"></dc-import>WhatsApp : {{ site.telephone }}</a>
+          <a href="mailto:{{ site.email }}" style="display: flex; gap: 12px; align-items: center; min-height: 40px; font-weight: 600; color: #0F4D35; text-decoration: none;"><dc-import name="Icon" icon="Mail" size="22"></dc-import>{{ site.email }}</a>
+        </div>
         <div style="margin-top: 16px; transform: rotate(-3deg);"><p style="font-family: 'Caveat', cursive; font-size: clamp(36px, 4vw, 56px); font-weight: 700; color: #0F4D35; line-height: 1; max-width: 440px;">Ensemble, ouvrons la voie vers l'emploi.</p><svg sc-camel-view-box="0 0 300 16" aria-hidden="true" style="display: block; width: min(300px, 70%); height: auto; margin-top: 10px;"><path d="M3 11 C 80 3, 200 3, 297 9" fill="none" stroke="#F2B134" stroke-width="4.5" stroke-linecap="round"></path></svg></div>
       </div>
       <div data-form-card style="flex: 1.4 1 540px; min-width: 0; padding: clamp(24px, 4vw, 56px); border-radius: 48px 48px 48px 0; background: #FFFDF7; box-shadow: 0 40px 80px -56px rgba(15,77,53,.5);">

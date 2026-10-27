@@ -4,5 +4,8 @@
   "installCommand": "",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "cleanUrls": true
+  "cleanUrls": true,
+  "redirects": [
+    { "source": "/formation-informatique-reseaux", "destination": "/formation-maintenance-informatique", "permanent": true }
+  ]
 }

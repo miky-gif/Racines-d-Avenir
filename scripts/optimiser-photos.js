@@ -27,52 +27,51 @@ const MAX_OTHER = 1100;  // plus grand côté des autres photos
 
 // emplacement → fichier source
 const AFFECTATIONS = {
-  // Photos plein cadre du haut de page
-  'accueil-hero': 'Mécanicienne camerounaise au garage.png',
+  // Bannière d'accueil (paysage, personne dans la moitié droite)
+  'hero-carrelage': 'Smiling Tiler Laying Floor Tiles.png',
+  'hero-couture': 'Creative Sewing Studio with Colorful Fabrics.png',
+  'hero-esthetique': 'Relaxing Spa Facial Treatment.png',
+  'hero-comptabilite': 'Étudiante en comptabilité au travail.png',
+
+  // Photos plein cadre du haut des autres pages (format paysage)
   'qui-hero': 'Formation pratique en électrotechnique.png',
-  'form-hero': 'Apprentissage du bois en atelier.png',
-  'parcours-hero': 'Boutique artisanale chaleureuse et accueillante.png',
+  'form-hero': 'Atelier de formation aux métiers d’avenir.png',
+  'parcours-hero': 'Atelier de couture inspirant et coloré.png',
   'part-hero': 'Poignée de main au garage automobile.png',
-  'actu-une': 'Accueil chaleureux au centre de formation.png',
+  'actu-une': 'Atelier de formation aux métiers d’avenir.png',
 
-  // Accueil
-  'accueil-qui': 'Démonstration mécanique en atelier professionnel.png',
-  'rail-1': 'Focused Technician Repairing an Open Desktop PC.png',
-  'rail-2': 'Focused Student Balancing Books and Numbers.png',
-  'rail-3': 'Infirmier manipulant un stéthoscope.png',
-  'rail-4': 'Sourire et service en boutique.png',
-  'rail-5': 'Classement chaleureux au bureau.png',
-  'rail-6': 'Tressage de cheveux au salon.png',
-  'rail-7': 'Chef en pleine création culinaire.png',
-  'rail-8': 'Maçon souriant construisant un mur en briques.png',
-  'rail-9': 'Jeune mécanicien réparant un moteurensor.png',
-  'rail-10': 'Apprenti menuisier assemblant une chaise.png',
+  // Formations : une photo verticale par formation (f-<slug>)
+  'f-carrelage': 'Artisane posant du carrelage mural.png',
+  'f-plomberie': 'Plombier concentré sous l’évier.png',
+  'f-electricite': 'Électricienne inspectant un tableau électrique.png',
+  'f-maconnerie': 'Maçon bâtissant un mur en briques.png',
+  'f-menuiserie-metallique': 'Artisan soudant une grille décorative.png',
+  'f-couture-africaine': 'Mesure en atelier de couture афricain.png',
+  'f-coiffure': 'Artiste des tresses au salon.png',
+  'f-esthetique': 'Manucure soignée au salon.png',
+  'f-cosmetique': 'Fabrication artisanale de crème naturelle.png',
+  'f-maintenance-informatique': 'Technicien informatique en pleine réparation.png',
+  'f-developpement-web': 'Jeune développeur dans un espace moderne.png',
+  'f-numerique-ia': 'Espace de travail organisé au bureau.png',
+  'f-comptabilite': 'Étudiante en comptabilité au travail.png',
+  'f-secretariat-bureautique': 'Professionnelle au téléphone au bureau.png',
+  'f-restauration': 'Cheffe africaine dressant un plat traditionnel.png',
+  'f-sante': 'Contrôle de tension en clinique africaine.png',
 
-  // Nos formations
-  'fil-1': 'Technicien crimpant un câble Ethernet.png',
-  'fil-2': 'Comptabilité sur bureau professionnel.png',
-  'fil-3': 'Infirmier manipulant un stéthoscope.png',
-  'fil-4': 'Transaction chaleureuse au comptoir du magasin.png',
-  'fil-5': 'Espace de travail organisé au bureau.png',
-  'fil-6': 'Tressage de cheveux au salon.png',
-  'fil-7': 'Chef en pleine création culinaire.png',
-  'fil-8': 'Maçon posant des briques rouges.png',
-  'fil-9': 'Mécanicien réparant un moteur automobile.png',
-  'fil-10': 'Ponçage artisanal d’une planche en bois.png',
-
-  // Qui sommes-nous
-  'qui-equipe': 'Équipe souriante devant le centre de formation.png',
-
-  // Parcours
-  'parcours-1': 'Formation pratique en électrotechnique.png',
+  // Accueil, Qui sommes-nous, Parcours
+  'accueil-qui': 'Électricienne inspectant un tableau électrique.png',
+  'qui-equipe': 'Équipe professionnelle diversifiée en plein air.png',
+  'parcours-1': 'Atelier de formation aux métiers d’avenir.png',
   'parcours-2': 'Formation pratique en mécanique automobile.png',
-  'parcours-3': 'Échange chaleureux au garage automobile.png',
+  'parcours-3': 'Créations africaines au cœur de l’atelier.png',
 
   // Actualités
-  'actu-2': 'Mécanicienne camerounaise au garage.png',
-  'actu-3': 'Formation pratique en électrotechnique.png',
-  'actu-4': 'Apprentissage du bois en atelier.png',
-  'actu-5': 'Poignée de main au garage automobile.png'
+  'actu-1': 'Célébration des jeunes diplômés en vert.png',
+  'actu-2': 'Électricienne inspectant un tableau électrique.png',
+  'actu-3': 'Démonstration mécanique en atelier professionnel.png',
+  'actu-4': 'Creative Sewing Studio with Colorful Fabrics.png',
+  'actu-5': 'Poignée de main au garage automobile.png',
+  'actu-6': 'Remise de boîtes à outils pour l’avenir.png'
 };
 
 const BROWSERS = [
@@ -90,6 +89,13 @@ async function main() {
   const browser = BROWSERS.find(b => fs.existsSync(b));
   if (!browser) throw new Error('Edge ou Chrome introuvable.');
   fs.mkdirSync(OUT, { recursive: true });
+
+  // Une source nommée comme l'emplacement (ex. hero-couture.png) est prise
+  // automatiquement, sans avoir à compléter la table.
+  for (const file of fs.readdirSync(SOURCES)) {
+    const m = file.match(/^([a-z0-9-]+)\.(png|jpe?g|webp)$/i);
+    if (m) AFFECTATIONS[m[1].toLowerCase()] = file;
+  }
 
   const missing = Object.values(AFFECTATIONS).filter(f => !fs.existsSync(path.join(SOURCES, f)));
   if (missing.length) throw new Error('Sources manquantes :\n  ' + [...new Set(missing)].join('\n  '));
@@ -140,6 +146,11 @@ async function main() {
       fs.writeFileSync(path.join(OUT, slot + '.webp'), out);
       before += buf.length; after += out.length;
       console.log(`✔ ${slot}.webp  ${(out.length / 1024).toFixed(0)} Ko  ← ${file}`);
+    }
+    // Supprime les anciennes photos qui ne correspondent plus à aucun emplacement
+    for (const old of fs.readdirSync(OUT).filter(n => n.endsWith('.webp') && !AFFECTATIONS[n.slice(0, -5)])) {
+      fs.unlinkSync(path.join(OUT, old));
+      console.log('✖ supprimée : ' + old);
     }
     console.log(`\nPoids total : ${(before / 1048576).toFixed(1)} Mo → ${(after / 1048576).toFixed(1)} Mo`);
     ws.close();

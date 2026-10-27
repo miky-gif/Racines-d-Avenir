@@ -1,5 +1,5 @@
-<!-- title: Racines d'Avenir — Qui sommes-nous
-     description: Découvrez Racines d'Avenir, centre de formation aux métiers et d'insertion professionnelle à Yaoundé : notre mission et nos valeurs. -->
+<!-- title: Qui sommes-nous | {{ site.nom }}
+     description: {{ site.nom }}, institut de formation professionnelle à Yaoundé : notre mission, notre vision, nos valeurs et notre accompagnement vers l'emploi et l'entrepreneuriat. -->
 <div style="background: #F7F5EC; color: #253A30; font-family: 'Poppins', sans-serif; overflow-x: clip; min-height: 100vh;">
   <dc-import name="Header" active="qui"></dc-import>
   <main id="contenu">
@@ -7,16 +7,51 @@
   <section data-hero style="position: relative; min-height: clamp(660px, 90vh, 940px); display: flex; flex-direction: column; justify-content: flex-end; background: #0F4D35;">
     <div class="hero-media" style="position: absolute; inset: 0;"><image-slot id="qui-hero" shape="rect" placeholder="Photo plein cadre — atelier électricité, apprenants en tenue verte avec leur formateur"></image-slot></div>
     <p class="hero-tag" style="position: absolute; right: clamp(16px, 4vw, 56px); top: clamp(96px, 12vw, 120px); padding: 10px 16px; border-radius: 999px; background: rgba(255,253,247,.88); font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.1em; color: #0F4D35; pointer-events: none;">QUI SOMMES-NOUS</p>
-    <div class="hero-card" style="position: relative; width: min(900px, calc(100% - 16px)); margin-top: 240px; padding: clamp(32px, 5vw, 72px) clamp(24px, 5vw, 80px) clamp(32px, 4vw, 56px) clamp(20px, 4vw, 56px); background: #F7F5EC; border-radius: 0 clamp(56px, 8vw, 112px) 0 0;">
+    <div class="hero-card" style="position: relative; width: min(820px, calc(100% - 16px)); margin-top: 240px; padding: clamp(32px, 5vw, 64px) clamp(24px, 5vw, 72px) clamp(32px, 4vw, 56px) clamp(20px, 4vw, 56px); background: #F7F5EC; border-radius: 0 clamp(56px, 8vw, 112px) 0 0;">
       <nav aria-label="Fil d'Ariane" style="display: flex; gap: 8px; font-size: 13px; color: #4E7F68; margin-bottom: 20px;"><a href="index.html" style="color: #4E7F68; text-decoration: none;">Accueil</a><span>/</span><span style="color: #0F4D35; font-weight: 600;">Qui sommes-nous</span></nav>
-      <h1 style="font-size: clamp(42px, 7vw, 104px); line-height: 0.95; letter-spacing: -0.05em; font-weight: 700; color: #0F4D35;">Une formation aujourd'hui, <span style="font-weight: 200; color: #4E7F68;">un avenir demain.</span></h1>
+      <h1 style="font-size: clamp(42px, 6.4vw, 96px); line-height: 0.95; letter-spacing: -0.05em; font-weight: 700; color: #0F4D35;">Former aujourd'hui <span style="font-weight: 200; color: #4E7F68;">le technicien de demain.</span></h1>
+      <p style="font-size: clamp(16px, 1.4vw, 19px); line-height: 1.6; max-width: 560px; margin-top: 20px;">{{ site.nom }}, {{ site.statut.toLowerCase() }} à Yaoundé.</p>
     </div>
   </section>
 
-  <section style="padding: clamp(80px, 10vw, 150px) clamp(20px, 4vw, 56px);">
+  <section style="padding: clamp(80px, 10vw, 150px) clamp(20px, 4vw, 56px) clamp(64px, 8vw, 112px);">
     <div data-reveal="" style="max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px;">
       <div style="width: 60px; height: 4px; border-radius: 4px; background: #F2B134;"></div>
-      <p style="font-size: clamp(26px, 3.4vw, 46px); line-height: 1.25; letter-spacing: -0.025em; font-weight: 500; color: #0F4D35; text-wrap: pretty;">Racines d'Avenir est un centre de formation aux métiers et d'insertion professionnelle. <span style="font-weight: 300; color: #4E7F68;">Nous proposons des formations courtes, pratiques et professionnalisantes, adaptées aux besoins du marché du travail.</span></p>
+      <p style="font-size: clamp(26px, 3.4vw, 46px); line-height: 1.25; letter-spacing: -0.025em; font-weight: 500; color: #0F4D35; text-wrap: pretty;">{{ site.nom }} est un institut de formation professionnelle. <span style="font-weight: 300; color: #4E7F68;">Nous préparons les jeunes et les adultes à des métiers qualifiés, par des formations pratiques de six mois à un an, et nous les accompagnons jusqu'à l'emploi ou la création de leur activité.</span></p>
+    </div>
+  </section>
+
+  <section style="padding: 0 clamp(20px, 4vw, 56px) clamp(96px, 11vw, 160px);">
+    <div style="max-width: 1320px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(32px, 4vw, 56px);">
+      <div data-reveal="" style="display: flex; flex-direction: column; gap: 18px;"><p style="font-size: 12px; font-weight: 600; letter-spacing: 0.2em; color: #4E7F68;">CE QUI NOUS ANIME</p><h2 style="font-size: clamp(40px, 5.4vw, 80px); line-height: 0.96; letter-spacing: -0.045em; font-weight: 700; color: #0F4D35;">Une mission, <span style="font-weight: 200; color: #4E7F68;">une vision.</span></h2></div>
+      <div data-stagger style="display: grid; grid-template-columns: repeat(auto-fit, minmax(max(280px, calc((100% - 20px) / 2)), 1fr)); gap: 20px;">
+        <div class="bloc" style="background: #0F4D35; color: #FFFDF7;">
+          <span class="bloc__icon" style="background: #F2B134;"><dc-import name="Icon" icon="Target" size="30" accent="#0F4D35"></dc-import></span>
+          <p class="bloc__kicker" style="color: #F2B134;">NOTRE MISSION</p>
+          <h3 class="bloc__title">Former, accompagner, insérer.</h3>
+          <p class="bloc__text" style="color: #E6EDE6;">Nous transmettons des savoir-faire concrets, en atelier et en situation réelle, pour que chaque apprenant devienne un professionnel compétent et autonome. Nos programmes sont construits à partir des besoins des entreprises, afin que les compétences acquises soient immédiatement utiles sur le terrain.</p>
+        </div>
+        <div class="bloc" style="background: #FFFDF7;">
+          <span class="bloc__icon" style="background: #E6EDE6;"><dc-import name="Icon" icon="Eye" size="30"></dc-import></span>
+          <p class="bloc__kicker">NOTRE VISION</p>
+          <h3 class="bloc__title">Faire du métier un choix d'avenir.</h3>
+          <p class="bloc__text">Nous voulons une formation professionnelle reconnue et ambitieuse, valorisée par les familles comme par les employeurs. L'institut prévoit d'élargir progressivement ses filières et ses niveaux de qualification, et d'accueillir demain des apprenants venus de toute l'Afrique.</p>
+        </div>
+        <div class="bloc" style="background: #FFFDF7;">
+          <span class="bloc__icon" style="background: #E6EDE6;"><dc-import name="Icon" icon="Users" size="30"></dc-import></span>
+          <p class="bloc__kicker">NOTRE ACCOMPAGNEMENT</p>
+          <h3 class="bloc__title">Personne n'avance seul.</h3>
+          <p class="bloc__text">Chaque apprenant est suivi de l'orientation jusqu'à l'insertion : test d'orientation à l'entrée, formateur référent pendant la formation, stage encadré par un tuteur, préparation au CV et aux entretiens, puis suivi après la sortie.</p>
+          <a href="parcours.html#accompagnement" class="bloc__link">Le parcours en détail <dc-import name="Icon" icon="ArrowRight" size="18" accent="#0F4D35" sw="2"></dc-import></a>
+        </div>
+        <div class="bloc" style="background: #E6EDE6;">
+          <span class="bloc__icon" style="background: #FFFDF7;"><dc-import name="Icon" icon="Rocket" size="30"></dc-import></span>
+          <p class="bloc__kicker">EMPLOI &amp; ENTREPRENEURIAT</p>
+          <h3 class="bloc__title">Deux voies pour réussir.</h3>
+          <p class="bloc__text">À la sortie, l'apprenant peut rejoindre une entreprise de notre réseau de partenaires ou créer sa propre activité : atelier de couture, salon de coiffure, entreprise de carrelage ou de dépannage. L'institut et sa Fondation l'aident à franchir le pas.</p>
+          <a href="partenaires.html#entrepreneurs" class="bloc__link">Le soutien aux entrepreneurs <dc-import name="Icon" icon="ArrowRight" size="18" accent="#0F4D35" sw="2"></dc-import></a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -24,13 +59,14 @@
     <div style="max-width: 1320px; margin: 0 auto;">
       <div data-reveal="" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: clamp(32px, 4vw, 56px);">
         <div style="display: flex; flex-direction: column; gap: 18px;"><p style="font-size: 12px; font-weight: 600; letter-spacing: 0.2em; color: #4E7F68;">NOS VALEURS</p><h2 style="font-size: clamp(40px, 5.4vw, 80px); line-height: 0.96; letter-spacing: -0.045em; font-weight: 700; color: #0F4D35;">Cinq valeurs, <span style="font-weight: 200; color: #4E7F68;">une seule direction.</span></h2></div>
+        <p style="font-size: 17px; line-height: 1.7; max-width: 440px;">Elles guident nos choix pédagogiques, notre relation avec les apprenants et nos partenariats.</p>
       </div>
       <div data-stagger style="display: flex; flex-direction: column;">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(max(240px, calc((100% - 40px) / 2)), 1fr)); gap: 12px 40px; align-items: center; padding: 28px 0; border-top: 1px solid #CFDCCF;"><div style="display: flex; align-items: center; gap: 24px;"><span style="width: 80px; height: 80px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><dc-import name="Icon" icon="Heart" size="34"></dc-import></span><h3 style="font-size: clamp(32px, 4.4vw, 64px); line-height: 1; letter-spacing: -0.04em; font-weight: 700; color: #0F4D35;">Engagement</h3></div><p style="font-size: clamp(17px, 1.6vw, 21px); line-height: 1.5;">La réussite de chaque apprenant.</p></div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(max(240px, calc((100% - 40px) / 2)), 1fr)); gap: 12px 40px; align-items: center; padding: 28px 0; border-top: 1px solid #CFDCCF;"><div style="display: flex; align-items: center; gap: 24px;"><span style="width: 80px; height: 80px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><dc-import name="Icon" icon="Award" size="34"></dc-import></span><h3 style="font-size: clamp(32px, 4.4vw, 64px); line-height: 1; letter-spacing: -0.04em; font-weight: 700; color: #0F4D35;">Excellence</h3></div><p style="font-size: clamp(17px, 1.6vw, 21px); line-height: 1.5;">Des formations de qualité orientées emploi.</p></div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(max(240px, calc((100% - 40px) / 2)), 1fr)); gap: 12px 40px; align-items: center; padding: 28px 0; border-top: 1px solid #CFDCCF;"><div style="display: flex; align-items: center; gap: 24px;"><span style="width: 80px; height: 80px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><dc-import name="Icon" icon="UsersRound" size="34"></dc-import></span><h3 style="font-size: clamp(32px, 4.4vw, 64px); line-height: 1; letter-spacing: -0.04em; font-weight: 700; color: #0F4D35;">Inclusion</h3></div><p style="font-size: clamp(17px, 1.6vw, 21px); line-height: 1.5;">Une chance pour tous, sans distinction.</p></div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(max(240px, calc((100% - 40px) / 2)), 1fr)); gap: 12px 40px; align-items: center; padding: 28px 0; border-top: 1px solid #CFDCCF;"><div style="display: flex; align-items: center; gap: 24px;"><span style="width: 80px; height: 80px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><dc-import name="Icon" icon="Rocket" size="34"></dc-import></span><h3 style="font-size: clamp(32px, 4.4vw, 64px); line-height: 1; letter-spacing: -0.04em; font-weight: 700; color: #0F4D35;">Autonomie</h3></div><p style="font-size: clamp(17px, 1.6vw, 21px); line-height: 1.5;">Des compétences pour une vie meilleure.</p></div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(max(240px, calc((100% - 40px) / 2)), 1fr)); gap: 12px 40px; align-items: center; padding: 28px 0; border-top: 1px solid #CFDCCF; border-bottom: 1px solid #CFDCCF;"><div style="display: flex; align-items: center; gap: 24px;"><span style="width: 80px; height: 80px; border-radius: 999px; background: #F2B134; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><dc-import name="Icon" icon="Handshake" size="34" accent="#0F4D35"></dc-import></span><h3 style="font-size: clamp(32px, 4.4vw, 64px); line-height: 1; letter-spacing: -0.04em; font-weight: 700; color: #0F4D35;">Solidarité</h3></div><p style="font-size: clamp(17px, 1.6vw, 21px); line-height: 1.5;">Ensemble pour un impact durable.</p></div>
+        <div class="valeur" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(max(240px, calc((100% - 40px) / 2)), 1fr)); gap: 12px 40px; align-items: center; padding: 28px 0; border-top: 1px solid #CFDCCF;"><div style="display: flex; align-items: center; gap: 24px;"><span style="width: 80px; height: 80px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><dc-import name="Icon" icon="Heart" size="34"></dc-import></span><h3 style="font-size: clamp(32px, 4.4vw, 64px); line-height: 1; letter-spacing: -0.04em; font-weight: 700; color: #0F4D35;">Engagement</h3></div><p style="font-size: clamp(17px, 1.5vw, 20px); line-height: 1.55;">Nous nous engageons pour la réussite de chaque apprenant, avec un suivi personnalisé de l'orientation jusqu'au premier emploi.</p></div>
+        <div class="valeur" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(max(240px, calc((100% - 40px) / 2)), 1fr)); gap: 12px 40px; align-items: center; padding: 28px 0; border-top: 1px solid #CFDCCF;"><div style="display: flex; align-items: center; gap: 24px;"><span style="width: 80px; height: 80px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><dc-import name="Icon" icon="Award" size="34"></dc-import></span><h3 style="font-size: clamp(32px, 4.4vw, 64px); line-height: 1; letter-spacing: -0.04em; font-weight: 700; color: #0F4D35;">Excellence</h3></div><p style="font-size: clamp(17px, 1.5vw, 20px); line-height: 1.55;">Des formateurs issus du métier, des ateliers équipés et des programmes construits avec les entreprises, pour une qualification qui a de la valeur.</p></div>
+        <div class="valeur" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(max(240px, calc((100% - 40px) / 2)), 1fr)); gap: 12px 40px; align-items: center; padding: 28px 0; border-top: 1px solid #CFDCCF;"><div style="display: flex; align-items: center; gap: 24px;"><span style="width: 80px; height: 80px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><dc-import name="Icon" icon="UsersRound" size="34"></dc-import></span><h3 style="font-size: clamp(32px, 4.4vw, 64px); line-height: 1; letter-spacing: -0.04em; font-weight: 700; color: #0F4D35;">Inclusion</h3></div><p style="font-size: clamp(17px, 1.5vw, 20px); line-height: 1.55;">Jeunes ou adultes, femmes ou hommes, avec ou sans diplôme : chacun peut trouver sa voie, y compris dans les métiers techniques.</p></div>
+        <div class="valeur" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(max(240px, calc((100% - 40px) / 2)), 1fr)); gap: 12px 40px; align-items: center; padding: 28px 0; border-top: 1px solid #CFDCCF;"><div style="display: flex; align-items: center; gap: 24px;"><span style="width: 80px; height: 80px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><dc-import name="Icon" icon="Rocket" size="34"></dc-import></span><h3 style="font-size: clamp(32px, 4.4vw, 64px); line-height: 1; letter-spacing: -0.04em; font-weight: 700; color: #0F4D35;">Autonomie</h3></div><p style="font-size: clamp(17px, 1.5vw, 20px); line-height: 1.55;">Nous formons des professionnels capables de travailler en entreprise comme de créer et de faire grandir leur propre activité.</p></div>
+        <div class="valeur" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(max(240px, calc((100% - 40px) / 2)), 1fr)); gap: 12px 40px; align-items: center; padding: 28px 0; border-top: 1px solid #CFDCCF; border-bottom: 1px solid #CFDCCF;"><div style="display: flex; align-items: center; gap: 24px;"><span style="width: 80px; height: 80px; border-radius: 999px; background: #F2B134; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><dc-import name="Icon" icon="Handshake" size="34" accent="#0F4D35"></dc-import></span><h3 style="font-size: clamp(32px, 4.4vw, 64px); line-height: 1; letter-spacing: -0.04em; font-weight: 700; color: #0F4D35;">Solidarité</h3></div><p style="font-size: clamp(17px, 1.5vw, 20px); line-height: 1.55;">Avec nos partenaires et notre Fondation, nous soutenons les apprenants les plus motivés : bourses, équipements et mentorat.</p></div>
       </div>
     </div>
   </section>
@@ -39,13 +75,30 @@
     <div style="flex: 1 1 480px; min-height: clamp(420px, 50vw, 760px); position: relative; background: #CFDCCF;"><image-slot id="qui-equipe" shape="rect" placeholder="Photo — l'équipe pédagogique et administrative"></image-slot></div>
     <div data-reveal="" style="flex: 1 1 480px; position: relative; overflow: hidden; padding: clamp(48px, 7vw, 120px) clamp(24px, 6vw, 96px); display: flex; flex-direction: column; justify-content: center; gap: 24px;">
       <div aria-hidden="true" style="position: absolute; right: -60px; top: -60px; width: 200px; height: 200px; background: #F2B134; border-radius: 0 100% 0 100%;"></div>
-      <p style="position: relative; font-size: 12px; font-weight: 600; letter-spacing: 0.2em; color: #0F4D35;">NOTRE MISSION</p>
-      <div style="position: relative;"><h2 style="font-family: 'Caveat', cursive; font-size: clamp(60px, 7vw, 104px); font-weight: 700; color: #0F4D35; line-height: 0.9;">Notre mission</h2><svg sc-camel-view-box="0 0 260 14" aria-hidden="true" style="display: block; width: min(300px, 70%); height: auto; margin-top: 8px;"><path d="M3 9 C 70 3, 170 2, 257 7" fill="none" stroke="#F2B134" stroke-width="4.5" stroke-linecap="round"></path></svg></div>
-      <p style="position: relative; font-size: clamp(17px, 1.6vw, 20px); line-height: 1.7; max-width: 560px; text-wrap: pretty;">Former, accompagner et insérer les jeunes et les adultes dans des métiers porteurs. Nous transmettons des savoir-faire concrets en atelier, suivons chaque apprenant pendant ses stages et l'aidons à trouver un emploi ou à lancer sa propre activité.</p>
+      <p style="position: relative; font-size: 12px; font-weight: 600; letter-spacing: 0.2em; color: #0F4D35;">NOTRE ÉQUIPE</p>
+      <div style="position: relative;"><h2 style="font-family: 'Caveat', cursive; font-size: clamp(60px, 7vw, 104px); font-weight: 700; color: #0F4D35; line-height: 0.9;">Une équipe engagée</h2><svg sc-camel-view-box="0 0 260 14" aria-hidden="true" style="display: block; width: min(300px, 70%); height: auto; margin-top: 8px;"><path d="M3 9 C 70 3, 170 2, 257 7" fill="none" stroke="#F2B134" stroke-width="4.5" stroke-linecap="round"></path></svg></div>
+      <p style="position: relative; font-size: clamp(17px, 1.6vw, 20px); line-height: 1.7; max-width: 560px; text-wrap: pretty;">Formateurs issus du métier, conseillers en insertion, équipe administrative : chacun accompagne les apprenants au quotidien. Nos formateurs exercent ou ont exercé le métier qu'ils enseignent, et transmettent les gestes, les exigences et les réalités du terrain.</p>
       <div data-stagger style="position: relative; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px;">
-        <span style="min-height: 48px; padding: 0 18px 0 6px; border-radius: 999px; background: #FFFDF7; display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: #0F4D35;"><span style="width: 36px; height: 36px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="GraduationCap" size="20"></dc-import></span>Formation</span>
-        <span style="min-height: 48px; padding: 0 18px 0 6px; border-radius: 999px; background: #FFFDF7; display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: #0F4D35;"><span style="width: 36px; height: 36px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="Users" size="20"></dc-import></span>Accompagnement</span>
-        <span style="min-height: 48px; padding: 0 18px 0 6px; border-radius: 999px; background: #FFFDF7; display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: #0F4D35;"><span style="width: 36px; height: 36px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="Sprout" size="20"></dc-import></span>Insertion</span>
+        <a href="nos-formations.html" class="chip-lien" style="min-height: 48px; padding: 0 18px 0 6px; border-radius: 999px; background: #FFFDF7; display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: #0F4D35; text-decoration: none;" style-hover="background: #F2B134; color: #0F4D35;"><span style="width: 36px; height: 36px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="GraduationCap" size="20"></dc-import></span>Nos formations</a>
+        <a href="parcours.html#accompagnement" class="chip-lien" style="min-height: 48px; padding: 0 18px 0 6px; border-radius: 999px; background: #FFFDF7; display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: #0F4D35; text-decoration: none;" style-hover="background: #F2B134; color: #0F4D35;"><span style="width: 36px; height: 36px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="Users" size="20"></dc-import></span>Notre accompagnement</a>
+        <a href="partenaires.html" class="chip-lien" style="min-height: 48px; padding: 0 18px 0 6px; border-radius: 999px; background: #FFFDF7; display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: #0F4D35; text-decoration: none;" style-hover="background: #F2B134; color: #0F4D35;"><span style="width: 36px; height: 36px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="Sprout" size="20"></dc-import></span>Nos partenaires</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="position: relative; overflow: hidden; background: #0F4D35; color: #FFFDF7; padding: clamp(80px, 10vw, 140px) clamp(20px, 4vw, 56px);">
+    <div aria-hidden="true" style="position: absolute; right: -140px; bottom: -160px; width: clamp(280px, 40vw, 560px); height: clamp(280px, 40vw, 560px); background: #4E7F68; border-radius: 0 100% 0 100%;"></div>
+    <div data-reveal="" style="position: relative; max-width: 1320px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: clamp(32px, 5vw, 80px); align-items: center;">
+      <div style="flex: 1 1 520px; display: flex; flex-direction: column; gap: 24px;">
+        <p style="display: flex; align-items: center; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #F2B134;"><span class="flag-cm flag-cm--lg" role="img" aria-label="Drapeau du Cameroun"></span>YAOUNDÉ · CAMEROUN</p>
+        <h2 style="font-size: clamp(40px, 5.4vw, 80px); line-height: 0.96; letter-spacing: -0.045em; font-weight: 700;">Ancré au Cameroun, <span style="font-weight: 200; color: #F2B134;">ouvert sur l'Afrique.</span></h2>
+        <p style="font-size: clamp(17px, 1.6vw, 20px); line-height: 1.7; color: #E6EDE6; max-width: 620px;">Né à Yaoundé, {{ site.nom }} s'appuie sur les savoir-faire et les besoins des entreprises camerounaises. Son ambition est panafricaine : former des professionnels capables d'exercer partout sur le continent, et accueillir demain des apprenants de toute la sous-région.</p>
+      </div>
+      <div data-stagger style="flex: 1 1 360px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div class="mini-stat"><span>{{ catalogue.ouvertes.length }}</span>formations ouvertes</div>
+        <div class="mini-stat"><span>4</span>domaines de métiers</div>
+        <div class="mini-stat"><span>6–12</span>mois de formation</div>
+        <div class="mini-stat"><span>3</span>étapes : former, accompagner, transformer</div>
       </div>
     </div>
   </section>
@@ -57,12 +110,11 @@
       <h2 style="font-size: clamp(44px, 7.4vw, 112px); line-height: 0.94; letter-spacing: -0.055em; font-weight: 700; color: #0F4D35;">Des compétences <span style="font-weight: 200; color: #4E7F68;">au service de votre avenir.</span></h2>
       <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 8px;">
         <a href="nos-formations.html" style="min-height: 60px; padding: 0 32px; border-radius: 999px; background: #0F4D35; color: #FFFDF7; font-weight: 600; font-size: 16px; text-decoration: none; display: inline-flex; align-items: center;" style-hover="transform: translateY(-2px); color: #FFFDF7;">Découvrir nos formations</a>
-        <a href="contact.html" style="min-height: 60px; padding: 0 32px; border-radius: 999px; background: #F2B134; color: #0F4D35; font-weight: 700; font-size: 16px; text-decoration: none; display: inline-flex; align-items: center;" style-hover="transform: translateY(-2px); color: #0F4D35;">Je me préinscris</a>
+        <a href="contact.html#formulaire" style="min-height: 60px; padding: 0 32px; border-radius: 999px; background: #F2B134; color: #0F4D35; font-weight: 700; font-size: 16px; text-decoration: none; display: inline-flex; align-items: center;" style-hover="transform: translateY(-2px); color: #0F4D35;">Je me préinscris</a>
       </div>
     </div>
   </section>
   </main>
-
 
   <dc-import name="Footer"></dc-import>
 </div>

@@ -1,5 +1,5 @@
-<!-- title: Racines d'Avenir — Actualités
-     description: Rentrées, événements, partenariats et réussites : toute l'actualité du centre de formation Racines d'Avenir à Yaoundé. -->
+<!-- title: Actualités | {{ site.nom }}
+     description: Rentrées, événements, partenariats et réussites : toute l'actualité de {{ site.nom }}, institut de formation professionnelle à Yaoundé. -->
 <div style="background: #F7F5EC; color: #253A30; font-family: 'Poppins', sans-serif; overflow-x: clip; min-height: 100vh;">
   <dc-import name="Header" active="actualites"></dc-import>
   <main id="contenu">
@@ -10,8 +10,8 @@
     <div class="hero-card" style="position: relative; width: min(960px, calc(100% - 16px)); margin-top: 240px; padding: clamp(32px, 5vw, 72px) clamp(24px, 5vw, 80px) clamp(32px, 4vw, 56px) clamp(20px, 4vw, 56px); background: #F7F5EC; border-radius: 0 clamp(56px, 8vw, 112px) 0 0;">
       <nav aria-label="Fil d'Ariane" style="display: flex; gap: 8px; font-size: 13px; color: #4E7F68; margin-bottom: 20px;"><a href="index.html" style="color: #4E7F68; text-decoration: none;">Accueil</a><span>/</span><span style="color: #0F4D35; font-weight: 600;">Actualités</span></nav>
       <h1 style="font-size: clamp(38px, 5.6vw, 84px); line-height: 0.96; letter-spacing: -0.05em; font-weight: 700; color: #0F4D35;">Rentrée de janvier 2027 : <span style="font-weight: 200; color: #4E7F68;">les préinscriptions sont ouvertes.</span></h1>
-      <p style="margin-top: 20px; font-size: 17px; line-height: 1.65; max-width: 600px;">Dix filières ouvrent leurs portes le 11 janvier. Tests d'orientation chaque mercredi au centre, sur rendez-vous.</p>
-      <a href="#" style="margin-top: 28px; display: inline-flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 8px 0 24px; border-radius: 999px; border: 2px solid #0F4D35; font-weight: 600; font-size: 16px; color: #0F4D35; text-decoration: none;" style-hover="background: #E6EDE6; color: #0F4D35;">Lire l'article <span style="width: 40px; height: 40px; border-radius: 999px; background: #F2B134; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="ArrowRight" size="18" accent="#0F4D35" sw="2"></dc-import></span></a>
+      <p style="margin-top: 20px; font-size: 17px; line-height: 1.65; max-width: 600px;">{{ catalogue.ouvertes.length }} formations ouvrent leurs portes en {{ site.rentree }}. Tests d'orientation chaque mercredi au centre, sur rendez-vous.</p>
+      <a href="contact.html#formulaire" style="margin-top: 28px; display: inline-flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 8px 0 24px; border-radius: 999px; border: 2px solid #0F4D35; font-weight: 600; font-size: 16px; color: #0F4D35; text-decoration: none;" style-hover="background: #E6EDE6; color: #0F4D35;">Je me préinscris <span style="width: 40px; height: 40px; border-radius: 999px; background: #F2B134; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="ArrowRight" size="18" accent="#0F4D35" sw="2"></dc-import></span></a>
     </div>
   </section>
 
@@ -25,12 +25,12 @@
       </div>
       <div data-stagger style="display: grid; grid-template-columns: repeat(auto-fill, minmax(max(280px, calc((100% - 2 * 24px) / 3)), 1fr)); gap: clamp(32px, 4vw, 56px) 24px;">
         <sc-for list="{{ articles }}" as="a">
-          <a href="#" data-filter-item data-cat="{{ a.cat }}" style="display: flex; flex-direction: column; gap: 18px; text-decoration: none; color: #253A30;" style-hover="color: #253A30;">
+          <article data-filter-item data-cat="{{ a.cat }}" style="display: flex; flex-direction: column; gap: 18px; color: #253A30;">
             <div style="position: relative; aspect-ratio: 4 / 3; border-radius: 999px 999px 0 999px / 220px 220px 0 220px; overflow: hidden; background: #E6EDE6;"><image-slot id="{{ a.slot }}" shape="rect" placeholder="{{ a.photo }}"></image-slot></div>
             <div style="display: flex; gap: 12px; align-items: center;"><span style="padding: 6px 12px; border-radius: 999px; background: #E6EDE6; color: #0F4D35; font-size: 12px; font-weight: 600;">{{ a.cat }}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px;">{{ a.date }}</span></div>
             <h3 style="font-size: clamp(21px, 2vw, 26px); line-height: 1.2; letter-spacing: -0.02em; font-weight: 700; color: #0F4D35; text-wrap: balance;">{{ a.title }}</h3>
             <p style="font-size: 15.5px; line-height: 1.6;">{{ a.excerpt }}</p>
-          </a>
+          </article>
         </sc-for>
       </div>
       <p data-filter-empty hidden style="font-family: 'Caveat', cursive; font-size: 36px; color: #0F4D35;">Aucun article dans cette catégorie pour l'instant.</p>

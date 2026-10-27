@@ -104,7 +104,7 @@
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && !menu.hidden) { setOpen(false); toggle.focus(); }
     });
-    window.matchMedia('(min-width: 1140px)').addEventListener('change', e => {
+    window.matchMedia('(min-width: 1280px)').addEventListener('change', e => {
       if (e.matches) { menu.classList.remove('is-opening', 'is-closing'); menu.hidden = true; setOpen(false); }
     });
   }
@@ -128,7 +128,7 @@
     whenVisible(pendingGroups, el => { el.classList.remove('is-pending'); el.classList.add('is-in'); });
 
     // Photos (hors photo plein cadre du haut de page)
-    const slots = $$('.img-slot').filter(el => !el.closest('.hero-media') && !inView(el));
+    const slots = $$('.img-slot').filter(el => !el.closest('.hero-media, .hs-media') && !inView(el));
     slots.forEach(el => el.classList.add('is-pending'));
     whenVisible(slots, el => el.classList.remove('is-pending'), '0px 0px -4% 0px');
 
@@ -226,8 +226,8 @@
       el._offset = 0;
     });
 
-    const heroImage = $('.hero-media > .img-slot');
-    const hero = heroImage && heroImage.closest('[data-hero]');
+    const heroImages = $$('.hero-media > .img-slot, .hs-media > .img-slot');
+    const hero = heroImages.length && heroImages[0].closest('[data-hero]');
 
     onScrollFrame(() => {
       const vh = window.innerHeight;
@@ -238,8 +238,9 @@
         el._offset = clamp((vh / 2 - base) * el._speed, -90, 90);
         el.style.setProperty('--parallax', el._offset.toFixed(1) + 'px');
       });
-      if (heroImage && window.scrollY < hero.offsetHeight + 100) {
-        heroImage.style.setProperty('--parallax', (window.scrollY * 0.35).toFixed(1) + 'px');
+      if (hero && window.scrollY < hero.offsetHeight + 100) {
+        const y = (window.scrollY * 0.35).toFixed(1) + 'px';
+        heroImages.forEach(img => img.style.setProperty('--parallax', y));
       }
     });
   }
@@ -323,13 +324,7 @@
      Pastilles : [data-filter="<groupe>"][data-value="…"] (valeur "all" = tout)
      Éléments  : [data-filter-item] avec data-<groupe>="…"
      ------------------------------------------------------------------ */
-  const MATCHERS = {
-    // La durée se compare au nombre de mois de la filière
-    duree: (value, item) => {
-      const m = Number(item.dataset.mois);
-      return (value === 'court' && m <= 3) || (value === 'moyen' && m >= 4 && m <= 6) || (value === 'long' && m > 6);
-    }
-  };
+  const params = new URLSearchParams(window.location.search);
 
   function initFilters() {
     $$('[data-filters]').forEach(scope => {
@@ -338,12 +333,16 @@
       const grid = items.length && items[0].parentElement;
       const state = {};
       chips.forEach(c => { if (c.getAttribute('aria-pressed') === 'true') state[c.dataset.filter] = c.dataset.value; });
+      // Filtre présélectionné par l'adresse (ex. nos-formations.html?domaine=numerique)
+      Object.keys(state).forEach(group => {
+        const v = params.get(group);
+        if (v && chips.some(c => c.dataset.filter === group && c.dataset.value === v)) state[group] = v;
+      });
 
       const apply = animate => {
         let count = 0;
         items.forEach(item => {
-          const ok = Object.entries(state).every(([group, value]) =>
-            value === 'all' || (MATCHERS[group] ? MATCHERS[group](value, item) : item.dataset[group] === value));
+          const ok = Object.entries(state).every(([group, value]) => value === 'all' || item.dataset[group] === value);
           item.hidden = !ok;
           if (ok) item.style.setProperty('--i', Math.min(count++, 12));
         });
@@ -406,7 +405,112 @@
   }
 
   /* ------------------------------------------------------------------
-     Témoignages : défilement automatique, pause au survol
+     Défilement automatique partagé (bannière d'accueil, témoignages) :
+     pause au survol, au focus, hors de l'écran ou sur demande.
+     ------------------------------------------------------------------ */
+  function autoplay(root, duration, onNext, options) {
+    // hoverTarget : zone dont le survol met en pause (par défaut tout le bloc)
+    const hoverTarget = options && 'hoverTarget' in options ? options.hoverTarget : root;
+    root.style.setProperty('--slide-duration', duration + 'ms');
+    let timer = null, startedAt = 0, remaining = duration, hovering = false, visible = false, stopped = false;
+    const api = {};
+    api.schedule = () => {
+      clearTimeout(timer); timer = null;
+      if (reducedMotion || stopped || !visible || hovering) return;
+      startedAt = performance.now();
+      timer = setTimeout(onNext, remaining);
+      root.classList.add('is-playing');
+      root.classList.remove('is-paused');
+    };
+    api.pause = () => {
+      if (timer) { clearTimeout(timer); timer = null; remaining -= performance.now() - startedAt; }
+      root.classList.add('is-paused');
+    };
+    api.restart = () => { remaining = duration; api.schedule(); };
+    api.toggle = () => { stopped = !stopped; if (stopped) api.pause(); else api.schedule(); return stopped; };
+
+    const hold = () => { hovering = true; api.pause(); };
+    const release = () => { hovering = false; api.schedule(); };
+    if (hoverTarget) {
+      hoverTarget.addEventListener('mouseenter', hold);
+      hoverTarget.addEventListener('mouseleave', release);
+    }
+    // Pause au clavier seulement : un clic sur une flèche ne doit pas tout arrêter
+    root.addEventListener('focusin', e => { if (e.target.matches(':focus-visible')) hold(); });
+    root.addEventListener('focusout', e => { if (!root.contains(e.relatedTarget)) release(); });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting;
+        if (visible) api.schedule(); else api.pause();
+      }, { threshold: 0.35 }).observe(root);
+    }
+    return api;
+  }
+
+  const replay = el => {
+    if (reducedMotion) return;
+    el.classList.remove('is-entering'); void el.offsetWidth; el.classList.add('is-entering');
+  };
+
+  /* Glisser horizontal au doigt → précédent / suivant */
+  function onSwipe(root, prev, next) {
+    let x0 = null, y0 = 0;
+    root.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') { x0 = e.clientX; y0 = e.clientY; } });
+    root.addEventListener('pointerup', e => {
+      if (x0 === null) return;
+      const dx = e.clientX - x0, dy = e.clientY - y0;
+      x0 = null;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) (dx < 0 ? next : prev)();
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     Bannière d'accueil (carrousel des métiers)
+     ------------------------------------------------------------------ */
+  function initSlider() {
+    $$('[data-slider]').forEach(root => {
+      const slides = $$('[data-slide-item]', root);
+      const dots = $$('[data-slider-dot]', root);
+      const index = $('[data-slider-index]', root);
+      const pauseBtn = $('[data-slider-pause]', root);
+      let current = 0;
+
+      const show = i => {
+        current = (i + slides.length) % slides.length;
+        slides.forEach((s, k) => {
+          const on = k === current;
+          s.classList.toggle('is-active', on);
+          s.setAttribute('aria-hidden', String(!on));
+          $$('a, button', s).forEach(el => { el.tabIndex = on ? 0 : -1; });
+        });
+        dots.forEach((d, k) => d.setAttribute('aria-selected', String(k === current)));
+        if (index) index.textContent = String(current + 1).padStart(2, '0');
+        player.restart();
+      };
+      const player = autoplay(root, 7000, () => show(current + 1), { hoverTarget: $('.hs-bar', root) });
+
+      $('[data-slider-prev]', root).addEventListener('click', () => show(current - 1));
+      $('[data-slider-next]', root).addEventListener('click', () => show(current + 1));
+      dots.forEach((d, k) => d.addEventListener('click', () => show(k)));
+      if (pauseBtn) {
+        if (reducedMotion) pauseBtn.hidden = true;
+        pauseBtn.addEventListener('click', () => {
+          const stopped = player.toggle();
+          pauseBtn.setAttribute('aria-pressed', String(stopped));
+          pauseBtn.setAttribute('aria-label', stopped ? 'Reprendre le défilement' : 'Mettre en pause le défilement');
+          root.classList.toggle('is-stopped', stopped);
+        });
+      }
+      root.addEventListener('keydown', e => {
+        if (e.key === 'ArrowLeft') show(current - 1);
+        if (e.key === 'ArrowRight') show(current + 1);
+      });
+      onSwipe(root, () => show(current - 1), () => show(current + 1));
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     Témoignages
      ------------------------------------------------------------------ */
   function initTestimonials() {
     $$('[data-testimonials]').forEach(root => {
@@ -414,54 +518,39 @@
       const photos = $$('[data-slide-photo]', root);
       const dots = $$('[data-slide-dot]', root);
       const index = $('[data-slide-index]', root);
-      const DURATION = 7000;
-      root.style.setProperty('--slide-duration', DURATION + 'ms');
-      let current = 0, timer = null, startedAt = 0, remaining = DURATION, hovering = false, visible = false;
+      let current = 0;
 
-      const enter = el => {
-        if (reducedMotion) return;
-        el.classList.remove('is-entering'); void el.offsetWidth; el.classList.add('is-entering');
-      };
-      const schedule = () => {
-        clearTimeout(timer); timer = null;
-        if (reducedMotion || !visible || hovering) return;
-        startedAt = performance.now();
-        timer = setTimeout(() => show(current + 1), remaining);
-        root.classList.add('is-playing');
-        root.classList.remove('is-paused');
-      };
-      const pause = () => {
-        if (timer) { clearTimeout(timer); timer = null; remaining -= performance.now() - startedAt; }
-        root.classList.add('is-paused');
-      };
       const show = i => {
         current = (i + slides.length) % slides.length;
-        slides.forEach((s, k) => { s.hidden = k !== current; if (k === current) enter(s); });
-        photos.forEach((p, k) => { p.style.display = k === current ? 'block' : 'none'; if (k === current) enter(p); });
+        slides.forEach((s, k) => { s.hidden = k !== current; if (k === current) replay(s); });
+        photos.forEach((p, k) => { p.style.display = k === current ? 'block' : 'none'; if (k === current) replay(p); });
         dots.forEach((d, k) => d.setAttribute('aria-selected', String(k === current)));
         if (index) index.textContent = current + 1;
-        remaining = DURATION;
-        schedule();
+        player.restart();
       };
+      const player = autoplay(root, 7000, () => show(current + 1));
 
       $('[data-slide-prev]', root).addEventListener('click', () => show(current - 1));
       $('[data-slide-next]', root).addEventListener('click', () => show(current + 1));
       dots.forEach((d, k) => d.addEventListener('click', () => show(k)));
-
-      const hold = () => { hovering = true; pause(); };
-      const release = () => { hovering = false; schedule(); };
-      root.addEventListener('mouseenter', hold);
-      root.addEventListener('mouseleave', release);
-      root.addEventListener('focusin', hold);
-      root.addEventListener('focusout', e => { if (!root.contains(e.relatedTarget)) release(); });
-
-      if ('IntersectionObserver' in window) {
-        new IntersectionObserver(([entry]) => {
-          visible = entry.isIntersecting;
-          if (visible) schedule(); else pause();
-        }, { threshold: 0.35 }).observe(root);
-      }
+      onSwipe(root, () => show(current - 1), () => show(current + 1));
     });
+  }
+
+  /* ------------------------------------------------------------------
+     Ancres : sur mobile, certaines cibles existent en double (frise du
+     parcours) → on redirige vers la version visible (#former → #former-m)
+     ------------------------------------------------------------------ */
+  function initAnchors() {
+    const go = () => {
+      const id = decodeURIComponent(window.location.hash.slice(1));
+      const el = id && document.getElementById(id);
+      if (!el || el.offsetParent) return;
+      const alt = document.getElementById(id + '-m');
+      if (alt && alt.offsetParent) alt.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' });
+    };
+    window.addEventListener('hashchange', go);
+    if (window.location.hash) setTimeout(go, 60);
   }
 
   /* ------------------------------------------------------------------
@@ -489,7 +578,17 @@
         b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'));
         syncMulti();
       }));
+      // Choix présélectionné par l'adresse (ex. partenaires.html?engagement=Fondation)
+      multi.forEach(b => { if (params.getAll(b.dataset.multi).includes(b.dataset.value)) b.setAttribute('aria-pressed', 'true'); });
       syncMulti();
+
+      // Champs préremplis par l'adresse (ex. contact.html?formation=couture-africaine)
+      const preset = (name, value) => {
+        const field = form.elements[name];
+        if (field && value && Array.from(field.options || []).some(o => o.value === value)) field.value = value;
+      };
+      if (params.get('formation')) { preset('objet', 'pre'); preset('filiere', params.get('formation')); }
+      preset('objet', params.get('objet'));
 
       // Champ affiché selon la valeur d'un autre (ex. filière si « Préinscription »)
       $$('[data-show-when]', form).forEach(el => {
@@ -568,6 +667,8 @@
   initRails();
   initFilters();
   initAccordions();
+  initSlider();
   initTestimonials();
+  initAnchors();
   initForms();
 })();

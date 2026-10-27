@@ -1,44 +1,57 @@
-<!-- title: Racines d'Avenir — Accueil
-     description: Racines d'Avenir, centre de formation aux métiers et d'insertion professionnelle à Yaoundé : 10 filières courtes et pratiques, un stage, un emploi. -->
+<!-- title: {{ site.nom }} — {{ site.statut }} à Yaoundé
+     description: {{ site.nom }}, institut de formation professionnelle à Yaoundé : {{ catalogue.ouvertes.length }} formations de 6 mois à 1 an dans le BTP, la couture, la beauté, les services et le numérique, avec stage et accompagnement vers l'emploi. -->
 <div style="background: #F7F5EC; color: #253A30; font-family: 'Poppins', sans-serif; overflow-x: clip; min-height: 100vh;">
   <dc-import name="Header" active="accueil"></dc-import>
   <main id="contenu">
 
-  <section data-hero style="position: relative; min-height: clamp(700px, 96vh, 1000px); display: flex; flex-direction: column; justify-content: flex-end; background: #0F4D35;">
-    <div class="hero-media" style="position: absolute; inset: 0;"><image-slot id="accueil-hero" shape="rect" placeholder="Photo plein cadre — jeune femme en tenue d'atelier vert foncé, souriante, en apprentissage"></image-slot></div>
-    <p class="hero-tag" style="position: absolute; right: clamp(16px, 4vw, 56px); top: clamp(96px, 12vw, 120px); padding: 10px 16px; border-radius: 999px; background: rgba(255,253,247,.88); font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.1em; color: #0F4D35; pointer-events: none;">ATELIER MÉCANIQUE — YAOUNDÉ</p>
-    <div class="hero-card" style="position: relative; width: min(940px, calc(100% - 16px)); margin-top: 240px; padding: clamp(32px, 5vw, 72px) clamp(24px, 5vw, 80px) clamp(32px, 4vw, 56px) clamp(20px, 4vw, 56px); background: #F7F5EC; border-radius: 0 clamp(56px, 8vw, 112px) 0 0;">
-      <p style="font-size: 12px; font-weight: 600; letter-spacing: 0.2em; line-height: 1.8; color: #4E7F68; margin-bottom: clamp(16px, 2vw, 24px); max-width: 560px;">FORMATIONS COURTES AUX MÉTIERS D'AVENIR ET INSERTION PROFESSIONNELLE</p>
-      <h1 style="font-size: clamp(42px, 7vw, 104px); line-height: 0.95; letter-spacing: -0.05em; font-weight: 700; color: #0F4D35;">
-        <span style="display: block;">Apprendre un métier.</span>
-        <span style="display: block; font-weight: 200; color: #4E7F68;">Accéder à des opportunités.</span>
-        <span style="display: block;">Construire son avenir.</span>
-      </h1>
-      <svg sc-camel-view-box="0 0 420 24" aria-hidden="true" style="display: block; width: min(60%, 420px); height: auto; margin-top: 10px;"><path d="M4 16 C 90 4, 210 2, 300 9 S 400 18, 416 8" fill="none" stroke="#F2B134" stroke-width="5" stroke-linecap="round"></path></svg>
-      <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(24px, 3vw, 36px);">
-        <a href="nos-formations.html" style="min-height: 60px; padding: 0 32px; border-radius: 999px; background: #0F4D35; color: #FFFDF7; font-weight: 600; font-size: 16px; text-decoration: none; display: inline-flex; align-items: center; box-shadow: 0 18px 36px -18px rgba(15,77,53,.6); transition: transform .2s;" style-hover="transform: translateY(-2px); color: #FFFDF7;">Découvrir nos formations</a>
-        <a href="partenaires.html" style="min-height: 60px; padding: 0 32px; border-radius: 999px; border: 2px solid #0F4D35; color: #0F4D35; font-weight: 600; font-size: 16px; text-decoration: none; display: inline-flex; align-items: center;" style-hover="background: #E6EDE6; color: #0F4D35;">Devenir partenaire</a>
+  <section data-hero data-slider class="hs" aria-roledescription="carrousel" aria-label="Nos métiers à la une">
+    <h1 class="sr-only">{{ site.nom }}, {{ site.statut.toLowerCase() }} à Yaoundé</h1>
+    <div class="hs-track">
+      <sc-for list="{{ slides }}" as="s">
+        <div class="hs-slide{{ $index === 0 ? ' is-active' : '' }}" data-slide-item role="group" aria-roledescription="diapositive" aria-label="{{ $index + 1 }} sur {{ slides.length }} : {{ s.label }}" aria-hidden="{{ $index === 0 ? 'false' : 'true' }}">
+          <div class="hs-media"><image-slot id="{{ s.slot }}" fallback="{{ s.fallback }}" fallback-focus="{{ s.fallbackFocus }}" priority="{{ $index === 0 ? 'high' : 'auto' }}" shape="rect" placeholder="{{ s.photo }}"></image-slot></div>
+          <div class="hs-shade" aria-hidden="true"></div>
+          <div class="hs-content">
+            <p class="hs-kicker"><span class="hs-kicker__num">{{ s.n }}</span><span class="hs-kicker__rule" aria-hidden="true"></span>{{ s.tag }}<span class="hs-kicker__meta"> · {{ s.meta }}</span></p>
+            <h2 class="hs-title"><span class="hs-line"><span>{{ s.titre[0] }}</span></span><span class="hs-line hs-line--light"><span>{{ s.titre[1] }}</span></span></h2>
+            <p class="hs-text">{{ s.texte }}</p>
+            <div class="hs-actions">
+              <a href="{{ s.url }}" class="hs-cta hs-cta--primary" tabindex="{{ $index === 0 ? '0' : '-1' }}">Découvrir la formation <dc-import name="Icon" icon="ArrowRight" size="18" stroke="#0F4D35" accent="#0F4D35" sw="2"></dc-import></a>
+              <a href="contact.html?formation={{ s.formation }}#formulaire" class="hs-cta hs-cta--ghost" tabindex="{{ $index === 0 ? '0' : '-1' }}">Je me préinscris</a>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div class="hs-bar">
+      <div class="hs-tabs" role="tablist" aria-label="Choisir un métier">
+        <sc-for list="{{ slides }}" as="s"><button type="button" class="hs-tab" role="tab" data-slider-dot aria-selected="{{ $index === 0 }}" aria-label="{{ s.label }}"><span class="hs-tab__track"><span class="hs-tab__fill"></span></span><span class="hs-tab__label"><span class="hs-tab__num">{{ s.n }}</span><span class="hs-tab__name">{{ s.label }}</span></span></button></sc-for>
+      </div>
+      <div class="hs-nav">
+        <button type="button" class="hs-btn hs-btn--small" data-slider-pause aria-pressed="false" aria-label="Mettre en pause le défilement"><span class="hs-ico-pause"><dc-import name="Icon" icon="Pause" size="16" stroke="#FFFDF7" accent="#FFFDF7" sw="2"></dc-import></span><span class="hs-ico-play"><dc-import name="Icon" icon="Play" size="16" stroke="#FFFDF7" accent="#FFFDF7" sw="2"></dc-import></span></button>
+        <button type="button" class="hs-btn" data-slider-prev aria-label="Métier précédent"><dc-import name="Icon" icon="ArrowLeft" size="20" stroke="#FFFDF7" accent="#FFFDF7" sw="2"></dc-import></button>
+        <button type="button" class="hs-btn" data-slider-next aria-label="Métier suivant"><dc-import name="Icon" icon="ArrowRight" size="20" stroke="#FFFDF7" accent="#F2B134" sw="2"></dc-import></button>
       </div>
     </div>
   </section>
 
   <section style="padding: clamp(56px, 7vw, 96px) clamp(20px, 4vw, 56px) 0;">
     <div data-stagger style="max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(max(260px, calc((100% - 2px) / 3)), 1fr)); gap: 1px; background: #CFDCCF;">
-      <div style="background: #F7F5EC; padding: 8px clamp(20px, 3vw, 40px) 32px 0; display: flex; flex-direction: column; gap: 16px;">
+      <a href="parcours.html#former" class="pilier" style="background: #F7F5EC; padding: 8px clamp(20px, 3vw, 40px) 32px 0; display: flex; flex-direction: column; gap: 16px; text-decoration: none; color: #253A30;">
         <div style="display: flex; align-items: center; gap: 14px;"><span style="width: 56px; height: 56px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="GraduationCap" size="28"></dc-import></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #4E7F68;">01</span></div>
         <h2 style="font-size: clamp(36px, 4.6vw, 64px); line-height: 1; letter-spacing: -0.03em; font-weight: 800; color: #0F4D35;">FORMER</h2>
-        <p style="font-size: 17px;">Des compétences pour demain</p>
-      </div>
-      <div style="background: #F7F5EC; padding: 8px clamp(20px, 3vw, 40px) 32px; display: flex; flex-direction: column; gap: 16px;">
+        <p style="font-size: 17px; display: flex; align-items: center; gap: 8px;">Des compétences pour demain <dc-import name="Icon" icon="ArrowRight" size="18" accent="#0F4D35" sw="2"></dc-import></p>
+      </a>
+      <a href="parcours.html#accompagner" class="pilier" style="background: #F7F5EC; padding: 8px clamp(20px, 3vw, 40px) 32px; display: flex; flex-direction: column; gap: 16px; text-decoration: none; color: #253A30;">
         <div style="display: flex; align-items: center; gap: 14px;"><span style="width: 56px; height: 56px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="Users" size="28"></dc-import></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #4E7F68;">02</span></div>
         <h2 style="font-size: clamp(36px, 4.6vw, 64px); line-height: 1; letter-spacing: -0.03em; font-weight: 800; color: #0F4D35;">ACCOMPAGNER</h2>
-        <p style="font-size: 17px;">Vers l'emploi et l'entrepreneuriat</p>
-      </div>
-      <div style="background: #F7F5EC; padding: 8px 0 32px clamp(20px, 3vw, 40px); display: flex; flex-direction: column; gap: 16px;">
+        <p style="font-size: 17px; display: flex; align-items: center; gap: 8px;">Vers l'emploi et l'entrepreneuriat <dc-import name="Icon" icon="ArrowRight" size="18" accent="#0F4D35" sw="2"></dc-import></p>
+      </a>
+      <a href="parcours.html#transformer" class="pilier" style="background: #F7F5EC; padding: 8px 0 32px clamp(20px, 3vw, 40px); display: flex; flex-direction: column; gap: 16px; text-decoration: none; color: #253A30;">
         <div style="display: flex; align-items: center; gap: 14px;"><span style="width: 56px; height: 56px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="Sprout" size="28"></dc-import></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #4E7F68;">03</span></div>
         <h2 style="font-size: clamp(36px, 4.6vw, 64px); line-height: 1; letter-spacing: -0.03em; font-weight: 800; color: #0F4D35;">TRANSFORMER</h2>
-        <p style="font-size: 17px;">Des talents en réussites</p>
-      </div>
+        <p style="font-size: 17px; display: flex; align-items: center; gap: 8px;">Des talents en réussites <dc-import name="Icon" icon="ArrowRight" size="18" accent="#0F4D35" sw="2"></dc-import></p>
+      </a>
     </div>
   </section>
 
@@ -46,19 +59,19 @@
     <div aria-hidden="true" style="position: absolute; left: clamp(-40px, 4vw, 80px); top: clamp(40px, 6vw, 80px); width: clamp(80px, 9vw, 130px); height: clamp(80px, 9vw, 130px); background: #E6EDE6; border-radius: 0 100% 0 100%;"></div>
     <div aria-hidden="true" style="position: absolute; right: clamp(20px, 8vw, 140px); bottom: clamp(48px, 7vw, 100px); width: 64px; height: 64px; background: #F2B134; border-radius: 100% 0 100% 0;"></div>
     <div data-reveal="" style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 28px;">
-      <h2 style="font-size: clamp(56px, 10.4vw, 156px); line-height: 0.92; letter-spacing: -0.055em; font-weight: 700; color: #0F4D35;">10 métiers.<br><span style="font-weight: 200; color: #4E7F68;">Un stage.</span><br>Un emploi.</h2>
+      <h2 style="font-size: clamp(56px, 10.4vw, 156px); line-height: 0.92; letter-spacing: -0.055em; font-weight: 700; color: #0F4D35;">{{ catalogue.ouvertes.length }} métiers.<br><span style="font-weight: 200; color: #4E7F68;">Un stage.</span><br>Un avenir.</h2>
       <svg sc-camel-view-box="0 0 420 24" aria-hidden="true" style="display: block; width: min(70%, 420px); height: auto;"><path d="M4 16 C 90 4, 210 2, 300 9 S 400 18, 416 8" fill="none" stroke="#F2B134" stroke-width="5" stroke-linecap="round"></path></svg>
-      <p style="font-size: clamp(17px, 1.6vw, 20px); line-height: 1.65; max-width: 620px; text-wrap: pretty;">Des formations courtes, pratiques et professionnalisantes, construites à partir des besoins réels des entreprises du Cameroun.</p>
+      <p style="font-size: clamp(17px, 1.6vw, 20px); line-height: 1.65; max-width: 660px; text-wrap: pretty;">Des formations professionnelles de six mois à un an, pratiques et construites avec les entreprises, pour accéder à un emploi qualifié ou créer sa propre activité.</p>
     </div>
   </section>
 
   <section style="padding: 0 clamp(20px, 4vw, 56px) clamp(96px, 11vw, 160px);">
     <div style="max-width: 1320px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: clamp(48px, 7vw, 112px);">
       <div data-reveal="" style="flex: 1 1 420px; min-width: 0; position: relative; aspect-ratio: 4 / 5; max-height: 760px;">
-        <div style="position: absolute; inset: 0; border-radius: 999px 999px 0 999px / 640px 640px 0 640px; overflow: hidden; background: #E6EDE6;"><image-slot id="accueil-qui" shape="rect" placeholder="Photo — apprenants en salle informatique avec leur formateur"></image-slot></div>
+        <div style="position: absolute; inset: 0; border-radius: 999px 999px 0 999px / 640px 640px 0 640px; overflow: hidden; background: #E6EDE6;"><image-slot id="accueil-qui" shape="rect" placeholder="Photo — apprenants en atelier avec leur formateur"></image-slot></div>
         <div aria-hidden="true" style="position: absolute; inset: -18px -18px 30% 30%; border: 3px solid transparent; border-top-color: #F2B134; border-right-color: #F2B134; border-radius: 50%; pointer-events: none;"></div>
         <div style="position: absolute; right: clamp(-8px, -1vw, 0px); bottom: 32px; padding: 14px 22px 12px; border-radius: 24px 24px 0 24px; background: #FFFDF7; box-shadow: 0 24px 48px -28px rgba(15,77,53,.5); pointer-events: none;">
-          <p style="font-family: 'Caveat', cursive; font-size: clamp(26px, 2.6vw, 36px); font-weight: 700; color: #0F4D35; line-height: 1;">Se former, c'est déjà avancer !</p>
+          <p style="font-family: 'Caveat', cursive; font-size: clamp(26px, 2.6vw, 36px); font-weight: 700; color: #0F4D35; line-height: 1;">Former aujourd'hui le technicien de demain.</p>
           <svg sc-camel-view-box="0 0 260 14" aria-hidden="true" style="display: block; width: 86%; height: auto; margin-top: 4px;"><path d="M3 9 C 70 3, 170 2, 257 7" fill="none" stroke="#F2B134" stroke-width="4" stroke-linecap="round"></path></svg>
         </div>
       </div>
@@ -66,8 +79,8 @@
         <div style="width: 60px; height: 4px; border-radius: 4px; background: #F2B134;"></div>
         <p style="font-size: 12px; font-weight: 600; letter-spacing: 0.2em; color: #4E7F68;">QUI SOMMES-NOUS</p>
         <h2 style="font-size: clamp(40px, 5.4vw, 80px); line-height: 0.96; letter-spacing: -0.045em; font-weight: 700; color: #0F4D35;">Une formation aujourd'hui, <span style="font-weight: 200; color: #4E7F68;">un avenir demain.</span></h2>
-        <p style="font-size: 17px; line-height: 1.75; max-width: 520px; text-wrap: pretty;">Racines d'Avenir est un centre de formation aux métiers et d'insertion professionnelle installé à Yaoundé. Nos formations courtes, pratiques et professionnalisantes répondent aux besoins réels du marché du travail.</p>
-        <a href="qui-sommes-nous.html" style="display: inline-flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 8px 0 24px; border-radius: 999px; border: 2px solid #0F4D35; font-weight: 600; font-size: 16px; color: #0F4D35; text-decoration: none;" style-hover="background: #E6EDE6; color: #0F4D35;">En savoir plus <span style="width: 40px; height: 40px; border-radius: 999px; background: #F2B134; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="ArrowRight" size="18" accent="#0F4D35" sw="2"></dc-import></span></a>
+        <p style="font-size: 17px; line-height: 1.75; max-width: 540px; text-wrap: pretty;">{{ site.nom }} est un institut de formation professionnelle installé à Yaoundé. Nous formons aux métiers porteurs du bâtiment, de la couture, de la beauté, des services et du numérique, et nous accompagnons chaque apprenant jusqu'à l'emploi ou la création de son activité.</p>
+        <a href="qui-sommes-nous.html" style="display: inline-flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 8px 0 24px; border-radius: 999px; border: 2px solid #0F4D35; font-weight: 600; font-size: 16px; color: #0F4D35; text-decoration: none;" style-hover="background: #E6EDE6; color: #0F4D35;">Découvrir l'institut <span style="width: 40px; height: 40px; border-radius: 999px; background: #F2B134; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="ArrowRight" size="18" accent="#0F4D35" sw="2"></dc-import></span></a>
       </div>
     </div>
   </section>
@@ -75,28 +88,52 @@
   <section style="padding: 0 0 clamp(96px, 11vw, 160px);">
     <div data-reveal="" style="max-width: 1320px; margin: 0 auto clamp(32px, 4vw, 48px); padding: 0 clamp(20px, 4vw, 56px); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px;">
       <div style="display: flex; flex-direction: column; gap: 18px;">
-        <p style="font-size: 12px; font-weight: 600; letter-spacing: 0.2em; color: #4E7F68;">NOS FILIÈRES</p>
+        <p style="font-size: 12px; font-weight: 600; letter-spacing: 0.2em; color: #4E7F68;">NOS FORMATIONS</p>
         <h2 style="font-size: clamp(40px, 5.4vw, 80px); line-height: 0.96; letter-spacing: -0.045em; font-weight: 700; color: #0F4D35;">Choisissez <span style="font-weight: 200; color: #4E7F68;">votre métier.</span></h2>
       </div>
       <div style="display: flex; gap: 10px;">
-        <button type="button" data-rail-prev="filieres" aria-label="Filières précédentes" style="width: 56px; height: 56px; border-radius: 999px; border: 2px solid #0F4D35; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer;"><dc-import name="Icon" icon="ArrowLeft" size="22" accent="#0F4D35" sw="2"></dc-import></button>
-        <button type="button" data-rail-next="filieres" aria-label="Filières suivantes" style="width: 56px; height: 56px; border-radius: 999px; border: none; background: #0F4D35; display: flex; align-items: center; justify-content: center; cursor: pointer;"><dc-import name="Icon" icon="ArrowRight" size="22" stroke="#FFFDF7" accent="#F2B134" sw="2"></dc-import></button>
+        <button type="button" data-rail-prev="filieres" aria-label="Formations précédentes" style="width: 56px; height: 56px; border-radius: 999px; border: 2px solid #0F4D35; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer;"><dc-import name="Icon" icon="ArrowLeft" size="22" accent="#0F4D35" sw="2"></dc-import></button>
+        <button type="button" data-rail-next="filieres" aria-label="Formations suivantes" style="width: 56px; height: 56px; border-radius: 999px; border: none; background: #0F4D35; display: flex; align-items: center; justify-content: center; cursor: pointer;"><dc-import name="Icon" icon="ArrowRight" size="22" stroke="#FFFDF7" accent="#F2B134" sw="2"></dc-import></button>
       </div>
     </div>
     <div class="rail" data-rail="filieres" data-stagger style="display: flex; gap: clamp(12px, 1.6vw, 20px); overflow-x: auto; scroll-snap-type: x mandatory; padding: 8px max(clamp(20px, 4vw, 56px), calc((100% - 1320px) / 2 + 56px)) 16px; scroll-padding: 0 max(clamp(20px, 4vw, 56px), calc((100% - 1320px) / 2 + 56px)); scrollbar-width: none;">
       <sc-for list="{{ filieres }}" as="f">
-        <a href="formation-informatique-reseaux.html" style="flex: 0 0 clamp(250px, 26vw, 340px); aspect-ratio: 34 / 48; position: relative; border-radius: 999px 999px 999px 0 / 170px 170px 170px 0; overflow: hidden; background: #E6EDE6; scroll-snap-align: start; text-decoration: none; transition: transform .3s ease;" style-hover="transform: translateY(-6px);">
-          <image-slot id="{{ f.slot }}" shape="rect" placeholder="{{ f.photo }}"></image-slot>
+        <a href="{{ f.url }}" style="flex: 0 0 clamp(250px, 26vw, 340px); aspect-ratio: 34 / 48; position: relative; border-radius: 999px 999px 999px 0 / 170px 170px 170px 0; overflow: hidden; background: #E6EDE6; scroll-snap-align: start; text-decoration: none; transition: transform .3s ease;" style-hover="transform: translateY(-6px);">
+          <image-slot id="{{ f.photo }}" shape="rect" placeholder="Photo — {{ f.label.toLowerCase() }}"></image-slot>
           <span style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 56px; height: 56px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center; pointer-events: none;"><dc-import name="Icon" icon="{{ f.icon }}" size="26"></dc-import></span>
           <div style="position: absolute; left: 0; right: 0; bottom: 0; min-height: 96px; padding: 20px 20px 20px 22px; background: #FFFDF7; border-radius: 0 32px 0 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; pointer-events: none;">
-            <div style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 4px; min-width: 0;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #4E7F68; white-space: nowrap;">{{ f.n }} · {{ f.mois }} MOIS</span><span style="font-size: 18px; font-weight: 700; color: #0F4D35; line-height: 1.2;">{{ f.label }}</span></div>
+            <div style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 4px; min-width: 0;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #4E7F68; white-space: nowrap;">{{ f.meta }}</span><span style="font-size: 18px; font-weight: 700; color: #0F4D35; line-height: 1.2;">{{ f.label }}</span></div>
             <span style="width: 44px; height: 44px; border-radius: 999px; background: #F2B134; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><dc-import name="Icon" icon="ArrowUpRight" size="20" stroke="#0F4D35" accent="#0F4D35" sw="2"></dc-import></span>
           </div>
         </a>
       </sc-for>
     </div>
     <div style="display: flex; justify-content: center; margin-top: 32px; padding: 0 20px;">
-      <a href="nos-formations.html" style="min-height: 60px; padding: 0 32px; border-radius: 999px; background: #0F4D35; color: #FFFDF7; font-weight: 600; font-size: 16px; text-decoration: none; display: inline-flex; align-items: center;" style-hover="transform: translateY(-2px); color: #FFFDF7;">Voir toutes nos formations</a>
+      <a href="nos-formations.html" style="min-height: 60px; padding: 0 32px; border-radius: 999px; background: #0F4D35; color: #FFFDF7; font-weight: 600; font-size: 16px; text-decoration: none; display: inline-flex; align-items: center;" style-hover="transform: translateY(-2px); color: #FFFDF7;">Voir les {{ catalogue.ouvertes.length }} formations</a>
+    </div>
+  </section>
+
+  <section style="padding: 0 clamp(20px, 4vw, 56px) clamp(96px, 11vw, 160px);">
+    <div style="max-width: 1320px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: clamp(40px, 6vw, 96px); align-items: flex-start;">
+      <div data-reveal="" style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 24px; position: sticky; top: 120px;">
+        <p style="font-size: 12px; font-weight: 600; letter-spacing: 0.2em; color: #4E7F68;">NUMÉRIQUE &amp; INTELLIGENCE ARTIFICIELLE</p>
+        <h2 style="font-size: clamp(40px, 5.4vw, 80px); line-height: 0.96; letter-spacing: -0.045em; font-weight: 700; color: #0F4D35;">Le numérique, <span style="font-weight: 200; color: #4E7F68;">au service de tous les métiers.</span></h2>
+        <p style="font-size: 17px; line-height: 1.75; max-width: 500px; text-wrap: pretty;">L'intelligence artificielle ne remplace pas le savoir-faire : elle le complète. Nous formons des techniciens et des développeurs, et nous apprenons à chaque apprenant, quel que soit son métier, à utiliser le numérique pour mieux travailler, mieux vendre et gagner du temps.</p>
+      </div>
+      <div data-stagger style="flex: 1.3 1 520px; min-width: 0; display: grid; gap: 16px;">
+        <a href="nos-formations.html?domaine=numerique" class="carte-lien" style="display: flex; gap: 22px; align-items: flex-start; padding: clamp(24px, 3vw, 36px); border-radius: 36px 36px 36px 0; background: #FFFDF7; text-decoration: none; color: #253A30;">
+          <span style="width: 64px; height: 64px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><dc-import name="Icon" icon="Monitor" size="30"></dc-import></span>
+          <span style="display: flex; flex-direction: column; gap: 8px;"><span style="font-size: 22px; font-weight: 700; color: #0F4D35; line-height: 1.2;">Se former aux métiers du numérique</span><span style="font-size: 16px; line-height: 1.6;">Maintenance informatique et réseaux, développement web et mobile : deux formations d'un an pour devenir technicien ou développeur.</span><span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #0F4D35; margin-top: 4px;">Voir les formations numériques <dc-import name="Icon" icon="ArrowRight" size="18" accent="#0F4D35" sw="2"></dc-import></span></span>
+        </a>
+        <div style="display: flex; gap: 22px; align-items: flex-start; padding: clamp(24px, 3vw, 36px); border-radius: 36px 36px 36px 0; background: #FFFDF7;">
+          <span style="width: 64px; height: 64px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><dc-import name="Icon" icon="Smartphone" size="30"></dc-import></span>
+          <span style="display: flex; flex-direction: column; gap: 8px;"><span style="font-size: 22px; font-weight: 700; color: #0F4D35; line-height: 1.2;">Le numérique dans chaque formation</span><span style="font-size: 16px; line-height: 1.6;">WhatsApp Business, réseaux sociaux, devis et gestion sur smartphone : chaque programme intègre les outils qui aident un artisan à trouver ses clients et à gérer son activité.</span></span>
+        </div>
+        <a href="formation-numerique-ia.html" class="carte-lien" style="display: flex; gap: 22px; align-items: flex-start; padding: clamp(24px, 3vw, 36px); border-radius: 36px 36px 36px 0; background: #0F4D35; text-decoration: none; color: #FFFDF7;">
+          <span style="width: 64px; height: 64px; border-radius: 999px; background: #F2B134; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><dc-import name="Icon" icon="BrainCircuit" size="30" accent="#0F4D35"></dc-import></span>
+          <span style="display: flex; flex-direction: column; gap: 8px;"><span style="font-size: 22px; font-weight: 700; line-height: 1.2;">L'IA, un outil au service du savoir-faire</span><span style="font-size: 16px; line-height: 1.6; color: #E6EDE6;">Notre module de 3 mois apprend à utiliser l'intelligence artificielle pour rédiger, créer, vendre et s'organiser, en gardant son esprit critique.</span><span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #F2B134; margin-top: 4px;">Découvrir le module <dc-import name="Icon" icon="ArrowRight" size="18" stroke="#F2B134" accent="#F2B134" sw="2"></dc-import></span></span>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -108,7 +145,7 @@
       </div>
       <div data-reveal="" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(max(min(100%, 460px), calc((100% - 32px) / 2)), 1fr)); gap: 32px;">
         <div data-stagger style="display: grid; grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 32px) / 2)), 1fr)); gap: 32px;">
-          <div style="display: flex; flex-direction: column; gap: 14px; padding-top: 24px; border-top: 1px solid #CFDCCF;"><div style="display: flex; align-items: center; justify-content: space-between;"><span style="font-size: clamp(64px, 7vw, 104px); font-weight: 200; letter-spacing: -0.06em; line-height: 0.9; color: #0F4D35;">01</span><dc-import name="Icon" icon="ChevronRight" size="32" stroke="#F2B134" accent="#F2B134" sw="2.2"></dc-import></div><h3 style="font-size: 22px; font-weight: 700; color: #0F4D35;">Formation</h3><p style="font-size: 15.5px; line-height: 1.6;">Un métier appris en atelier, en quelques mois.</p></div>
+          <div style="display: flex; flex-direction: column; gap: 14px; padding-top: 24px; border-top: 1px solid #CFDCCF;"><div style="display: flex; align-items: center; justify-content: space-between;"><span style="font-size: clamp(64px, 7vw, 104px); font-weight: 200; letter-spacing: -0.06em; line-height: 0.9; color: #0F4D35;">01</span><dc-import name="Icon" icon="ChevronRight" size="32" stroke="#F2B134" accent="#F2B134" sw="2.2"></dc-import></div><h3 style="font-size: 22px; font-weight: 700; color: #0F4D35;">Formation</h3><p style="font-size: 15.5px; line-height: 1.6;">Un métier appris en atelier, en six mois à un an.</p></div>
           <div style="display: flex; flex-direction: column; gap: 14px; padding-top: 24px; border-top: 1px solid #CFDCCF;"><div style="display: flex; align-items: center; justify-content: space-between;"><span style="font-size: clamp(64px, 7vw, 104px); font-weight: 200; letter-spacing: -0.06em; line-height: 0.9; color: #0F4D35;">02</span><dc-import name="Icon" icon="ChevronRight" size="32" stroke="#F2B134" accent="#F2B134" sw="2.2"></dc-import></div><h3 style="font-size: 22px; font-weight: 700; color: #0F4D35;">Stage pratique</h3><p style="font-size: 15.5px; line-height: 1.6;">En entreprise, pour se confronter au terrain.</p></div>
         </div>
         <div data-stagger style="display: grid; grid-template-columns: repeat(auto-fit, minmax(max(200px, calc((100% - 32px) / 2)), 1fr)); gap: 32px;">
@@ -125,7 +162,7 @@
     <div data-reveal="" style="position: relative; max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 28px;">
       <span style="width: 96px; height: 96px; border-radius: 999px; background: #FFFDF7; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="Target" size="46"></dc-import></span>
       <h2 style="font-size: clamp(48px, 8vw, 124px); line-height: 0.92; letter-spacing: -0.055em; font-weight: 700; color: #0F4D35;">Un objectif : <span style="font-weight: 200; color: #4E7F68;">votre réussite.</span></h2>
-      <p style="font-size: clamp(17px, 1.6vw, 20px); line-height: 1.65; max-width: 640px; text-wrap: pretty;">Racines d'Avenir se veut un tremplin : chaque formation ouvre sur un stage, un accompagnement personnalisé et une vraie perspective d'emploi ou de création d'activité.</p>
+      <p style="font-size: clamp(17px, 1.6vw, 20px); line-height: 1.65; max-width: 640px; text-wrap: pretty;">{{ site.nom }} se veut un tremplin : chaque formation ouvre sur un stage, un accompagnement personnalisé et une vraie perspective d'emploi ou de création d'activité.</p>
       <div style="transform: rotate(-3deg); margin-top: 8px;"><p style="font-family: 'Caveat', cursive; font-size: clamp(34px, 3.6vw, 52px); font-weight: 700; color: #0F4D35; line-height: 1;">Se former, se qualifier, s'insérer !</p><svg sc-camel-view-box="0 0 300 16" aria-hidden="true" style="display: block; width: 86%; height: auto; margin: 8px auto 0;"><path d="M3 11 C 80 3, 200 3, 297 9" fill="none" stroke="#F2B134" stroke-width="4.5" stroke-linecap="round"></path></svg></div>
     </div>
   </section>
@@ -138,8 +175,43 @@
         <div data-stagger style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; padding-top: 24px; border-top: 1px solid #CFDCCF;">
           <div><p style="font-size: clamp(28px, 3vw, 40px); font-weight: 700; letter-spacing: -0.03em; color: #0F4D35;"><span data-count="1200">1 200</span>+</p><p style="font-size: 14px;">apprenants formés</p></div>
           <div><p style="font-size: clamp(28px, 3vw, 40px); font-weight: 700; letter-spacing: -0.03em; color: #0F4D35;"><span data-count="60">60</span>+</p><p style="font-size: 14px;">entreprises partenaires</p></div>
-          <div><p style="font-size: clamp(28px, 3vw, 40px); font-weight: 700; letter-spacing: -0.03em; color: #0F4D35;"><span data-count="10">10</span></p><p style="font-size: 14px;">filières proposées</p></div>
+          <div><p style="font-size: clamp(28px, 3vw, 40px); font-weight: 700; letter-spacing: -0.03em; color: #0F4D35;"><span data-count="{{ catalogue.ouvertes.length }}">{{ catalogue.ouvertes.length }}</span></p><p style="font-size: 14px;">formations proposées</p></div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 0 clamp(20px, 4vw, 56px) clamp(96px, 11vw, 160px);">
+    <div style="max-width: 1320px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(32px, 4vw, 48px);">
+      <div data-reveal="" style="display: flex; flex-direction: column; gap: 18px;">
+        <p style="font-size: 12px; font-weight: 600; letter-spacing: 0.2em; color: #4E7F68;">ET MAINTENANT ?</p>
+        <h2 style="font-size: clamp(40px, 5.4vw, 80px); line-height: 0.96; letter-spacing: -0.045em; font-weight: 700; color: #0F4D35;">Que souhaitez-vous <span style="font-weight: 200; color: #4E7F68;">faire ?</span></h2>
+      </div>
+      <div data-stagger class="actions" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(max(240px, calc((100% - 3 * 16px) / 4)), 1fr)); gap: 16px;">
+        <a href="nos-formations.html" class="action" style="background: #FFFDF7; color: #0F4D35;">
+          <span class="action__icon" style="background: #E6EDE6;"><dc-import name="Icon" icon="GraduationCap" size="28"></dc-import></span>
+          <span class="action__title">Choisir ma formation</span>
+          <span class="action__text">{{ catalogue.ouvertes.length }} métiers, des fiches détaillées avec programme et débouchés.</span>
+          <span class="action__go"><dc-import name="Icon" icon="ArrowUpRight" size="20" accent="#0F4D35" sw="2"></dc-import></span>
+        </a>
+        <a href="contact.html#formulaire" class="action" style="background: #F2B134; color: #0F4D35;">
+          <span class="action__icon" style="background: #FFFDF7;"><dc-import name="Icon" icon="ClipboardList" size="28" accent="#0F4D35"></dc-import></span>
+          <span class="action__title">Me préinscrire</span>
+          <span class="action__text">Gratuit et sans engagement : nous vous rappelons pour le test d'orientation.</span>
+          <span class="action__go"><dc-import name="Icon" icon="ArrowUpRight" size="20" accent="#0F4D35" sw="2"></dc-import></span>
+        </a>
+        <a href="{{ site.whatsappLien }}" target="_blank" rel="noopener" class="action" style="background: #0F4D35; color: #FFFDF7;">
+          <span class="action__icon" style="background: #25D366;"><dc-import name="Icon" icon="WhatsApp" size="28" fill="#FFFDF7"></dc-import></span>
+          <span class="action__title">Poser une question</span>
+          <span class="action__text" style="color: #E6EDE6;">Écrivez-nous sur WhatsApp, un conseiller vous répond rapidement.</span>
+          <span class="action__go"><dc-import name="Icon" icon="ArrowUpRight" size="20" stroke="#F2B134" accent="#F2B134" sw="2"></dc-import></span>
+        </a>
+        <a href="partenaires.html#formulaire" class="action" style="background: #FFFDF7; color: #0F4D35;">
+          <span class="action__icon" style="background: #E6EDE6;"><dc-import name="Icon" icon="Handshake" size="28"></dc-import></span>
+          <span class="action__title">Devenir partenaire</span>
+          <span class="action__text">Accueillir des stagiaires, recruter, soutenir la Fondation.</span>
+          <span class="action__go"><dc-import name="Icon" icon="ArrowUpRight" size="20" accent="#0F4D35" sw="2"></dc-import></span>
+        </a>
       </div>
     </div>
   </section>
@@ -150,18 +222,18 @@
     <div data-reveal="" style="position: relative; max-width: 1320px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(32px, 4vw, 48px);">
       <div style="width: 60px; height: 4px; border-radius: 4px; background: #F2B134;"></div>
       <h2 style="font-size: clamp(44px, 6.6vw, 100px); line-height: 0.94; letter-spacing: -0.05em; font-weight: 700; max-width: 820px;">Entreprises, partenaires, <span style="font-weight: 200; color: #F2B134;">rejoignez-nous !</span></h2>
+      <p style="font-size: clamp(17px, 1.6vw, 20px); line-height: 1.65; max-width: 600px; color: #E6EDE6;">Formez vos futurs collaborateurs, recrutez des profils opérationnels et contribuez à l'insertion des jeunes.</p>
       <div data-stagger style="display: flex; flex-wrap: wrap; gap: 10px; max-width: 760px;">
-        <span style="min-height: 52px; padding: 0 20px 0 8px; border-radius: 999px; background: #0F4D35; border: 1px solid rgba(230,237,230,.35); display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600;"><span style="width: 38px; height: 38px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="Briefcase" size="20"></dc-import></span>Stages</span>
-        <span style="min-height: 52px; padding: 0 20px 0 8px; border-radius: 999px; background: #0F4D35; border: 1px solid rgba(230,237,230,.35); display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600;"><span style="width: 38px; height: 38px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="Handshake" size="20"></dc-import></span>Emplois</span>
-        <span style="min-height: 52px; padding: 0 20px 0 8px; border-radius: 999px; background: #0F4D35; border: 1px solid rgba(230,237,230,.35); display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600;"><span style="width: 38px; height: 38px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="GraduationCap" size="20"></dc-import></span>Formation</span>
-        <span style="min-height: 52px; padding: 0 20px 0 8px; border-radius: 999px; background: #0F4D35; border: 1px solid rgba(230,237,230,.35); display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600;"><span style="width: 38px; height: 38px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="Lightbulb" size="20"></dc-import></span>Expertise</span>
-        <span style="min-height: 52px; padding: 0 20px 0 8px; border-radius: 999px; background: #0F4D35; border: 1px solid rgba(230,237,230,.35); display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600;"><span style="width: 38px; height: 38px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="HeartHandshake" size="20"></dc-import></span>Soutien</span>
+        <a href="partenaires.html#stagiaires" class="chip-lien" style="min-height: 52px; padding: 0 20px 0 8px; border-radius: 999px; background: #0F4D35; border: 1px solid rgba(230,237,230,.35); display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: #FFFDF7; text-decoration: none;" style-hover="border-color: #F2B134; color: #FFFDF7;"><span style="width: 38px; height: 38px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="Briefcase" size="20"></dc-import></span>Stages</a>
+        <a href="partenaires.html#emplois" class="chip-lien" style="min-height: 52px; padding: 0 20px 0 8px; border-radius: 999px; background: #0F4D35; border: 1px solid rgba(230,237,230,.35); display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: #FFFDF7; text-decoration: none;" style-hover="border-color: #F2B134; color: #FFFDF7;"><span style="width: 38px; height: 38px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="Handshake" size="20"></dc-import></span>Emplois</a>
+        <a href="partenaires.html#formations" class="chip-lien" style="min-height: 52px; padding: 0 20px 0 8px; border-radius: 999px; background: #0F4D35; border: 1px solid rgba(230,237,230,.35); display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: #FFFDF7; text-decoration: none;" style-hover="border-color: #F2B134; color: #FFFDF7;"><span style="width: 38px; height: 38px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="GraduationCap" size="20"></dc-import></span>Formation</a>
+        <a href="partenaires.html#entrepreneurs" class="chip-lien" style="min-height: 52px; padding: 0 20px 0 8px; border-radius: 999px; background: #0F4D35; border: 1px solid rgba(230,237,230,.35); display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: #FFFDF7; text-decoration: none;" style-hover="border-color: #F2B134; color: #FFFDF7;"><span style="width: 38px; height: 38px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="Lightbulb" size="20"></dc-import></span>Entrepreneurs</a>
+        <a href="partenaires.html#fondation" class="chip-lien" style="min-height: 52px; padding: 0 20px 0 8px; border-radius: 999px; background: #0F4D35; border: 1px solid rgba(230,237,230,.35); display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: #FFFDF7; text-decoration: none;" style-hover="border-color: #F2B134; color: #FFFDF7;"><span style="width: 38px; height: 38px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="HeartHandshake" size="20"></dc-import></span>Fondation</a>
       </div>
-      <a href="partenaires.html" style="align-self: flex-start; min-height: 64px; padding: 0 36px; border-radius: 999px; background: #F2B134; color: #0F4D35; font-weight: 700; font-size: 17px; text-decoration: none; display: inline-flex; align-items: center; box-shadow: 0 0 0 6px #0F4D35;" style-hover="transform: translateY(-2px); color: #0F4D35;">Devenir partenaire</a>
+      <a href="partenaires.html#formulaire" style="align-self: flex-start; min-height: 64px; padding: 0 36px; border-radius: 999px; background: #F2B134; color: #0F4D35; font-weight: 700; font-size: 17px; text-decoration: none; display: inline-flex; align-items: center; box-shadow: 0 0 0 6px #0F4D35;" style-hover="transform: translateY(-2px); color: #0F4D35;">Proposer un partenariat</a>
     </div>
   </section>
   </main>
-
 
   <div style="background: #0F4D35;"><dc-import name="Footer"></dc-import></div>
 </div>

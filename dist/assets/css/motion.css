@@ -49,15 +49,19 @@ button:hover .i-send { transform: translate(3px, -3px) rotate(-8deg); }
   .site-header.is-hidden .hdr-bar { transform: translateY(calc(-100% - 24px)); }
   .first-visit .hdr-pill { animation: drop-in .8s var(--ease-out) both; }
 
-  /* Logo : les feuilles poussent */
-  :is(.first-visit .hdr-pill, .js .wordmark:not(.is-pending)) .logo-mark > * { animation: sprout .7s var(--ease-spring) both; }
-  :is(.first-visit .hdr-pill, .js .wordmark:not(.is-pending)) .logo-mark > :nth-child(4) { animation-name: stem; animation-delay: .1s; }
-  :is(.first-visit .hdr-pill, .js .wordmark:not(.is-pending)) .logo-mark > :nth-child(5),
-  :is(.first-visit .hdr-pill, .js .wordmark:not(.is-pending)) .logo-mark > :nth-child(6) { animation-name: fade; animation-delay: .25s; }
-  :is(.first-visit .hdr-pill, .js .wordmark:not(.is-pending)) .logo-mark > :nth-child(2) { animation-delay: .35s; }
-  :is(.first-visit .hdr-pill, .js .wordmark:not(.is-pending)) .logo-mark > :nth-child(3) { animation-delay: .45s; }
-  :is(.first-visit .hdr-pill, .js .wordmark:not(.is-pending)) .logo-mark > :nth-child(1) { animation-delay: .6s; }
-  a:hover > .logo-mark > :nth-child(-n+3) { animation: sway 1s ease-in-out; }
+  /* Logo : la pousse sort de terre (1re visite) et au pied de page */
+  .logo-mark .lm-leaf, .logo-mark .lm-bud, .logo-mark .lm-stem { transform-box: fill-box; }
+  .logo-mark .lm-leaf--l { transform-origin: 100% 100%; }
+  .logo-mark .lm-leaf--r { transform-origin: 0% 100%; }
+  .logo-mark .lm-bud { transform-origin: 50% 50%; }
+  .logo-mark .lm-stem { transform-origin: 50% 100%; }
+  .logo-mark .lm-roots path { stroke-dasharray: 1; }
+  :is(.first-visit .hdr-pill, .js .wordmark:not(.is-pending)) .logo-mark .lm-roots path { animation: draw .8s var(--ease-out) .05s both; }
+  :is(.first-visit .hdr-pill, .js .wordmark:not(.is-pending)) .logo-mark .lm-stem { animation: grow-y .6s var(--ease-out) .25s both; }
+  :is(.first-visit .hdr-pill, .js .wordmark:not(.is-pending)) .logo-mark .lm-leaf--l { animation: sprout .7s var(--ease-spring) .5s both; }
+  :is(.first-visit .hdr-pill, .js .wordmark:not(.is-pending)) .logo-mark .lm-leaf--r { animation: sprout .7s var(--ease-spring) .6s both; }
+  :is(.first-visit .hdr-pill, .js .wordmark:not(.is-pending)) .logo-mark .lm-bud { animation: sprout .7s var(--ease-spring) .8s both; }
+  a:hover > .logo-mark .lm-leaf, a:hover > .logo-mark .lm-bud { animation: sway 1s ease-in-out; }
 
   /* Menu mobile */
   .hdr-menu.is-opening { animation: menu-open .6s var(--ease-out) both; }
@@ -81,6 +85,40 @@ button:hover .i-send { transform: translate(3px, -3px) rotate(-8deg); }
   .js [data-hero] .hero-card h1 > span:nth-child(2) { animation-delay: .6s; }
   .js [data-hero] .hero-card h1 > span:nth-child(3) { animation-delay: .75s; }
   .js [data-hero] .hero-tag { animation: slide-left .9s var(--ease-out) .9s both; }
+  /* Bannière d'accueil : zoom lent de la photo, texte révélé ligne à ligne */
+  .js .hs-slide .img-slot__frame { transform: scale(1.12); transition: transform 0s linear 1.2s; }
+  .js .hs-slide.is-active .img-slot__frame { transform: scale(1); transition: transform 9s cubic-bezier(.2, .6, .2, 1); }
+  .hs-media > .img-slot { will-change: transform; transform: translate3d(0, var(--parallax, 0px), 0); }
+
+  .js .hs-line > span { transform: translateY(108%); transition: transform 0s linear 1.2s; }
+  .js .hs-slide.is-active .hs-line > span { transform: none; transition: transform 1.1s var(--ease-out) .35s; }
+  .js .hs-slide.is-active .hs-line + .hs-line > span { transition-delay: .5s; }
+  .js .hs-slide :is(.hs-kicker, .hs-text, .hs-actions) {
+    opacity: 0; transform: translateY(22px);
+    transition: opacity .35s ease, transform 0s linear 1.2s;
+  }
+  .js .hs-slide.is-active :is(.hs-kicker, .hs-text, .hs-actions) {
+    opacity: 1; transform: none;
+    transition: opacity .9s ease var(--d, .2s), transform 1s var(--ease-out) var(--d, .2s);
+  }
+  .js .hs-slide.is-active .hs-text { --d: .7s; }
+  .js .hs-slide.is-active .hs-actions { --d: .85s; }
+  .js .hs-kicker__rule { transform-origin: 0 50%; }
+  .js .hs-slide .hs-kicker__rule { transform: scaleX(0); transition: transform 0s linear 1.2s; }
+  .js .hs-slide.is-active .hs-kicker__rule { transform: scaleX(1); transition: transform .9s var(--ease-out) .4s; }
+  .first-visit .hs-bar { animation: rise 1s var(--ease-out) 1.1s both; }
+
+  /* Progression de l'onglet actif pendant le défilement automatique */
+  [data-slider].is-playing .hs-tab[aria-selected="true"] .hs-tab__fill { animation: dot-timer var(--slide-duration, 7s) linear both; }
+  [data-slider].is-paused .hs-tab[aria-selected="true"] .hs-tab__fill { animation-play-state: paused; }
+
+  /* Bouton WhatsApp : apparaît après l'arrivée sur la page, puis respire */
+  .js .wa-float { animation: wa-in .7s var(--ease-spring) 1.6s both; }
+  .wa-float::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    animation: wa-pulse 2.8s ease-out 3s infinite;
+  }
+
   .hero-media { overflow: hidden; }
   .hero-media > .img-slot { will-change: transform; transform: translate3d(0, var(--parallax, 0px), 0); }
   .js .hero-media .img-slot__frame { animation: hero-zoom 2.4s var(--ease-out) both, breathe 18s ease-in-out 2.4s infinite alternate; }
@@ -214,4 +252,11 @@ button:hover .i-send { transform: translate(3px, -3px) rotate(-8deg); }
   to { clip-path: circle(150% at calc(100% - 48px) 48px); }
 }
 @keyframes dot-timer { from { transform: scaleX(0); } }
+@keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes grow-y { from { transform: scaleY(0); } }
+@keyframes wa-in { from { opacity: 0; transform: translateY(30px) scale(.6); } }
+@keyframes wa-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(37,211,102,.55); }
+  70%, 100% { box-shadow: 0 0 0 18px rgba(37,211,102,0); }
+}
 @keyframes stagger-in { from { opacity: 0; translate: 0 32px; scale: .97; } }

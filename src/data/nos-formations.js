@@ -1,13 +1,9 @@
-const FILIERES = require('./filieres');
+const { ouvertes, aEtudier } = require('./formations');
 
 module.exports = {
-  list: FILIERES.map((f, i) => ({
-    ...f,
-    slot: 'fil-' + (i + 1),
-    photo: 'Photo — ' + f.label.toLowerCase(),
-    meta: f.mois + ' MOIS · ' + f.niv.toUpperCase()
-  })),
-  durees: [['all', 'Toutes'], ['court', '3 mois ou moins'], ['moyen', '4 à 6 mois'], ['long', 'Plus de 6 mois']],
-  domaines: [['all', 'Tous'], ['num', 'Numérique & gestion'], ['sante', 'Santé & bien-être'], ['com', 'Commerce & services'], ['btp', 'BTP & technique']],
+  list: ouvertes,
+  aEtudier,
+  durees: [['all', 'Toutes'], ['6', '6 mois'], ['9', '9 mois'], ['12', '12 mois'], ['module', 'Modules de 3 mois']],
+  domaines: [['all', 'Tous'], ['mode', 'Couture & beauté'], ['btp', 'BTP & techniques'], ['numerique', 'Numérique & IA'], ['services', 'Services & gestion']],
   niveaux: [['all', 'Tous'], ['Sans diplôme', 'Sans diplôme'], ['CEP', 'CEP'], ['BEPC', 'BEPC'], ['Probatoire', 'Probatoire']]
 };

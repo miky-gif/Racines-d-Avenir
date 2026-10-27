@@ -117,8 +117,17 @@ function renderTemplate(html, ctx) {
 /* Composants                                                          */
 /* ------------------------------------------------------------------ */
 
+// Icônes de marque absentes de Lucide (tracé plein)
+const BRAND_ICONS = {
+  WhatsApp: 'M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z'
+};
+
 function icon(attrs) {
   const name = attrs.icon || 'Sprout';
+  if (BRAND_ICONS[name]) {
+    const size = attrs.size || 28;
+    return `<svg class="i i-${name.toLowerCase()}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="${attrs.fill || attrs.stroke || '#0F4D35'}" style="display: block; flex-shrink: 0;" aria-hidden="true" focusable="false"><path d="${BRAND_ICONS[name]}"/></svg>`;
+  }
   let node = lucide.icons[name];
   if (!node) throw new Error(`Icône Lucide inconnue : ${name}`);
   if (node[0] === 'svg') node = node[2];
@@ -136,6 +145,23 @@ function icon(attrs) {
   return `<svg class="${cls}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round" style="display: block; flex-shrink: 0;" aria-hidden="true" focusable="false">${kids}</svg>`;
 }
 
+/* Logo : pousse à deux feuilles, bourgeon or et racines */
+function logo(attrs) {
+  const light = attrs.variant === 'light';
+  const c = light
+    ? { left: '#FFFDF7', right: '#CFDCCF', stem: '#FFFDF7' }
+    : { left: '#0F4D35', right: '#4E7F68', stem: '#0F4D35' };
+  const size = attrs.size || 38;
+  const style = attrs.style || `width: ${size}px; height: ${size}px;`;
+  return `<svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true" focusable="false" style="display: block; flex-shrink: 0; overflow: visible; ${style}">`
+    + `<path class="lm-leaf lm-leaf--l" d="M24 27C13.5 27 7 20 7 10.5 17 10.5 24 16.5 24 27Z" fill="${c.left}"/>`
+    + `<path class="lm-leaf lm-leaf--r" d="M24 27C34.5 27 41 20 41 10.5 31 10.5 24 16.5 24 27Z" fill="${c.right}"/>`
+    + `<circle class="lm-bud" cx="24" cy="8.5" r="4.5" fill="#F2B134"/>`
+    + `<rect class="lm-stem" x="22.4" y="18" width="3.2" height="16" rx="1.6" fill="${c.stem}"/>`
+    + `<g class="lm-roots" fill="none" stroke="#F2B134" stroke-width="2.6" stroke-linecap="round"><path d="M24 33.5c0 4.5-4 6-8.5 9.5" pathLength="1"/><path d="M24 33.5c0 4.5 4 6 8.5 9.5" pathLength="1"/><path d="M24 34.5V45" pathLength="1"/></g>`
+    + `</svg>`;
+}
+
 const PHOTO_DIR = path.join(SRC, 'assets', 'photos');
 const PHOTO_EXT = ['.webp', '.avif', '.jpg', '.jpeg', '.png'];
 const PHOTO_FOCUS = require(path.join(SRC, 'data', 'photos.js'));
@@ -147,14 +173,22 @@ function imageSlot(attrs) {
   const caption = attrs.placeholder || '';
   const alt = caption.replace(/^(Photo plein cadre|Photo|Portrait)\s*—\s*/, '').replace(/^Logo$/, 'Logo partenaire');
   const shape = attrs.shape === 'circle' ? ' img-slot--circle' : '';
-  const ext = PHOTO_EXT.find(e => fs.existsSync(path.join(PHOTO_DIR, id + e)));
-  if (ext) {
-    const eager = /hero|une/.test(id);
-    const fit = attrs.fit === 'contain' ? ' img-slot--contain' : '';
-    const focus = PHOTO_FOCUS[id] ? ` style="object-position: ${PHOTO_FOCUS[id]};"` : '';
-    return `<div class="img-slot img-slot--filled${shape}${fit}"><div class="img-slot__frame"><img src="assets/photos/${id}${ext}" alt="${escapeHtml(alt)}"${eager ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async"${focus}></div></div>`;
+  const findExt = name => PHOTO_EXT.find(e => fs.existsSync(path.join(PHOTO_DIR, name + e)));
+  // Photo dédiée, sinon photo provisoire (attribut fallback) en attendant
+  let file = id, ext = findExt(id), focusValue = PHOTO_FOCUS[id];
+  if (!ext && attrs.fallback && (ext = findExt(attrs.fallback))) {
+    file = attrs.fallback;
+    focusValue = attrs['fallback-focus'] || PHOTO_FOCUS[attrs.fallback];
+    if (![...missingPhotos].some(p => p.startsWith(id + ' '))) missingPhotos.add(`${id}  —  ${caption}  (photo provisoire : ${attrs.fallback})`);
   }
-  missingPhotos.add(`${id}  —  ${caption}`);
+  if (ext) {
+    const priority = attrs.priority || (/hero|une/.test(id) ? 'high' : 'lazy');
+    const loading = priority === 'high' ? ' fetchpriority="high"' : priority === 'lazy' ? ' loading="lazy"' : '';
+    const fit = attrs.fit === 'contain' ? ' img-slot--contain' : '';
+    const focus = focusValue ? ` style="object-position: ${focusValue};"` : '';
+    return `<div class="img-slot img-slot--filled${shape}${fit}"><div class="img-slot__frame"><img src="assets/photos/${file}${ext}" alt="${escapeHtml(alt)}"${loading} decoding="async"${focus}></div></div>`;
+  }
+  if (![...missingPhotos].some(p => p.startsWith(id + " "))) missingPhotos.add(`${id}  —  ${caption}`);
   return `<div class="img-slot${shape}" role="img" aria-label="${escapeHtml(alt)}"><div class="img-slot__frame"></div><div class="img-slot__empty" aria-hidden="true">${SLOT_ICON}<div class="img-slot__cap">${escapeHtml(caption)}</div></div><div class="img-slot__ring"></div></div>`;
 }
 
@@ -215,6 +249,7 @@ function renderComponents(html, ctx) {
     const attrs = parseAttrs(attrStr);
     switch (attrs.name) {
       case 'Icon': return icon(attrs);
+      case 'Logo': return logo(attrs);
       case 'Header': {
         const active = attrs.active || 'accueil';
         const nav = NAV.map(([k, label, short, href], i) => ({
@@ -228,8 +263,16 @@ function renderComponents(html, ctx) {
   });
 }
 
-function renderPage(file) {
-  const slug = path.basename(file, '.html');
+// Données communes à toutes les pages (et aux en-tête / pied de page)
+const GLOBALS = {
+  site: require(path.join(SRC, 'data', 'site.js')),
+  catalogue: require(path.join(SRC, 'data', 'formations.js'))
+};
+
+// Remplace les {{ … }} d'un texte brut (titre, description), sans échappement
+const fillText = (str, ctx) => String(str).replace(/\{\{\s*([^}]*?)\s*\}\}/g, (m, e) => evaluate(e, ctx));
+
+function renderPage(file, pageData) {
   let src = fs.readFileSync(file, 'utf8');
   const meta = {};
   src = src.replace(/^<!--([\s\S]*?)-->\s*/, (m, body) => {
@@ -239,8 +282,9 @@ function renderPage(file) {
     }
     return '';
   });
-  const dataFile = path.join(SRC, 'data', slug + '.js');
-  const data = fs.existsSync(dataFile) ? require(dataFile) : {};
+  const data = { ...GLOBALS, ...pageData };
+  meta.title = fillText(meta.title || '', data);
+  meta.description = fillText(meta.description || '', data);
 
   let html = renderTemplate(src, data);
   html = renderComponents(html, data);
@@ -270,16 +314,30 @@ function build() {
   copyDir(path.join(SRC, 'assets'), path.join(DIST, 'assets'));
 
   const pagesDir = path.join(SRC, 'pages');
-  const pages = fs.readdirSync(pagesDir).filter(f => f.endsWith('.html'));
-  for (const f of pages) {
-    fs.writeFileSync(path.join(DIST, f), renderPage(path.join(pagesDir, f)));
+  const dataFor = name => {
+    const file = path.join(SRC, 'data', name + '.js');
+    return fs.existsSync(file) ? require(file) : {};
+  };
+  let count = 0;
+  for (const f of fs.readdirSync(pagesDir).filter(n => n.endsWith('.html'))) {
+    const name = path.basename(f, '.html');
+    if (name.startsWith('_')) {
+      // Gabarit : une page générée par entrée de $pages (src/data/_<nom>.js)
+      for (const page of dataFor(name).$pages || []) {
+        fs.writeFileSync(path.join(DIST, page.file), renderPage(path.join(pagesDir, f), page.data));
+        count++;
+      }
+    } else {
+      fs.writeFileSync(path.join(DIST, f), renderPage(path.join(pagesDir, f), dataFor(name)));
+      count++;
+    }
   }
 
   const states = [...pseudoRules.values()].map(r => r.rule).join('\n');
   fs.writeFileSync(path.join(DIST, 'assets', 'css', 'states.css'),
     '/* Généré par scripts/build.js à partir des attributs style-hover / style-focus. */\n' + states + '\n');
 
-  console.log(`✔ ${pages.length} pages générées dans dist/`);
+  console.log(`✔ ${count} pages générées dans dist/`);
   if (missingPhotos.size) {
     console.log(`ℹ ${missingPhotos.size} emplacements photo sans image (à déposer dans src/assets/photos/) :`);
     for (const p of [...missingPhotos].sort()) console.log('   · ' + p);

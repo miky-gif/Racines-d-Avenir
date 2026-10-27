@@ -1,0 +1,169 @@
+<!-- title: {{ f.label }} — formation | {{ site.nom }}
+     description: Formation {{ f.label }} à Yaoundé ({{ f.duree }}{{ f.cqp ? ', préparation au CQP' : '' }}) : le métier, les compétences, le programme, les débouchés et la préinscription gratuite. -->
+<div style="background: #F7F5EC; color: #253A30; font-family: 'Poppins', sans-serif; overflow-x: clip; min-height: 100vh;">
+  <dc-import name="Header" active="formations"></dc-import>
+  <main id="contenu">
+
+  <section data-hero class="fiche-hero" style="position: relative; overflow: hidden; background: #0F4D35; padding: clamp(112px, 13vw, 160px) clamp(20px, 4vw, 56px) 0;">
+    <div aria-hidden="true" style="position: absolute; right: -120px; top: -100px; width: clamp(240px, 30vw, 460px); height: clamp(240px, 30vw, 460px); background: #F2B134; border-radius: 0 100% 0 100%; transform: rotate(-12deg);"></div>
+    <div aria-hidden="true" style="position: absolute; left: -80px; bottom: 80px; width: 200px; height: 200px; background: #4E7F68; border-radius: 100% 0 100% 0; opacity: .6;"></div>
+    <div class="fiche-hero__inner" style="position: relative; max-width: 1320px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: flex-end; gap: clamp(24px, 4vw, 64px);">
+      <div class="hero-card fiche-hero__card" style="flex: 1.25 1 520px; min-width: 0; padding: clamp(28px, 4vw, 56px) clamp(24px, 4vw, 56px) clamp(32px, 4vw, 56px); background: #F7F5EC; border-radius: 0 clamp(56px, 8vw, 112px) 0 0;">
+        <nav aria-label="Fil d'Ariane" style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 13px; color: #4E7F68; margin-bottom: 20px;"><a href="index.html" style="color: #4E7F68; text-decoration: none;">Accueil</a><span>/</span><a href="nos-formations.html" style="color: #4E7F68; text-decoration: none;">Nos formations</a><span>/</span><span style="color: #0F4D35; font-weight: 600;">{{ f.label }}</span></nav>
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 20px;"><span style="width: 64px; height: 64px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="{{ f.icon }}" size="30"></dc-import></span><p style="font-size: 12px; font-weight: 600; letter-spacing: 0.2em; color: #4E7F68;">{{ domaine.toUpperCase() }}</p></div>
+        <h1 style="font-size: clamp(42px, 6vw, 96px); line-height: 0.92; letter-spacing: -0.055em; font-weight: 700; color: #0F4D35;">{{ f.titre[0] }} <span style="font-weight: 200; color: #4E7F68;">{{ f.titre[1] }}</span></h1>
+        <p style="font-size: clamp(16px, 1.4vw, 19px); line-height: 1.6; max-width: 560px; margin-top: 20px;">{{ f.accroche }}</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px;">
+          <span class="badge"><dc-import name="Icon" icon="Clock" size="16" sw="2"></dc-import>{{ f.duree }}</span>
+          <span class="badge"><dc-import name="Icon" icon="GraduationCap" size="16" sw="2"></dc-import>Niveau : {{ f.niv }}</span>
+          <sc-if value="{{ f.cqp }}"><span class="badge badge--or"><dc-import name="Icon" icon="BadgeCheck" size="16" accent="#0F4D35" sw="2"></dc-import>Prépare au CQP</span></sc-if>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(24px, 3vw, 32px);">
+          <a href="contact.html?formation={{ f.slug }}#formulaire" style="min-height: 60px; padding: 0 32px; border-radius: 999px; background: #F2B134; color: #0F4D35; font-weight: 700; font-size: 16px; text-decoration: none; display: inline-flex; align-items: center;" style-hover="transform: translateY(-2px); color: #0F4D35;">Je me préinscris</a>
+          <a href="{{ f.whatsapp }}" target="_blank" rel="noopener" style="min-height: 60px; padding: 0 26px; border-radius: 999px; border: 2px solid #0F4D35; color: #0F4D35; font-weight: 600; font-size: 16px; text-decoration: none; display: inline-flex; align-items: center; gap: 10px;" style-hover="background: #E6EDE6; color: #0F4D35;"><dc-import name="Icon" icon="WhatsApp" size="20" fill="#0F4D35"></dc-import>Poser une question</a>
+        </div>
+      </div>
+      <div class="fiche-hero__photo" style="flex: 1 1 360px; min-width: 0; position: relative; aspect-ratio: 4 / 5; max-height: 660px; border-radius: 999px 999px 0 0 / 420px 420px 0 0; overflow: hidden; background: #E6EDE6;"><image-slot id="{{ f.photo }}" shape="rect" placeholder="Photo — apprenant(e) en {{ f.label.toLowerCase() }}"></image-slot></div>
+    </div>
+  </section>
+
+  <section style="padding: clamp(48px, 6vw, 80px) clamp(20px, 4vw, 56px) 0;">
+    <div data-stagger style="max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(max(220px, calc((100% - 3 * 32px) / 4)), 1fr)); gap: 32px;">
+      <div style="padding-top: 20px; border-top: 3px solid #F2B134; display: flex; flex-direction: column; gap: 6px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #0F4D35;">DURÉE</span><span style="font-size: clamp(44px, 5vw, 72px); font-weight: 200; letter-spacing: -0.05em; line-height: 1; color: #0F4D35;"><span data-count="{{ f.mois }}">{{ f.mois }}</span> mois</span><span style="font-size: 15px;">{{ f.dureeDetail }}</span></div>
+      <div style="padding-top: 20px; border-top: 1px solid #CFDCCF; display: flex; flex-direction: column; gap: 6px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #0F4D35;">NIVEAU D'ENTRÉE</span><span style="font-size: clamp(36px, 4vw, 60px); font-weight: 200; letter-spacing: -0.05em; line-height: 1.1; color: #0F4D35;">{{ f.niv }}</span><span style="font-size: 15px;">{{ f.niv === 'Sans diplôme' ? 'motivation et test d’orientation' : 'ou niveau équivalent' }}</span></div>
+      <div style="padding-top: 20px; border-top: 1px solid #CFDCCF; display: flex; flex-direction: column; gap: 6px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #0F4D35;">CERTIFICATION</span><span style="font-size: clamp(36px, 4vw, 60px); font-weight: 200; letter-spacing: -0.05em; line-height: 1.1; color: #0F4D35;">{{ f.certification }}</span><span style="font-size: 15px;">{{ f.certificationDetail }}</span></div>
+      <div style="padding-top: 20px; border-top: 1px solid #CFDCCF; display: flex; flex-direction: column; gap: 6px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #0F4D35;">PROCHAINE RENTRÉE</span><span style="font-size: clamp(36px, 4vw, 60px); font-weight: 200; letter-spacing: -0.05em; line-height: 1.1; color: #0F4D35;">{{ site.rentree.split(' ')[0].replace(/^./, c => c.toUpperCase()) }}</span><span style="font-size: 15px;">{{ site.rentree }} · 20 places par session</span></div>
+    </div>
+  </section>
+
+  <section style="padding: clamp(80px, 9vw, 128px) clamp(20px, 4vw, 56px);">
+    <div style="max-width: 1320px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: flex-start; gap: clamp(48px, 6vw, 96px);">
+      <div style="flex: 1 1 600px; min-width: 0; display: flex; flex-direction: column; gap: clamp(64px, 7vw, 96px);">
+
+        <div data-reveal="" style="display: flex; flex-direction: column; gap: 24px;">
+          <h2 style="font-size: clamp(36px, 4.4vw, 64px); line-height: 0.98; letter-spacing: -0.045em; font-weight: 700; color: #0F4D35;">Le métier <span style="font-weight: 200; color: #4E7F68;">en bref.</span></h2>
+          <p style="font-size: clamp(18px, 1.6vw, 21px); line-height: 1.7; text-wrap: pretty;">{{ f.metier }}</p>
+          <p style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #0F4D35; margin-top: 8px;">PRINCIPALES ACTIVITÉS</p>
+          <div data-stagger style="display: grid; grid-template-columns: repeat(auto-fit, minmax(max(220px, calc((100% - 16px) / 2)), 1fr)); gap: 12px 16px;">
+            <sc-for list="{{ f.activites }}" as="a"><div style="display: flex; gap: 12px; align-items: flex-start; padding: 16px 18px; border-radius: 20px 20px 20px 0; background: #FFFDF7; font-size: 16px; line-height: 1.45;"><dc-import name="Icon" icon="CircleCheck" size="22" sw="2"></dc-import>{{ a }}</div></sc-for>
+          </div>
+        </div>
+
+        <div data-reveal="" style="display: flex; flex-direction: column; gap: 28px;">
+          <h2 style="font-size: clamp(36px, 4.4vw, 64px); line-height: 0.98; letter-spacing: -0.045em; font-weight: 700; color: #0F4D35;">Objectifs <span style="font-weight: 200; color: #4E7F68;">de la formation.</span></h2>
+          <div data-stagger style="display: flex; flex-direction: column; border-bottom: 1px solid #CFDCCF;">
+            <sc-for list="{{ f.objectifs }}" as="o"><div style="display: flex; gap: 20px; align-items: baseline; padding: 20px 0; border-top: 1px solid #CFDCCF;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #4E7F68;">{{ String($index + 1).padStart(2, '0') }}</span><p style="font-size: clamp(18px, 1.8vw, 22px); line-height: 1.45; color: #0F4D35; font-weight: 500;">{{ o }}</p></div></sc-for>
+          </div>
+        </div>
+
+        <div data-reveal="" style="display: flex; flex-wrap: wrap; gap: 20px;">
+          <div style="flex: 1 1 300px; display: flex; flex-direction: column; gap: 18px; padding: 32px; border-radius: 36px 36px 36px 0; background: #FFFDF7;">
+            <h3 style="font-size: 24px; font-weight: 700; color: #0F4D35;">Compétences acquises</h3>
+            <ul data-stagger style="padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: 16px; line-height: 1.5;">
+              <sc-for list="{{ f.competences }}" as="c"><li style="display: flex; gap: 12px;"><span style="width: 8px; height: 8px; border-radius: 999px; background: #F2B134; margin-top: 9px; flex-shrink: 0;"></span>{{ c }}</li></sc-for>
+            </ul>
+          </div>
+          <div style="flex: 1 1 300px; display: flex; flex-direction: column; gap: 18px; padding: 32px; border-radius: 36px 36px 36px 0; background: #E6EDE6;">
+            <h3 style="font-size: 24px; font-weight: 700; color: #0F4D35;">Équipements et outils</h3>
+            <div data-stagger style="display: flex; flex-wrap: wrap; gap: 8px;">
+              <sc-for list="{{ f.equipements }}" as="e"><span style="padding: 9px 16px; border-radius: 999px; background: #FFFDF7; color: #0F4D35; font-size: 14px; font-weight: 500;">{{ e }}</span></sc-for>
+            </div>
+          </div>
+        </div>
+
+        <div data-reveal="" style="display: flex; flex-direction: column; gap: 28px;">
+          <h2 style="font-size: clamp(36px, 4.4vw, 64px); line-height: 0.98; letter-spacing: -0.045em; font-weight: 700; color: #0F4D35;">Programme <span style="font-weight: 200; color: #4E7F68;">module par module.</span></h2>
+          <div data-accordion style="display: flex; flex-direction: column; border-top: 1px solid #CFDCCF;">
+            <sc-for list="{{ f.programme }}" as="m">
+              <div style="border-bottom: 1px solid #CFDCCF;">
+                <button type="button" class="acc" aria-expanded="{{ m.open }}" aria-controls="module-{{ m.num }}" style="width: 100%; min-height: 88px; padding: 20px 0; display: flex; align-items: center; gap: clamp(16px, 2vw, 28px); background: transparent; border: none; font: inherit; text-align: left; cursor: pointer; color: #0F4D35;">
+                  <span class="acc__num" style="font-size: clamp(36px, 4vw, 56px); font-weight: 200; letter-spacing: -0.05em; line-height: 1; min-width: 1.6em;">{{ m.num }}</span>
+                  <span style="flex: 1; display: flex; flex-direction: column; gap: 4px;"><span style="font-size: clamp(18px, 1.8vw, 22px); font-weight: 600;">{{ m.title }}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #253A30;">{{ m.weeks }}</span></span>
+                  <span class="acc__btn" style="width: 48px; height: 48px; border-radius: 999px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform .25s, background .25s;"><dc-import name="Icon" icon="Plus" size="22" accent="#0F4D35" sw="2"></dc-import></span>
+                </button>
+                <ul id="module-{{ m.num }}" hidden="{{ !m.open }}" style="list-style: none; padding: 0 0 28px calc(1.6em + clamp(16px, 2vw, 28px)); display: flex; flex-direction: column; gap: 10px; font-size: 16px; line-height: 1.55;">
+                  <sc-for list="{{ m.items }}" as="it"><li style="display: flex; gap: 12px;"><span style="width: 6px; height: 6px; border-radius: 999px; background: #F2B134; margin-top: 10px; flex-shrink: 0;"></span>{{ it }}</li></sc-for>
+                </ul>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div data-reveal="" style="display: flex; flex-direction: column; gap: 28px;">
+          <h2 style="font-size: clamp(36px, 4.4vw, 64px); line-height: 0.98; letter-spacing: -0.045em; font-weight: 700; color: #0F4D35;">Et après <span style="font-weight: 200; color: #4E7F68;">la formation ?</span></h2>
+          <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+            <div style="flex: 1 1 300px; display: flex; flex-direction: column; gap: 18px; padding: 32px; border-radius: 36px 36px 36px 0; background: #FFFDF7;">
+              <span style="width: 56px; height: 56px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="Briefcase" size="26"></dc-import></span>
+              <h3 style="font-size: 24px; font-weight: 700; color: #0F4D35;">Travailler en entreprise</h3>
+              <div data-stagger style="display: flex; flex-wrap: wrap; gap: 8px;">
+                <sc-for list="{{ f.debouches }}" as="d"><span style="padding: 9px 16px; border-radius: 999px; border: 1.5px solid #CFDCCF; color: #0F4D35; font-size: 14px; font-weight: 500;">{{ d }}</span></sc-for>
+              </div>
+              <p style="font-size: 15px; line-height: 1.6;">Notre réseau d'entreprises partenaires accueille les stagiaires et recrute nos apprenants.</p>
+            </div>
+            <div style="flex: 1 1 300px; display: flex; flex-direction: column; gap: 18px; padding: 32px; border-radius: 36px 36px 36px 0; background: #0F4D35; color: #FFFDF7;">
+              <span style="width: 56px; height: 56px; border-radius: 999px; background: #F2B134; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="Rocket" size="26" accent="#0F4D35"></dc-import></span>
+              <h3 style="font-size: 24px; font-weight: 700;">Créer sa propre activité</h3>
+              <p style="font-size: 16px; line-height: 1.65; color: #E6EDE6;">{{ f.entreprendre }}</p>
+              <a href="parcours.html#accompagnement" style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #F2B134; text-decoration: none; margin-top: auto;">Notre accompagnement <dc-import name="Icon" icon="ArrowRight" size="18" stroke="#F2B134" accent="#F2B134" sw="2"></dc-import></a>
+            </div>
+          </div>
+        </div>
+
+        <div data-reveal="" style="display: flex; gap: clamp(20px, 3vw, 32px); align-items: flex-start; padding: clamp(28px, 4vw, 44px); border-radius: 36px 36px 36px 0; background: #E6EDE6;">
+          <span style="width: 72px; height: 72px; border-radius: 999px; background: #FFFDF7; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><dc-import name="Icon" icon="BrainCircuit" size="34"></dc-import></span>
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <p style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #0F4D35;">LE NUMÉRIQUE &amp; L'IA DANS CE MÉTIER</p>
+            <p style="font-size: clamp(17px, 1.5vw, 19px); line-height: 1.65; color: #0F4D35;">{{ f.numerique }}</p>
+            <sc-if value="{{ f.slug !== 'numerique-ia' }}"><a href="formation-numerique-ia.html" style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #0F4D35; text-decoration: none; box-shadow: inset 0 -2px 0 #F2B134; align-self: flex-start;">Module « Compétences numériques et IA » <dc-import name="Icon" icon="ArrowRight" size="18" accent="#0F4D35" sw="2"></dc-import></a></sc-if>
+          </div>
+        </div>
+
+        <div data-reveal="" style="display: flex; flex-direction: column; gap: 18px; padding: 32px; border-radius: 36px 36px 36px 0; border: 1.5px solid #CFDCCF;">
+          <h3 style="font-size: 24px; font-weight: 700; color: #0F4D35;">Conditions d'accès</h3>
+          <ul data-stagger style="padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(max(220px, calc((100% - 24px) / 2)), 1fr)); gap: 12px 24px; font-size: 16px; line-height: 1.5;">
+            <sc-for list="{{ f.prerequis }}" as="p"><li style="display: flex; gap: 12px;"><span style="width: 8px; height: 8px; border-radius: 999px; background: #F2B134; margin-top: 9px; flex-shrink: 0;"></span>{{ p }}</li></sc-for>
+          </ul>
+          <p style="font-size: 14px; line-height: 1.6; color: #4E7F68;">Préinscription gratuite et sans engagement, suivie d'un test d'orientation et d'un entretien au sein de l'institut.</p>
+        </div>
+      </div>
+
+      <aside style="flex: 1 1 320px; max-width: 100%; position: sticky; top: 104px; display: flex; flex-direction: column; gap: 18px; padding: 36px; border-radius: 40px 40px 40px 0; background: #FFFDF7; box-shadow: 0 40px 80px -50px rgba(15,77,53,.5);">
+        <p style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #0F4D35;">PRÉINSCRIPTION · GRATUITE</p>
+        <h3 style="font-size: 30px; line-height: 1.1; letter-spacing: -0.02em; font-weight: 700; color: #0F4D35;">Rentrée de {{ site.rentree }}</h3>
+        <ol class="etapes" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; font-size: 15px; line-height: 1.45;">
+          <li><span>1</span>Je remplis la préinscription en ligne</li>
+          <li><span>2</span>L'institut me rappelle sous 48 h</li>
+          <li><span>3</span>Test d'orientation et entretien</li>
+          <li><span>4</span>Inscription définitive</li>
+        </ol>
+        <a href="contact.html?formation={{ f.slug }}#formulaire" style="display: flex; align-items: center; justify-content: center; min-height: 60px; border-radius: 999px; background: #F2B134; color: #0F4D35; font-weight: 700; font-size: 16px; text-decoration: none;" style-hover="transform: translateY(-2px); color: #0F4D35;">Je me préinscris</a>
+        <a href="{{ f.whatsapp }}" target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 56px; border-radius: 999px; background: #0F4D35; color: #FFFDF7; font-weight: 600; font-size: 15px; text-decoration: none;" style-hover="transform: translateY(-2px); color: #FFFDF7;"><dc-import name="Icon" icon="WhatsApp" size="20" fill="#FFFDF7"></dc-import>Une question sur WhatsApp</a>
+        <a href="tel:{{ site.telephoneLien }}" style="display: flex; gap: 12px; align-items: center; min-height: 48px; font-size: 15px; font-weight: 600; color: #0F4D35; text-decoration: none;"><span style="width: 44px; height: 44px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center;"><dc-import name="Icon" icon="Phone" size="20"></dc-import></span>{{ site.telephone }}</a>
+        <p style="font-family: 'Caveat', cursive; font-size: 30px; font-weight: 700; color: #0F4D35; line-height: 1.05;">Apprendre aujourd'hui, travailler demain.</p>
+      </aside>
+    </div>
+  </section>
+
+  <sc-if value="{{ autres.length }}">
+  <section style="padding: 0 clamp(20px, 4vw, 56px) clamp(96px, 11vw, 160px);">
+    <div style="max-width: 1320px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(28px, 3vw, 40px);">
+      <div data-reveal="" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 20px;">
+        <h2 style="font-size: clamp(32px, 4vw, 56px); line-height: 0.98; letter-spacing: -0.045em; font-weight: 700; color: #0F4D35;">Dans le même domaine : <span style="font-weight: 200; color: #4E7F68;">{{ domaine.toLowerCase() }}.</span></h2>
+        <a href="nos-formations.html" style="display: inline-flex; align-items: center; gap: 10px; min-height: 44px; font-weight: 600; color: #0F4D35; text-decoration: none; box-shadow: inset 0 -2px 0 #F2B134;">Toutes les formations <dc-import name="Icon" icon="ArrowRight" size="18" accent="#0F4D35" sw="2"></dc-import></a>
+      </div>
+      <div data-stagger style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 16px;">
+        <sc-for list="{{ autres }}" as="o">
+          <a href="{{ o.url }}" class="carte-lien" style="display: flex; align-items: center; gap: 16px; padding: 18px 20px; border-radius: 28px 28px 28px 0; background: #FFFDF7; text-decoration: none; color: #0F4D35;">
+            <span style="width: 52px; height: 52px; border-radius: 999px; background: #E6EDE6; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><dc-import name="Icon" icon="{{ o.icon }}" size="24"></dc-import></span>
+            <span style="flex: 1; display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 17px; font-weight: 700; line-height: 1.25;">{{ o.label }}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #4E7F68;">{{ o.meta }}</span></span>
+            <dc-import name="Icon" icon="ArrowUpRight" size="20" accent="#0F4D35" sw="2"></dc-import>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+  </main>
+
+  <dc-import name="Footer"></dc-import>
+</div>
