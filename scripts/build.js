@@ -147,19 +147,11 @@ function icon(attrs) {
 
 /* Logo : pousse à deux feuilles, bourgeon or et racines */
 function logo(attrs) {
+  // Arbre du logo officiel (logo.png), en vert foncé ou en crème (variant="light")
   const light = attrs.variant === 'light';
-  const c = light
-    ? { left: '#FFFDF7', right: '#CFDCCF', stem: '#FFFDF7' }
-    : { left: '#0F4D35', right: '#4E7F68', stem: '#0F4D35' };
-  const size = attrs.size || 38;
-  const style = attrs.style || `width: ${size}px; height: ${size}px;`;
-  return `<svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true" focusable="false" style="display: block; flex-shrink: 0; overflow: visible; ${style}">`
-    + `<path class="lm-leaf lm-leaf--l" d="M24 27C13.5 27 7 20 7 10.5 17 10.5 24 16.5 24 27Z" fill="${c.left}"/>`
-    + `<path class="lm-leaf lm-leaf--r" d="M24 27C34.5 27 41 20 41 10.5 31 10.5 24 16.5 24 27Z" fill="${c.right}"/>`
-    + `<circle class="lm-bud" cx="24" cy="8.5" r="4.5" fill="#F2B134"/>`
-    + `<rect class="lm-stem" x="22.4" y="18" width="3.2" height="16" rx="1.6" fill="${c.stem}"/>`
-    + `<g class="lm-roots" fill="none" stroke="#F2B134" stroke-width="2.6" stroke-linecap="round"><path d="M24 33.5c0 4.5-4 6-8.5 9.5" pathLength="1"/><path d="M24 33.5c0 4.5 4 6 8.5 9.5" pathLength="1"/><path d="M24 34.5V45" pathLength="1"/></g>`
-    + `</svg>`;
+  const h = Number(attrs.size || 42);
+  const w = Math.round(h * 132 / 161);
+  return `<img class="logo-mark" src="assets/img/logo-arbre${light ? '-clair' : ''}.png" alt="" width="${w}" height="${h}" style="display: block; flex-shrink: 0; width: ${w}px; height: ${h}px;">`;
 }
 
 const PHOTO_DIR = path.join(SRC, 'assets', 'photos');
@@ -272,7 +264,7 @@ const GLOBALS = {
 // Remplace les {{ … }} d'un texte brut (titre, description), sans échappement
 const fillText = (str, ctx) => String(str).replace(/\{\{\s*([^}]*?)\s*\}\}/g, (m, e) => evaluate(e, ctx));
 
-function renderPage(file, pageData) {
+function renderPage(file, pageData, outFile) {
   let src = fs.readFileSync(file, 'utf8');
   const meta = {};
   src = src.replace(/^<!--([\s\S]*?)-->\s*/, (m, body) => {
@@ -296,6 +288,7 @@ function renderPage(file, pageData) {
   return layout
     .replace('{{ title }}', () => escapeHtml(meta.title || "Racines d'Avenir"))
     .replace('{{ description }}', () => escapeHtml(meta.description || ''))
+    .replace('{{ seo }}', () => seo.headTags(outFile, meta, data))
     .replace('{{ body }}', () => html.trim());
 }
 
@@ -305,6 +298,55 @@ function copyDir(from, to) {
     if (entry.name.startsWith('.') || entry.name === 'LISEZMOI.md') continue;
     const s = path.join(from, entry.name), d = path.join(to, entry.name);
     if (entry.isDirectory()) copyDir(s, d); else fs.copyFileSync(s, d);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Langues : chaque page est écrite en français puis traduite          */
+/* (dictionnaire src/i18n/en.json) dans dist/en/                       */
+/* ------------------------------------------------------------------ */
+
+const i18n = require('./i18n.js');
+const seo = require('./seo.js');
+const LANGS = { en: require(path.join(SRC, 'i18n', 'en.json')) };
+const WHATSAPP_EN = "Hello Racines d'Avenir, I would like some information about your programmes.";
+const missingI18n = new Map();
+
+function writePage(file, html) {
+  for (const lang of ['fr', 'en']) {
+    const isEn = lang === 'en';
+    let out = html;
+    if (isEn) {
+      const missing = new Set();
+      out = i18n.translate(out, LANGS.en, missing)
+        .replace(/(src|href)="assets\//g, '$1="../assets/')
+        .replace(/(https:\/\/wa\.me\/\d+\?text=)[^"]*/g, '$1' + encodeURIComponent(WHATSAPP_EN));
+      out = seo.translateLd(out, LANGS.en, i18n.norm);
+      missing.forEach(t => { if (!missingI18n.has(t)) missingI18n.set(t, file); });
+    }
+    const other = isEn ? '../' + file : 'en/' + file;
+    const tokens = {
+      __LANG__: lang,
+      __HREF_FR__: isEn ? '../' + file : file,
+      __HREF_EN__: isEn ? file : 'en/' + file,
+      __CUR_FR__: isEn ? 'false' : 'true',
+      __CUR_EN__: isEn ? 'true' : 'false',
+      __CUR_FLAG__: isEn ? 'flag-en' : 'flag-fr',
+      __CUR_CODE__: isEn ? 'EN' : 'FR',
+      __NAME_FR__: 'Français',
+      __NAME_EN__: 'English',
+      __LANG_LABEL__: isEn ? 'Language: English. Choose language' : 'Langue : français. Choisir la langue',
+      __OTHER_HREF__: other,
+      __OTHER_LANG__: isEn ? 'fr' : 'en',
+      __OTHER_CODE__: isEn ? 'FR' : 'EN',
+      __OTHER_FLAG__: isEn ? 'flag-fr' : 'flag-en',
+      __OTHER_LABEL__: isEn ? 'Version française' : 'English version'
+    };
+    out = seo.replaceTokens(out, file, lang);
+    out = out.replace(/__[A-Z_]+__/g, t => (t in tokens ? tokens[t] : t));
+    const dest = path.join(DIST, isEn ? 'en' : '', file);
+    fs.mkdirSync(path.dirname(dest), { recursive: true });
+    fs.writeFileSync(dest, out);
   }
 }
 
@@ -319,25 +361,35 @@ function build() {
     return fs.existsSync(file) ? require(file) : {};
   };
   let count = 0;
+  const indexables = [];
   for (const f of fs.readdirSync(pagesDir).filter(n => n.endsWith('.html'))) {
     const name = path.basename(f, '.html');
     if (name.startsWith('_')) {
       // Gabarit : une page générée par entrée de $pages (src/data/_<nom>.js)
       for (const page of dataFor(name).$pages || []) {
-        fs.writeFileSync(path.join(DIST, page.file), renderPage(path.join(pagesDir, f), page.data));
+        writePage(page.file, renderPage(path.join(pagesDir, f), page.data, page.file));
+        indexables.push(page.file);
         count++;
       }
     } else {
-      fs.writeFileSync(path.join(DIST, f), renderPage(path.join(pagesDir, f), dataFor(name)));
+      writePage(f, renderPage(path.join(pagesDir, f), dataFor(name), f));
+      if (name !== '404') indexables.push(f);
       count++;
     }
   }
+
+  seo.writeSitemap(DIST, indexables);
 
   const states = [...pseudoRules.values()].map(r => r.rule).join('\n');
   fs.writeFileSync(path.join(DIST, 'assets', 'css', 'states.css'),
     '/* Généré par scripts/build.js à partir des attributs style-hover / style-focus. */\n' + states + '\n');
 
-  console.log(`✔ ${count} pages générées dans dist/`);
+  console.log(`✔ ${count} pages générées dans dist/ (français) et dist/en/ (anglais)`);
+  console.log(`✔ sitemap.xml et robots.txt — adresse du site : ${seo.SITE_URL}`);
+  if (missingI18n.size) {
+    console.log(`ℹ ${missingI18n.size} textes sans traduction anglaise (à ajouter dans src/i18n/en.json) :`);
+    for (const [t, file] of missingI18n) console.log(`   · ${JSON.stringify(t)}  (${file})`);
+  }
   if (missingPhotos.size) {
     console.log(`ℹ ${missingPhotos.size} emplacements photo sans image (à déposer dans src/assets/photos/) :`);
     for (const p of [...missingPhotos].sort()) console.log('   · ' + p);

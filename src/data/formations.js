@@ -5,10 +5,11 @@
 //
 // Champs :
 //   slug        identifiant (page formation-<slug>.html, photo f-<slug>)
-//   dom         domaine : btp | mode | services | numerique
+//   dom         domaine : btp | mode | sante | numerique | services
 //   mois        durée totale, stage compris (3 = module de perfectionnement)
 //   stage       durée du stage en mois
-//   niv         niveau d'entrée minimum
+//   niv         niveau d'entrée minimum (Sans diplôme, CEP, BEPC, Probatoire, Bac, Bac+1, Bac+2…)
+//               → détermine le niveau de formation (cycle) : pro, bac ou sup
 //   cqp         true si la formation prépare au Certificat de qualification professionnelle
 //   statut      'prioritaire' (ouverte) ou 'etude' (à l'étude)
 //   modules     [intitulé, durée, [contenus]]
@@ -16,9 +17,18 @@
 const DOMAINES = {
   btp: 'BTP & techniques',
   mode: 'Couture & beauté',
-  services: 'Services & gestion',
-  numerique: 'Numérique & IA'
+  sante: 'Santé & paramédical',
+  numerique: 'Numérique & IA',
+  services: 'Services & gestion'
 };
+
+// Trois niveaux de formation, déduits du niveau d'entrée (niv)
+const CYCLES = {
+  pro: { label: 'Niveau BEPC / Probatoire', court: 'BEPC / Probatoire', texte: 'Des formations professionnelles et qualifiantes pour apprendre un métier concret, accessibles avant le baccalauréat. Plusieurs préparent au CQP.' },
+  bac: { label: 'Niveau Baccalauréat', court: 'Baccalauréat', texte: 'Des formations plus techniques, réservées aux bacheliers, pour accéder à des métiers qualifiés du numérique et de la santé.' },
+  sup: { label: 'Niveau Bac+ / Supérieur', court: 'Bac+ / Supérieur', texte: 'Des spécialisations techniques de niveau supérieur, pour les titulaires d’un Bac+1 ou Bac+2 qui veulent devenir experts.' }
+};
+const cycleDe = niv => (/^Bac\+/.test(niv) ? 'sup' : /^Bac/.test(niv) ? 'bac' : 'pro');
 
 const FORMATIONS = [
   /* ---------------------------------------------------------------- */
@@ -243,52 +253,8 @@ const FORMATIONS = [
   },
 
   /* ---------------------------------------------------------------- */
-  /* Numérique & IA                                                    */
+  /* Numérique & IA : du niveau BEPC au niveau Bac+                    */
   /* ---------------------------------------------------------------- */
-  {
-    slug: 'maintenance-informatique', label: 'Maintenance informatique et réseaux', titre: ['Maintenance informatique', 'et réseaux.'],
-    icon: 'Monitor', dom: 'numerique', mois: 12, stage: 3, niv: 'BEPC', cqp: false,
-    accroche: 'Dépannage, systèmes, réseaux, sécurité et support.',
-    metier: "Le technicien informatique installe, configure et dépanne ordinateurs, imprimantes et réseaux. Il assiste les utilisateurs, sécurise les postes et veille au bon fonctionnement du parc informatique d'une entreprise.",
-    objectifs: ['Diagnostiquer et réparer un ordinateur ou un périphérique', 'Installer et configurer systèmes, logiciels et pilotes', 'Câbler et mettre en service un réseau local filaire et Wi-Fi', 'Sécuriser les postes et organiser les sauvegardes'],
-    competences: ['Architecture et composants d’un ordinateur', 'Systèmes Windows et Linux', 'Réseaux locaux, adressage IP et Wi-Fi', 'Sécurité, antivirus et sauvegardes', 'Support aux utilisateurs', 'Outils d’IA pour le diagnostic et la documentation'],
-    activites: ['Maintenance d’un parc informatique', 'Installation de réseaux', 'Support et assistance aux utilisateurs', 'Réparation d’ordinateurs et de smartphones'],
-    equipements: ['Postes de travail et pièces détachées', 'Baies de brassage et commutateurs', 'Pinces à sertir et testeurs', 'Routeurs et points d’accès Wi-Fi', 'Kits de démontage', 'Logiciels de diagnostic'],
-    modules: [
-      ['Bases de l’informatique et bureautique', '6 SEMAINES', ['Matériel, composants et systèmes d’exploitation', 'Traitement de texte, tableur, messagerie', 'Organisation et gestion des fichiers']],
-      ['Maintenance matérielle', '8 SEMAINES', ['Diagnostic des pannes courantes', 'Montage et démontage d’un poste', 'Imprimantes et périphériques']],
-      ['Systèmes et logiciels', '7 SEMAINES', ['Installation de Windows et Linux', 'Pilotes et logiciels', 'Comptes et droits utilisateurs']],
-      ['Réseaux locaux', '10 SEMAINES', ['Câblage, sertissage et tests', 'Adressage IP et partage de ressources', 'Configuration d’un routeur et d’un réseau Wi-Fi']],
-      ['Sécurité, sauvegarde et support', '8 SEMAINES', ['Antivirus, pare-feu et mises à jour', 'Stratégies de sauvegarde', 'Assistance utilisateurs et outils d’IA']],
-      ['Stage en entreprise', '13 SEMAINES', ['Stage en entreprise partenaire', 'Suivi par un tuteur', 'Bilan et préparation à l’emploi']]
-    ],
-    debouches: ['Technicien(ne) de maintenance informatique', 'Technicien(ne) réseau, administrateur(trice) réseaux junior', 'Agent de support utilisateurs', 'Réparateur(trice) informatique indépendant(e)'],
-    entreprendre: "Atelier de dépannage, maintenance sous contrat pour les PME, installation de réseaux : le technicien informatique peut démarrer seul. L'institut l'aide à formaliser ses offres de maintenance et à trouver ses premiers clients.",
-    numerique: "Les assistants d'IA aident à diagnostiquer une panne, à rédiger une procédure ou à automatiser des tâches : le technicien apprend à s'en servir efficacement, sans négliger la sécurité des données.",
-    prerequis: ['BEPC ou niveau équivalent', '16 ans minimum', 'Curiosité pour la technologie', 'Test d’orientation et entretien']
-  },
-  {
-    slug: 'developpement-web', label: 'Développement web et mobile', titre: ['Développement', 'web et mobile.'],
-    icon: 'CodeXml', dom: 'numerique', mois: 12, stage: 3, niv: 'Probatoire', cqp: false,
-    accroche: 'Sites, boutiques en ligne, applications, avec l’IA comme assistant.',
-    metier: "Le développeur web conçoit et réalise sites internet, boutiques en ligne et applications. Il traduit les besoins d'un client en solution numérique, de l'interface à la mise en ligne.",
-    objectifs: ['Concevoir et intégrer des pages web adaptées au mobile', 'Programmer en JavaScript et utiliser une base de données', 'Réaliser un site ou une application complète', 'Utiliser l’IA comme assistant de programmation, avec esprit critique'],
-    competences: ['HTML, CSS et design responsive', 'JavaScript', 'Développement serveur et bases de données', 'WordPress et sites vitrines', 'Git et travail en équipe', 'Assistants d’IA pour coder et tester'],
-    activites: ['Création de sites vitrines et de boutiques en ligne', 'Applications web pour les entreprises', 'Maintenance et mise à jour de sites', 'Intégration des paiements mobiles'],
-    equipements: ['Ordinateurs de développement', 'Éditeur de code', 'Navigateurs et outils de test', 'Serveurs d’hébergement de formation', 'Smartphones de test', 'Connexion Internet'],
-    modules: [
-      ['Algorithmique et bases du web', '8 SEMAINES', ['Logique de programmation', 'Fonctionnement d’Internet', 'Outils du développeur']],
-      ['HTML, CSS et design responsive', '8 SEMAINES', ['Structure d’une page', 'Mise en forme et mise en page', 'Adaptation au mobile']],
-      ['JavaScript et interactivité', '9 SEMAINES', ['Bases du langage', 'Interactions et formulaires', 'Appels à des services en ligne']],
-      ['Serveur, bases de données et CMS', '8 SEMAINES', ['Bases de données', 'Programmation côté serveur', 'WordPress']],
-      ['Projet professionnel avec l’IA', '6 SEMAINES', ['Cahier des charges', 'Développement assisté par IA', 'Mise en ligne et présentation']],
-      ['Stage en entreprise', '13 SEMAINES', ['Stage en entreprise ou agence partenaire', 'Suivi par un tuteur', 'Bilan et préparation à l’emploi']]
-    ],
-    debouches: ['Développeur(se) web junior', 'Intégrateur(trice) web', 'Développeur(se) WordPress', 'Freelance en création de sites'],
-    entreprendre: "Commerces, artisans et associations ont tous besoin d'être visibles en ligne. Le développeur peut travailler en freelance, pour des clients locaux comme à l'international. L'institut l'aide à constituer son portfolio et à trouver ses premières missions.",
-    numerique: "Les assistants d'IA écrivent du code, mais il faut savoir le comprendre, le vérifier et l'adapter : c'est précisément ce que la formation enseigne.",
-    prerequis: ['Probatoire ou niveau équivalent', '17 ans minimum', 'Logique et persévérance', 'Test d’orientation et entretien']
-  },
   {
     slug: 'numerique-ia', label: 'Compétences numériques et IA', titre: ['Compétences numériques', 'et intelligence artificielle.'],
     icon: 'BrainCircuit', dom: 'numerique', mois: 3, stage: 0, niv: 'BEPC', cqp: false, module: true,
@@ -308,6 +274,138 @@ const FORMATIONS = [
     entreprendre: "Accompagner les artisans et les commerçants dans leur communication en ligne est une activité à part entière. Et pour ceux qui exercent déjà un métier, ces compétences permettent de mieux vendre et de gagner du temps.",
     numerique: "Ce module résume notre conviction : l'IA ne remplace pas le savoir-faire, elle le complète. Bien utilisée, elle aide chaque professionnel à gagner du temps et à trouver de nouveaux clients.",
     prerequis: ['BEPC ou niveau équivalent', 'Ouvert aux apprenants et aux professionnels', 'Savoir utiliser un smartphone', 'Entretien d’orientation']
+  },
+  {
+    slug: 'maintenance-informatique', label: 'Maintenance informatique et réseaux', titre: ['Maintenance informatique', 'et réseaux.'],
+    icon: 'Monitor', dom: 'numerique', mois: 9, stage: 3, niv: 'BEPC', cqp: false,
+    accroche: 'Dépannage, systèmes, réseaux, sécurité et support.',
+    metier: "Le technicien informatique installe, configure et dépanne ordinateurs, imprimantes et réseaux. Il assiste les utilisateurs, sécurise les postes et veille au bon fonctionnement du parc informatique d'une entreprise.",
+    objectifs: ['Diagnostiquer et réparer un ordinateur ou un périphérique', 'Installer et configurer systèmes, logiciels et pilotes', 'Câbler et mettre en service un réseau local filaire et Wi-Fi', 'Sécuriser les postes et organiser les sauvegardes'],
+    competences: ['Architecture et composants d’un ordinateur', 'Systèmes Windows et Linux', 'Réseaux locaux, adressage IP et Wi-Fi', 'Sécurité, antivirus et sauvegardes', 'Support aux utilisateurs', 'Outils d’IA pour le diagnostic et la documentation'],
+    activites: ['Maintenance d’un parc informatique', 'Installation de réseaux', 'Support et assistance aux utilisateurs', 'Réparation d’ordinateurs et de smartphones'],
+    equipements: ['Postes de travail et pièces détachées', 'Baies de brassage et commutateurs', 'Pinces à sertir et testeurs', 'Routeurs et points d’accès Wi-Fi', 'Kits de démontage', 'Logiciels de diagnostic'],
+    modules: [
+      ['Bases de l’informatique et bureautique', '4 SEMAINES', ['Matériel, composants et systèmes d’exploitation', 'Traitement de texte, tableur, messagerie', 'Organisation et gestion des fichiers']],
+      ['Maintenance matérielle', '6 SEMAINES', ['Diagnostic des pannes courantes', 'Montage et démontage d’un poste', 'Imprimantes et périphériques']],
+      ['Systèmes et logiciels', '5 SEMAINES', ['Installation de Windows et Linux', 'Pilotes et logiciels', 'Comptes et droits utilisateurs']],
+      ['Réseaux locaux', '6 SEMAINES', ['Câblage, sertissage et tests', 'Adressage IP et partage de ressources', 'Configuration d’un routeur et d’un réseau Wi-Fi']],
+      ['Sécurité, sauvegarde et support', '5 SEMAINES', ['Antivirus, pare-feu et mises à jour', 'Stratégies de sauvegarde', 'Assistance utilisateurs et outils d’IA']],
+      ['Stage en entreprise', '13 SEMAINES', ['Stage en entreprise partenaire', 'Suivi par un tuteur', 'Bilan et préparation à l’emploi']]
+    ],
+    debouches: ['Technicien(ne) de maintenance informatique', 'Technicien(ne) réseau', 'Agent de support utilisateurs', 'Réparateur(trice) informatique indépendant(e)'],
+    entreprendre: "Atelier de dépannage, maintenance sous contrat pour les PME, installation de réseaux : le technicien informatique peut démarrer seul. L'institut l'aide à formaliser ses offres de maintenance et à trouver ses premiers clients.",
+    numerique: "Les assistants d'IA aident à diagnostiquer une panne, à rédiger une procédure ou à automatiser des tâches : le technicien apprend à s'en servir efficacement, sans négliger la sécurité des données.",
+    prerequis: ['BEPC ou niveau équivalent', '16 ans minimum', 'Curiosité pour la technologie', 'Test d’orientation et entretien']
+  },
+  {
+    slug: 'creation-sites-internet', label: 'Conception et réalisation de sites internet', titre: ['Conception et réalisation', 'de sites internet.'],
+    icon: 'MonitorSmartphone', dom: 'numerique', mois: 6, stage: 2, niv: 'Probatoire', cqp: false,
+    accroche: 'Sites vitrines, blogs et boutiques en ligne avec WordPress et les outils sans code.',
+    metier: "L'intégrateur ou l'intégratrice web conçoit et réalise des sites vitrines, des blogs et de petites boutiques en ligne pour les commerces, les artisans et les associations, avec WordPress et des outils sans code. Il ou elle met en ligne ces sites, les met à jour et les fait vivre.",
+    objectifs: ['Comprendre le fonctionnement d’un site internet et d’un hébergement', 'Concevoir et réaliser un site vitrine ou une boutique avec WordPress', 'Mettre en forme des pages simples en HTML et CSS', 'Mettre en ligne, sécuriser et mettre à jour un site'],
+    competences: ['Bases du web : nom de domaine, hébergement, navigateur', 'WordPress, thèmes et extensions', 'HTML et CSS de base', 'Retouche d’images et visuels pour le web', 'Référencement local (Google, réseaux sociaux)', 'Outils d’IA pour rédiger les contenus'],
+    activites: ['Création de sites vitrines pour les petites entreprises', 'Boutiques en ligne avec paiement mobile', 'Mise à jour des contenus et maintenance', 'Gestion de la présence en ligne des commerces'],
+    equipements: ['Salle informatique', 'WordPress et outils sans code', 'Éditeur de code', 'Logiciels de retouche d’images', 'Hébergement de formation', 'Connexion Internet'],
+    modules: [
+      ['Bases du web', '4 SEMAINES', ['Fonctionnement d’Internet', 'Nom de domaine et hébergement', 'Organisation des fichiers']],
+      ['Créer un site avec WordPress', '6 SEMAINES', ['Installation et réglages', 'Thèmes, pages et menus', 'Extensions utiles']],
+      ['HTML, CSS et visuels', '4 SEMAINES', ['Structure d’une page', 'Mise en forme', 'Images optimisées pour le web']],
+      ['Boutique en ligne et mise en ligne', '4 SEMAINES', ['Catalogue et paiement mobile', 'Sécurité et sauvegardes', 'Référencement local']],
+      ['Stage ou projet client', '8 SEMAINES', ['Réalisation d’un site pour un client réel', 'Suivi par un tuteur', 'Bilan et préparation à l’emploi']]
+    ],
+    debouches: ['Intégrateur(trice) web junior', 'Webmaster', 'Gestionnaire de sites et de contenus', 'Créateur(trice) de sites indépendant(e)'],
+    entreprendre: "Beaucoup de commerces et d'artisans n'ont pas encore de site : la création de sites vitrines est une activité que l'on peut lancer seul, avec un ordinateur. L'institut aide les apprenants à constituer leurs premières réalisations et à fixer leurs tarifs.",
+    numerique: "Les outils sans code et l'IA permettent de produire rapidement un site soigné : la formation apprend à les utiliser avec méthode, sans perdre la maîtrise de la qualité.",
+    prerequis: ['Probatoire ou niveau équivalent', '16 ans minimum', 'Aisance avec l’ordinateur', 'Test d’orientation et entretien']
+  },
+  {
+    slug: 'programmation', label: 'Programmation informatique', titre: ['Programmation', 'informatique.'],
+    icon: 'Code', dom: 'numerique', mois: 12, stage: 3, niv: 'Bac', cqp: false,
+    accroche: 'Algorithmique, Python, bases de données et logiciels de gestion.',
+    metier: "Le programmeur conçoit et écrit les logiciels dont les entreprises ont besoin : applications de gestion, automatisation de tâches, traitement de données. Il traduit un besoin en programme fiable, testé et documenté.",
+    objectifs: ['Concevoir des algorithmes et structurer un programme', 'Programmer en Python et en programmation orientée objet', 'Concevoir et interroger une base de données', 'Réaliser, tester et documenter une application de gestion'],
+    competences: ['Algorithmique et logique', 'Python', 'Programmation orientée objet', 'Bases de données et SQL', 'Git, tests et documentation', 'Assistants d’IA pour programmer'],
+    activites: ['Développement de logiciels de gestion', 'Automatisation de tâches et de traitements', 'Maintenance et évolution d’applications', 'Traitement et analyse de données simples'],
+    equipements: ['Ordinateurs de développement', 'Environnements Python', 'Serveur de bases de données', 'Git et plateforme de projets', 'Éditeur de code', 'Connexion Internet'],
+    modules: [
+      ['Algorithmique et logique de programmation', '8 SEMAINES', ['Variables, conditions et boucles', 'Fonctions et structures de données', 'Résolution de problèmes']],
+      ['Programmer en Python', '9 SEMAINES', ['Syntaxe et bibliothèques', 'Fichiers et traitements', 'Programmation orientée objet']],
+      ['Bases de données et SQL', '8 SEMAINES', ['Modélisation des données', 'Requêtes SQL', 'Connexion d’un programme à une base']],
+      ['Génie logiciel et outils', '6 SEMAINES', ['Git et travail en équipe', 'Tests et débogage', 'Documentation']],
+      ['Projet : application de gestion', '8 SEMAINES', ['Cahier des charges', 'Développement assisté par IA', 'Présentation devant un jury']],
+      ['Stage en entreprise', '13 SEMAINES', ['Stage en entreprise partenaire', 'Suivi par un tuteur', 'Bilan et préparation à l’emploi']]
+    ],
+    debouches: ['Programmeur(se) junior', 'Développeur(se) d’applications de gestion', 'Technicien(ne) en développement logiciel', 'Freelance en automatisation'],
+    entreprendre: "Automatiser la facturation d'un commerce, créer un petit logiciel de gestion de stock : le programmeur peut proposer ses services aux PME en freelance. L'institut l'aide à constituer son portfolio et à trouver ses premiers clients.",
+    numerique: "Les assistants d'IA accélèrent l'écriture du code, mais ils se trompent : la formation apprend à comprendre, vérifier et tester chaque ligne produite.",
+    prerequis: ['Baccalauréat, série scientifique ou technique de préférence', '17 ans minimum', 'Logique et goût pour les mathématiques', 'Test de logique et entretien']
+  },
+  {
+    slug: 'developpement-web', label: 'Développement web', titre: ['Développement', 'web.'],
+    icon: 'CodeXml', dom: 'numerique', mois: 12, stage: 3, niv: 'Bac', cqp: false,
+    accroche: 'Sites et applications web complets, de l’interface au serveur.',
+    metier: "Le développeur web conçoit et réalise des sites et des applications web complets : interfaces, logique côté serveur, bases de données et mise en ligne. Il traduit les besoins d'un client en solution numérique fiable.",
+    objectifs: ['Concevoir et intégrer des pages web adaptées au mobile', 'Programmer en JavaScript et utiliser une base de données', 'Réaliser un site ou une application web complète', 'Utiliser l’IA comme assistant de programmation, avec esprit critique'],
+    competences: ['HTML, CSS et design responsive', 'JavaScript', 'Développement serveur et bases de données', 'WordPress et sites vitrines', 'Git et travail en équipe', 'Assistants d’IA pour coder et tester'],
+    activites: ['Création de sites et de boutiques en ligne', 'Applications web pour les entreprises', 'Maintenance et mise à jour de sites', 'Intégration des paiements mobiles'],
+    equipements: ['Ordinateurs de développement', 'Éditeur de code', 'Navigateurs et outils de test', 'Serveurs d’hébergement de formation', 'Smartphones de test', 'Connexion Internet'],
+    modules: [
+      ['Algorithmique et bases du web', '8 SEMAINES', ['Logique de programmation', 'Fonctionnement d’Internet', 'Outils du développeur']],
+      ['HTML, CSS et design responsive', '8 SEMAINES', ['Structure d’une page', 'Mise en forme et mise en page', 'Adaptation au mobile']],
+      ['JavaScript et interactivité', '9 SEMAINES', ['Bases du langage', 'Interactions et formulaires', 'Appels à des services en ligne']],
+      ['Serveur, bases de données et CMS', '8 SEMAINES', ['Bases de données', 'Programmation côté serveur', 'WordPress']],
+      ['Projet professionnel avec l’IA', '6 SEMAINES', ['Cahier des charges', 'Développement assisté par IA', 'Mise en ligne et présentation']],
+      ['Stage en entreprise', '13 SEMAINES', ['Stage en entreprise ou agence partenaire', 'Suivi par un tuteur', 'Bilan et préparation à l’emploi']]
+    ],
+    debouches: ['Développeur(se) web junior', 'Intégrateur(trice) web', 'Développeur(se) WordPress', 'Freelance en création de sites'],
+    entreprendre: "Commerces, artisans et associations ont tous besoin d'être visibles en ligne. Le développeur peut travailler en freelance, pour des clients locaux comme à l'international. L'institut l'aide à constituer son portfolio et à trouver ses premières missions.",
+    numerique: "Les assistants d'IA écrivent du code, mais il faut savoir le comprendre, le vérifier et l'adapter : c'est précisément ce que la formation enseigne.",
+    prerequis: ['Baccalauréat, toutes séries', '17 ans minimum', 'Logique et persévérance', 'Test de logique et entretien']
+  },
+  {
+    slug: 'developpement-applications', label: 'Développement d’applications web et mobiles', titre: ['Développement d’applications', 'web et mobiles.'],
+    icon: 'Smartphone', dom: 'numerique', mois: 18, stage: 4, niv: 'Bac+1', cqp: false,
+    accroche: 'Applications mobiles, API, frameworks modernes et mise en production.',
+    metier: "Le développeur d'applications conçoit des applications web et mobiles complètes : interfaces, services en ligne (API), bases de données et mise en production. Il travaille en équipe selon les méthodes professionnelles du secteur et peut prendre en charge un projet de bout en bout.",
+    objectifs: ['Concevoir l’architecture d’une application web ou mobile', 'Développer avec des frameworks modernes (React, Flutter ou équivalent)', 'Créer et sécuriser des API et des bases de données', 'Déployer, maintenir et faire évoluer une application en production'],
+    competences: ['JavaScript avancé et TypeScript', 'Frameworks front-end (React ou équivalent)', 'Applications mobiles multiplateformes', 'API, back-end et bases de données', 'Sécurité des applications', 'Méthodes agiles, Git et intégration continue'],
+    activites: ['Développement d’applications mobiles', 'Applications métier pour les entreprises', 'Intégration des paiements mobiles et des services en ligne', 'Maintenance et évolution d’applications en production'],
+    equipements: ['Ordinateurs de développement', 'Smartphones Android et iOS de test', 'Serveurs et services cloud de formation', 'Frameworks et environnements de développement', 'Outils de gestion de projet', 'Connexion Internet'],
+    modules: [
+      ['Fondamentaux avancés du développement', '10 SEMAINES', ['JavaScript avancé et TypeScript', 'Architecture logicielle', 'Git et méthodes agiles']],
+      ['Front-end avec un framework moderne', '12 SEMAINES', ['Composants et gestion d’état', 'Interfaces accessibles et responsives', 'Consommation d’API']],
+      ['Back-end, API et bases de données', '12 SEMAINES', ['Conception d’API', 'Bases de données relationnelles et NoSQL', 'Authentification et sécurité']],
+      ['Applications mobiles', '10 SEMAINES', ['Développement multiplateforme', 'Paiements mobiles et notifications', 'Publication sur les stores']],
+      ['Déploiement, qualité et IA', '6 SEMAINES', ['Tests automatisés', 'Déploiement dans le cloud', 'Intégrer des services d’IA dans une application']],
+      ['Projet de fin d’études', '11 SEMAINES', ['Application réalisée en équipe', 'Gestion de projet agile', 'Soutenance devant un jury']],
+      ['Stage en entreprise', '17 SEMAINES', ['Stage en entreprise ou agence partenaire', 'Suivi par un tuteur', 'Bilan et préparation à l’emploi']]
+    ],
+    debouches: ['Développeur(se) d’applications web et mobiles', 'Développeur(se) full-stack', 'Développeur(se) mobile', 'Chef(fe) de projet technique junior'],
+    entreprendre: "Startups, applications de services, solutions pour les PME : le développeur d'applications peut créer sa propre entreprise ou travailler à distance pour des clients du monde entier. L'institut accompagne les projets les plus prometteurs.",
+    numerique: "L'IA s'intègre désormais dans les applications elles-mêmes (assistants, recommandations, reconnaissance d'images) : la formation apprend à utiliser ces services de manière responsable.",
+    prerequis: ['Bac+1 en informatique, ou Baccalauréat avec une première formation en programmation', 'Test technique et entretien', 'Bonnes bases en logique et en anglais technique', 'Ordinateur personnel recommandé']
+  },
+  {
+    slug: 'reseaux-cybersecurite', label: 'Administration réseaux et cybersécurité', titre: ['Administration réseaux', 'et cybersécurité.'],
+    icon: 'ShieldCheck', dom: 'numerique', mois: 12, stage: 4, niv: 'Bac+2', cqp: false,
+    accroche: 'Serveurs, réseaux d’entreprise, cloud et protection des systèmes.',
+    metier: "L'administrateur systèmes et réseaux installe et gère les serveurs, les réseaux et les services informatiques d'une organisation. Spécialisé en cybersécurité, il protège les données, surveille les menaces et réagit en cas d'incident.",
+    objectifs: ['Administrer des serveurs Windows et Linux', 'Concevoir et sécuriser un réseau d’entreprise', 'Mettre en place une politique de sécurité et de sauvegarde', 'Détecter, analyser et traiter les incidents de sécurité'],
+    competences: ['Administration Windows Server et Linux', 'Routage, commutation et VLAN', 'Virtualisation et cloud', 'Pare-feu, VPN et contrôle d’accès', 'Supervision et analyse des incidents', 'Scripts et automatisation'],
+    activites: ['Administration du parc et des serveurs d’une entreprise', 'Sécurisation des réseaux et des accès', 'Supervision et réponse aux incidents', 'Conseil et audit de sécurité pour les PME'],
+    equipements: ['Laboratoire réseau (routeurs, commutateurs)', 'Serveurs et plateforme de virtualisation', 'Pare-feu de formation', 'Outils de supervision', 'Environnement de tests de sécurité', 'Connexion Internet'],
+    modules: [
+      ['Systèmes et serveurs', '8 SEMAINES', ['Windows Server et Active Directory', 'Administration Linux', 'Services réseau (DNS, DHCP, messagerie)']],
+      ['Réseaux d’entreprise', '8 SEMAINES', ['Routage et commutation', 'VLAN et Wi-Fi d’entreprise', 'Conception d’architecture']],
+      ['Virtualisation et cloud', '6 SEMAINES', ['Machines virtuelles', 'Services cloud', 'Sauvegarde et continuité d’activité']],
+      ['Cybersécurité', '9 SEMAINES', ['Pare-feu, VPN et contrôle d’accès', 'Analyse des vulnérabilités', 'Gestion des incidents']],
+      ['Automatisation et projet', '4 SEMAINES', ['Scripts PowerShell et Bash', 'Projet d’infrastructure sécurisée', 'Soutenance devant un jury']],
+      ['Stage en entreprise', '17 SEMAINES', ['Stage dans une entreprise ou un service informatique partenaire', 'Suivi par un tuteur', 'Bilan et préparation à l’emploi']]
+    ],
+    debouches: ['Administrateur(trice) systèmes et réseaux', 'Technicien(ne) supérieur(e) en cybersécurité', 'Analyste en sécurité junior', 'Consultant(e) en infrastructure pour les PME'],
+    entreprendre: "Les PME manquent de compétences pour sécuriser leurs systèmes : l'administrateur réseaux peut leur proposer des contrats d'infogérance, d'audit et de sauvegarde. L'institut l'aide à structurer ces offres de services.",
+    numerique: "L'IA est utilisée par les attaquants comme par les défenseurs : la formation apprend à exploiter les outils d'analyse automatisée tout en gardant un regard critique.",
+    prerequis: ['Bac+2 en informatique ou en réseaux (BTS, DUT, HND), ou expérience équivalente', 'Test technique et entretien', 'Bases solides en réseaux', 'Anglais technique']
   },
 
   /* ---------------------------------------------------------------- */
@@ -377,9 +475,55 @@ const FORMATIONS = [
     numerique: "Commandes par WhatsApp, livraison via les applications, photos des plats sur les réseaux sociaux : le numérique fait vendre.",
     prerequis: ['Savoir lire et compter', '16 ans minimum', 'Goût pour la cuisine', 'Entretien de motivation']
   },
+
+  /* ---------------------------------------------------------------- */
+  /* Santé & paramédical                                               */
+  /* ---------------------------------------------------------------- */
   {
-    slug: 'sante', label: 'Santé : aide-soignant(e)', titre: ['Santé :', 'aide-soignant(e).'],
-    icon: 'Stethoscope', dom: 'services', mois: 12, stage: 4, niv: 'BEPC', cqp: false,
+    slug: 'auxiliaire-vie', label: 'Auxiliaire de vie', titre: ['Auxiliaire', 'de vie.'],
+    icon: 'HeartHandshake', dom: 'sante', mois: 6, stage: 2, niv: 'BEPC', cqp: false,
+    accroche: 'Accompagnement des personnes âgées, malades ou en situation de handicap.',
+    metier: "L'auxiliaire de vie aide les personnes âgées, malades ou en situation de handicap à accomplir les gestes de la vie quotidienne, à domicile ou en établissement : toilette, repas, déplacements, entretien du cadre de vie. Il ou elle apporte aussi une présence attentive et rassurante.",
+    objectifs: ['Aider la personne dans les actes essentiels de la vie quotidienne', 'Préparer des repas adaptés et entretenir le cadre de vie', 'Assurer la sécurité de la personne et prévenir les accidents', 'Communiquer avec la personne, sa famille et l’équipe soignante'],
+    competences: ['Aide à la toilette et à l’habillage', 'Aide aux déplacements et aux transferts', 'Alimentation et préparation de repas adaptés', 'Prévention des chutes et premiers secours', 'Écoute et accompagnement relationnel', 'Hygiène et entretien du logement'],
+    activites: ['Accompagnement à domicile', 'Aide en maison de retraite ou en centre spécialisé', 'Garde de jour ou de nuit', 'Soutien aux familles et aux aidants'],
+    equipements: ['Appartement pédagogique', 'Lit médicalisé et fauteuil roulant', 'Matériel d’aide aux transferts', 'Mannequins de simulation', 'Matériel d’hygiène', 'Blouses professionnelles'],
+    modules: [
+      ['La personne accompagnée et ses besoins', '4 SEMAINES', ['Vieillissement, maladie et handicap', 'Besoins fondamentaux', 'Respect et bientraitance']],
+      ['Gestes du quotidien', '6 SEMAINES', ['Toilette et habillage', 'Transferts et déplacements', 'Repas et hydratation']],
+      ['Sécurité et premiers secours', '4 SEMAINES', ['Prévention des chutes', 'Gestes de premiers secours', 'Hygiène et prévention des infections']],
+      ['Relation et cadre de vie', '4 SEMAINES', ['Communication avec la personne et la famille', 'Entretien du logement', 'Travail en équipe']],
+      ['Stage à domicile ou en établissement', '8 SEMAINES', ['Stage dans une structure partenaire', 'Suivi par un tuteur', 'Bilan et préparation à l’emploi']]
+    ],
+    debouches: ['Auxiliaire de vie à domicile', 'Agent d’accompagnement en maison de retraite', 'Garde-malade', 'Accompagnant(e) de personnes en situation de handicap'],
+    entreprendre: "Les familles recherchent des personnes de confiance pour accompagner leurs proches : avec l'expérience, l'auxiliaire de vie peut proposer ses services en indépendant ou créer une petite structure d'aide à domicile.",
+    numerique: "Planning partagé avec la famille, applications de suivi, téléassistance : le numérique facilite la coordination autour de la personne accompagnée.",
+    prerequis: ['BEPC ou niveau équivalent', '18 ans minimum', 'Patience, bienveillance et sens des responsabilités', 'Certificat médical d’aptitude']
+  },
+  {
+    slug: 'vendeur-pharmacie', label: 'Vendeur(se) en pharmacie', titre: ['Vendeur(se)', 'en pharmacie.'],
+    icon: 'Pill', dom: 'sante', mois: 9, stage: 3, niv: 'BEPC', cqp: false,
+    accroche: 'Accueil, conseil, vente et gestion des stocks en officine.',
+    metier: "Le vendeur ou la vendeuse en pharmacie accueille la clientèle, délivre les produits de parapharmacie et assiste le pharmacien dans la délivrance des médicaments, sous sa responsabilité. Il ou elle participe à la réception des commandes, à la gestion des stocks et à la bonne tenue de l'officine.",
+    objectifs: ['Accueillir et orienter les clients avec discrétion', 'Connaître les principales familles de médicaments et de produits de parapharmacie', 'Assister le pharmacien dans la délivrance, sous son contrôle', 'Réceptionner les commandes, ranger et gérer les stocks'],
+    competences: ['Notions de pharmacologie et lecture d’ordonnance', 'Parapharmacie, hygiène et puériculture', 'Accueil et conseil au comptoir', 'Gestion des stocks et des dates de péremption', 'Encaissement et logiciel d’officine', 'Éthique et confidentialité'],
+    activites: ['Accueil et vente au comptoir', 'Réception et rangement des commandes', 'Mise en rayon et présentation de la parapharmacie', 'Suivi des stocks et des produits périmés'],
+    equipements: ['Officine pédagogique', 'Logiciel de gestion d’officine', 'Échantillons et emballages de médicaments', 'Documentation pharmaceutique', 'Caisse enregistreuse', 'Blouses professionnelles'],
+    modules: [
+      ['Environnement de l’officine', '4 SEMAINES', ['Rôle du pharmacien et de l’équipe', 'Réglementation et éthique', 'Hygiène en officine']],
+      ['Médicaments et parapharmacie', '9 SEMAINES', ['Familles de médicaments', 'Lecture d’une ordonnance', 'Parapharmacie et produits de soins']],
+      ['Accueil, conseil et vente', '7 SEMAINES', ['Accueil et écoute du client', 'Conseil dans la limite de ses compétences', 'Encaissement']],
+      ['Gestion des stocks et logiciel d’officine', '6 SEMAINES', ['Commandes et réception', 'Rangement et péremptions', 'Logiciel de gestion']],
+      ['Stage en pharmacie', '13 SEMAINES', ['Stage dans une pharmacie partenaire', 'Suivi par un tuteur', 'Bilan et préparation à l’emploi']]
+    ],
+    debouches: ['Vendeur(se) en pharmacie', 'Vendeur(se) en parapharmacie', 'Magasinier(ère) chez un grossiste pharmaceutique', 'Conseiller(ère) en produits de santé et de beauté'],
+    entreprendre: "La vente de produits de parapharmacie, de beauté et d'hygiène offre des possibilités d'activité indépendante. L'ouverture et la gestion d'une pharmacie restent réservées aux pharmaciens diplômés.",
+    numerique: "Logiciels d'officine, commandes en ligne auprès des grossistes, traçabilité des lots : le métier s'appuie sur des outils numériques que la formation apprend à maîtriser.",
+    prerequis: ['BEPC ou niveau équivalent', '17 ans minimum', 'Rigueur, discrétion et sens du contact', 'Entretien de motivation']
+  },
+  {
+    slug: 'aide-soignant', label: 'Aide-soignant(e)', titre: ['Aide-soignant(e)', 'en milieu de soins.'],
+    icon: 'Stethoscope', dom: 'sante', mois: 12, stage: 4, niv: 'Probatoire', cqp: false,
     accroche: 'Soins d’hygiène et de confort, accompagnement des patients.',
     metier: "L'aide-soignant(e) accompagne les patients dans les gestes de la vie quotidienne, participe aux soins d'hygiène et de confort et assiste l'équipe infirmière. Il ou elle exerce en hôpital, en clinique ou à domicile.",
     objectifs: ['Assurer l’hygiène et le confort du patient', 'Observer et transmettre les informations à l’équipe soignante', 'Mesurer les paramètres vitaux', 'Appliquer les règles de prévention des infections'],
@@ -393,10 +537,31 @@ const FORMATIONS = [
       ['Accompagnement et communication', '8 SEMAINES', ['Relation avec le patient', 'Personnes âgées et dépendantes', 'Travail en équipe soignante']],
       ['Stages en structures de santé', '17 SEMAINES', ['Stages en hôpital, clinique ou centre de santé', 'Suivi par un tuteur', 'Bilan et préparation à l’emploi']]
     ],
-    debouches: ['Aide-soignant(e) en hôpital ou en clinique', 'Auxiliaire de vie', 'Garde-malade à domicile', 'Agent en centre de santé'],
+    debouches: ['Aide-soignant(e) en hôpital ou en clinique', 'Aide-soignant(e) en maison de retraite', 'Soignant(e) à domicile', 'Agent en centre de santé'],
     entreprendre: "Les services d'aide à domicile pour les personnes âgées et malades se développent. Avec l'expérience, l'aide-soignant(e) peut proposer ses services ou créer une structure d'accompagnement, dans le respect de la réglementation.",
     numerique: "Dossiers patients informatisés, téléconsultation, applications de suivi : les métiers de la santé utilisent de plus en plus le numérique.",
-    prerequis: ['BEPC ou niveau équivalent', '18 ans minimum', 'Certificat médical d’aptitude', 'Entretien de motivation']
+    prerequis: ['Probatoire ou niveau équivalent', '18 ans minimum', 'Certificat médical d’aptitude', 'Entretien de motivation']
+  },
+  {
+    slug: 'delegue-medical', label: 'Délégué(e) médical(e)', titre: ['Délégué(e)', 'médical(e).'],
+    icon: 'BriefcaseMedical', dom: 'sante', mois: 9, stage: 3, niv: 'Bac', cqp: false,
+    accroche: 'Promotion des médicaments auprès des médecins et des pharmacies.',
+    metier: "Le délégué médical, ou visiteur médical, présente les médicaments et produits de santé d'un laboratoire aux médecins, aux pharmaciens et aux établissements de santé. Il informe sur les indications, les précautions d'emploi et le bon usage des produits, organise sa tournée et rend compte de son activité.",
+    objectifs: ['Connaître les bases de l’anatomie, des pathologies et de la pharmacologie', 'Présenter un produit de santé de manière claire et conforme à la réglementation', 'Organiser et gérer une tournée de visites', 'Analyser son secteur et rendre compte de son activité'],
+    competences: ['Anatomie, physiologie et pathologies courantes', 'Pharmacologie et familles de médicaments', 'Techniques de présentation et de communication', 'Réglementation et éthique de la promotion médicale', 'Organisation de tournée et gestion de secteur', 'Outils numériques de suivi (CRM)'],
+    activites: ['Visites auprès des médecins et des pharmacies', 'Présentation de produits lors de rencontres professionnelles', 'Suivi des prescripteurs et des commandes', 'Veille sur les produits concurrents'],
+    equipements: ['Salle de simulation de visite', 'Supports de présentation et tablettes', 'Documentation pharmaceutique', 'Logiciel de gestion de la relation client (CRM)', 'Études de cas de laboratoires', 'Tenue professionnelle'],
+    modules: [
+      ['Sciences de la santé', '8 SEMAINES', ['Anatomie et physiologie', 'Pathologies courantes', 'Pharmacologie et familles de médicaments']],
+      ['Communication et visite médicale', '7 SEMAINES', ['Préparer et conduire une visite', 'Argumenter avec rigueur', 'Simulations filmées']],
+      ['Réglementation et éthique', '4 SEMAINES', ['Cadre réglementaire du médicament', 'Pharmacovigilance', 'Éthique de la promotion']],
+      ['Gestion de secteur et outils numériques', '7 SEMAINES', ['Organisation de tournée', 'Analyse de secteur', 'CRM et compte rendu d’activité']],
+      ['Stage en laboratoire ou chez un distributeur', '13 SEMAINES', ['Tournées accompagnées sur le terrain', 'Suivi par un tuteur', 'Bilan et préparation à l’emploi']]
+    ],
+    debouches: ['Délégué(e) médical(e) en laboratoire pharmaceutique', 'Représentant(e) chez un grossiste-répartiteur', 'Délégué(e) en dispositifs médicaux', 'Animateur(trice) de réseau de pharmacies'],
+    entreprendre: "Avec l'expérience, le délégué médical peut évoluer vers l'encadrement d'une équipe ou représenter plusieurs laboratoires comme agent commercial indépendant, dans le respect de la réglementation pharmaceutique.",
+    numerique: "Tablettes de présentation, CRM, webinaires avec les prescripteurs : la visite médicale est devenue largement numérique, et la formation y prépare.",
+    prerequis: ['Baccalauréat, série scientifique de préférence', 'Études supérieures en santé appréciées', 'Aisance à l’oral et bonne présentation', 'Permis de conduire recommandé']
   },
 
   /* ---------------------------------------------------------------- */
@@ -415,13 +580,16 @@ FORMATIONS.forEach(f => {
   f.url = `formation-${f.slug}.html`;
   f.photo = 'f-' + f.slug;
   f.duree = f.mois === 3 ? 'Module de 3 mois' : `${f.mois} mois`;
-  f.meta = (f.mois === 3 ? '3 MOIS · MODULE' : `${f.mois} MOIS`) + (f.cqp ? ' · CQP' : '');
+  f.cycle = cycleDe(f.niv);
+  f.cycleLabel = CYCLES[f.cycle].label;
+  f.meta = (f.mois === 3 ? '3 MOIS · MODULE' : `${f.mois} MOIS`) + ' · ' + f.niv.toUpperCase();
   // Filtre « durée » du catalogue
   f.dureeFiltre = f.mois === 3 ? 'module' : String(f.mois);
 });
 
 module.exports = {
   DOMAINES,
+  CYCLES,
   toutes: FORMATIONS,
   ouvertes: FORMATIONS.filter(f => f.statut === 'prioritaire'),
   aEtudier: FORMATIONS.filter(f => f.statut === 'etude')

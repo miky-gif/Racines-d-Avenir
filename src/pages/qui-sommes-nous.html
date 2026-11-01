@@ -1,4 +1,4 @@
-<!-- title: Qui sommes-nous | {{ site.nom }}
+<!-- title: Qui sommes-nous — institut de formation à Yaoundé | {{ site.nom }}
      description: {{ site.nom }}, institut de formation professionnelle à Yaoundé : notre mission, notre vision, nos valeurs et notre accompagnement vers l'emploi et l'entrepreneuriat. -->
 <div style="background: #F7F5EC; color: #253A30; font-family: 'Poppins', sans-serif; overflow-x: clip; min-height: 100vh;">
   <dc-import name="Header" active="qui"></dc-import>
@@ -17,7 +17,7 @@
   <section style="padding: clamp(80px, 10vw, 150px) clamp(20px, 4vw, 56px) clamp(64px, 8vw, 112px);">
     <div data-reveal="" style="max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px;">
       <div style="width: 60px; height: 4px; border-radius: 4px; background: #F2B134;"></div>
-      <p style="font-size: clamp(26px, 3.4vw, 46px); line-height: 1.25; letter-spacing: -0.025em; font-weight: 500; color: #0F4D35; text-wrap: pretty;">{{ site.nom }} est un institut de formation professionnelle. <span style="font-weight: 300; color: #4E7F68;">Nous préparons les jeunes et les adultes à des métiers qualifiés, par des formations pratiques de six mois à un an, et nous les accompagnons jusqu'à l'emploi ou la création de leur activité.</span></p>
+      <p style="font-size: clamp(26px, 3.4vw, 46px); line-height: 1.25; letter-spacing: -0.025em; font-weight: 500; color: #0F4D35; text-wrap: pretty;">{{ site.nom }} est un institut de formation professionnelle. <span style="font-weight: 300; color: #4E7F68;">Nous préparons les jeunes et les adultes à des métiers qualifiés, par des formations pratiques de trois à dix-huit mois, du niveau BEPC au niveau Bac+, et nous les accompagnons jusqu'à l'emploi ou la création de leur activité.</span></p>
     </div>
   </section>
 
@@ -96,8 +96,8 @@
       </div>
       <div data-stagger style="flex: 1 1 360px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
         <div class="mini-stat"><span>{{ catalogue.ouvertes.length }}</span>formations ouvertes</div>
-        <div class="mini-stat"><span>4</span>domaines de métiers</div>
-        <div class="mini-stat"><span>6–12</span>mois de formation</div>
+        <div class="mini-stat"><span>{{ Object.keys(catalogue.DOMAINES).length }}</span>domaines de métiers</div>
+        <div class="mini-stat"><span>3</span>niveaux, du BEPC au Bac+</div>
         <div class="mini-stat"><span>3</span>étapes : former, accompagner, transformer</div>
       </div>
     </div>

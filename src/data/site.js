@@ -14,6 +14,10 @@ module.exports = {
   whatsappMessage: "Bonjour Racines d'Avenir, je souhaite des informations sur vos formations.",
   email: 'contact@racinesdavenir.org',
   web: 'www.racinesdavenir.org',
+  // Adresse du site en ligne (sans « / » final), utilisée pour le référencement :
+  // URL canoniques, sitemap, partage sur les réseaux. Sur Vercel, le domaine de
+  // production est détecté automatiquement ; cette valeur sert de secours.
+  url: 'https://www.racinesdavenir.org', // À CONFIRMER
   ville: 'Yaoundé, Cameroun',
   adresse: 'Yaoundé, Cameroun', // adresse précise (quartier, repère) — À CONFIRMER
   carte: 'Yaoundé, Cameroun', // recherche Google Maps pour la carte

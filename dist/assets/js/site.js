@@ -12,6 +12,9 @@
   const $ = (sel, root) => (root || document).querySelector(sel);
   const $$ = (sel, root) => Array.from((root || document).querySelectorAll(sel));
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Textes générés par le script : français par défaut, anglais sur dist/en/
+  const EN = document.documentElement.lang === 'en';
+  const t = (fr, en) => (EN ? en : fr);
   const motion = !reducedMotion && 'IntersectionObserver' in window;
   const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
 
@@ -77,12 +80,22 @@
     });
     header.addEventListener('focusin', () => header.classList.remove('is-hidden'));
 
+    // Liste déroulante de langue (<details>) : se ferme au clic extérieur et avec Échap
+    const langDd = $('[data-lang-dd]', header);
+    if (langDd) {
+      document.addEventListener('click', e => { if (langDd.open && !langDd.contains(e.target)) langDd.open = false; });
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && langDd.open) { langDd.open = false; $('summary', langDd).focus(); }
+      });
+      if (toggle) toggle.addEventListener('click', () => { langDd.open = false; });
+    }
+
     if (!toggle || !menu) return;
     $$('nav a, :scope > a, :scope > p', menu).forEach((el, i) => el.style.setProperty('--i', i));
 
     const setOpen = open => {
       toggle.setAttribute('aria-expanded', String(open));
-      toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+      toggle.setAttribute('aria-label', open ? t('Fermer le menu', 'Close menu') : t('Ouvrir le menu', 'Open menu'));
       $('[data-icon-open]', toggle).hidden = !open;
       $('[data-icon-closed]', toggle).hidden = open;
       menu.classList.remove('is-opening', 'is-closing');
@@ -104,7 +117,7 @@
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && !menu.hidden) { setOpen(false); toggle.focus(); }
     });
-    window.matchMedia('(min-width: 1280px)').addEventListener('change', e => {
+    window.matchMedia('(min-width: 1360px)').addEventListener('change', e => {
       if (e.matches) { menu.classList.remove('is-opening', 'is-closing'); menu.hidden = true; setOpen(false); }
     });
   }
@@ -189,7 +202,7 @@
   function initCounters() {
     const counters = $$('[data-count]');
     if (!counters.length || !motion) return;
-    const format = n => n.toLocaleString('fr-FR').replace(/[  ]/g, ' ');
+    const format = n => EN ? n.toLocaleString('en-GB') : n.toLocaleString('fr-FR').replace(/[  ]/g, ' ');
     counters.forEach(el => { el.textContent = '0'; });
     const pcts = $$('.pct').filter(el => !inView(el));
     pcts.forEach(el => el.classList.add('is-pending'));
@@ -497,7 +510,7 @@
         pauseBtn.addEventListener('click', () => {
           const stopped = player.toggle();
           pauseBtn.setAttribute('aria-pressed', String(stopped));
-          pauseBtn.setAttribute('aria-label', stopped ? 'Reprendre le défilement' : 'Mettre en pause le défilement');
+          pauseBtn.setAttribute('aria-label', stopped ? t('Reprendre le défilement', 'Resume the slideshow') : t('Mettre en pause le défilement', 'Pause the slideshow'));
           root.classList.toggle('is-stopped', stopped);
         });
       }
@@ -632,7 +645,7 @@
           const p = document.createElement('p');
           p.className = 'form-error';
           p.setAttribute('role', 'alert');
-          p.textContent = "L'envoi n'a pas abouti. Merci de réessayer ou de nous appeler au +237 6 12 34 56 78.";
+          p.textContent = t("L'envoi n'a pas abouti. Merci de réessayer ou de nous appeler au +237 6 12 34 56 78.", 'Your message could not be sent. Please try again or call us on +237 6 12 34 56 78.');
           form.appendChild(p);
         } finally {
           if (submit) submit.disabled = false;

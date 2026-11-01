@@ -50,18 +50,9 @@ button:hover .i-send { transform: translate(3px, -3px) rotate(-8deg); }
   .first-visit .hdr-pill { animation: drop-in .8s var(--ease-out) both; }
 
   /* Logo : la pousse sort de terre (1re visite) et au pied de page */
-  .logo-mark .lm-leaf, .logo-mark .lm-bud, .logo-mark .lm-stem { transform-box: fill-box; }
-  .logo-mark .lm-leaf--l { transform-origin: 100% 100%; }
-  .logo-mark .lm-leaf--r { transform-origin: 0% 100%; }
-  .logo-mark .lm-bud { transform-origin: 50% 50%; }
-  .logo-mark .lm-stem { transform-origin: 50% 100%; }
-  .logo-mark .lm-roots path { stroke-dasharray: 1; }
-  :is(.first-visit .hdr-pill, .js .wordmark:not(.is-pending)) .logo-mark .lm-roots path { animation: draw .8s var(--ease-out) .05s both; }
-  :is(.first-visit .hdr-pill, .js .wordmark:not(.is-pending)) .logo-mark .lm-stem { animation: grow-y .6s var(--ease-out) .25s both; }
-  :is(.first-visit .hdr-pill, .js .wordmark:not(.is-pending)) .logo-mark .lm-leaf--l { animation: sprout .7s var(--ease-spring) .5s both; }
-  :is(.first-visit .hdr-pill, .js .wordmark:not(.is-pending)) .logo-mark .lm-leaf--r { animation: sprout .7s var(--ease-spring) .6s both; }
-  :is(.first-visit .hdr-pill, .js .wordmark:not(.is-pending)) .logo-mark .lm-bud { animation: sprout .7s var(--ease-spring) .8s both; }
-  a:hover > .logo-mark .lm-leaf, a:hover > .logo-mark .lm-bud { animation: sway 1s ease-in-out; }
+  .logo-mark { transform-origin: 50% 100%; }
+  :is(.first-visit .hdr-pill, .js .ft-cols:not(.is-pending)) .logo-mark { animation: tree-grow .9s var(--ease-spring) .1s both; }
+  a:hover > .logo-mark { animation: sway 1.2s ease-in-out; }
 
   /* Menu mobile */
   .hdr-menu.is-opening { animation: menu-open .6s var(--ease-out) both; }
@@ -215,9 +206,6 @@ button:hover .i-send { transform: translate(3px, -3px) rotate(-8deg); }
   [data-rail-prev]:disabled, [data-rail-next]:disabled { opacity: .35; cursor: default; }
   [data-rail-prev]:not(:disabled):hover, [data-rail-next]:not(:disabled):hover { transform: scale(1.08); }
 
-  /* Pied de page : le grand logo monte */
-  .js .wordmark.is-pending { opacity: 0; transform: translateY(60%); }
-  .wordmark { transition: opacity 1s var(--ease-out), transform 1.2s var(--ease-out) !important; }
 }
 
 /* ----------------------------------------------------------------------
@@ -253,6 +241,7 @@ button:hover .i-send { transform: translate(3px, -3px) rotate(-8deg); }
 }
 @keyframes dot-timer { from { transform: scaleX(0); } }
 @keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes tree-grow { from { opacity: 0; scale: .45; } }
 @keyframes grow-y { from { transform: scaleY(0); } }
 @keyframes wa-in { from { opacity: 0; transform: translateY(30px) scale(.6); } }
 @keyframes wa-pulse {

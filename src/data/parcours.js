@@ -1,6 +1,6 @@
 module.exports = {
   steps: [
-    { id: 'former', num: '01', title: 'FORMER', icon: 'GraduationCap', text: 'Apprendre un métier en six mois à un an, par la pratique en atelier, avec des formateurs issus du métier.', tags: ['Ateliers pratiques', 'Petits groupes', 'Formateurs du métier'], slot: 'parcours-1', photo: 'Photo — formateur et apprenants en atelier' },
+    { id: 'former', num: '01', title: 'FORMER', icon: 'GraduationCap', text: 'Apprendre un métier en trois à dix-huit mois selon le niveau, par la pratique en atelier, avec des formateurs issus du métier.', tags: ['Ateliers pratiques', 'Petits groupes', 'Formateurs du métier'], slot: 'parcours-1', photo: 'Photo — formateur et apprenants en atelier' },
     { id: 'accompagner', num: '02', title: 'ACCOMPAGNER', icon: 'Users', text: "Stage en entreprise, tutorat et appui personnalisé pour préparer l'emploi ou la création d'activité.", tags: ['Stage en entreprise', 'Tutorat', 'CV & entretiens'], slot: 'parcours-2', photo: 'Photo — stagiaire et tuteur en entreprise' },
     { id: 'transformer', num: '03', title: 'TRANSFORMER', icon: 'Sprout', text: "Décrocher un emploi ou créer son activité : atelier de couture, salon de coiffure, entreprise du bâtiment.", tags: ['Mise en relation', 'Appui à la création', 'Suivi après la sortie'], slot: 'parcours-3', photo: 'Photo — ancienne apprenante dans son propre atelier de couture' }
   ].map((s, i) => ({ ...s, textLeft: i % 2 === 0 })),

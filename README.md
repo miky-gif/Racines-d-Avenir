@@ -30,6 +30,9 @@ Vercel, voir `vercel.json`). On peut aussi l'ouvrir directement
 Ajouter une formation dans `src/data/formations.js` crée automatiquement sa
 fiche (`formation-<slug>.html`), sa carte dans le catalogue, son entrée dans
 le carrousel de l'accueil et dans la liste du formulaire de préinscription.
+Son niveau (BEPC / Probatoire, Baccalauréat, Bac+ / Supérieur) est déduit du
+niveau d’entrée `niv` : « Bac+1 », « Bac+2 »… → Supérieur ; « Bac » →
+Baccalauréat ; sinon BEPC / Probatoire.
 
 Les informations encore provisoires sont listées dans
 [docs/validation-client.md](docs/validation-client.md).
@@ -40,8 +43,8 @@ Les informations encore provisoires sont listées dans
 | ------------------------- | ----------------------------------------------- |
 | `index.html`              | Accueil (bannière en carrousel)                 |
 | `qui-sommes-nous.html`    | Qui sommes-nous                                 |
-| `nos-formations.html`     | Catalogue avec filtres (`?domaine=numerique`…)  |
-| `formation-<slug>.html`   | Une fiche par formation (17 fiches)             |
+| `nos-formations.html`     | Catalogue avec filtres (`?domaine=sante`, `?cycle=bac`, `?duree=module`) |
+| `formation-<slug>.html`   | Une fiche par formation (24 fiches)             |
 | `parcours.html`           | Le parcours vers l'emploi                       |
 | `partenaires.html`        | Entreprises, partenaires et Fondation           |
 | `actualites.html`         | Actualités                                      |
@@ -82,6 +85,20 @@ Dans `src/pages/` :
 - `style-hover="…"` / `style-focus="…"` → classes générées dans
   `assets/css/states.css`.
 
+## Version anglaise (FR / EN)
+
+Chaque page est générée deux fois : en français dans `dist/`, et en
+anglais dans `dist/en/` (ex. `/parcours` ↔ `/en/parcours`). Le sélecteur
+🇫🇷 FR / 🇬🇧 EN de la barre de navigation mène à la même page dans l'autre
+langue.
+
+Les traductions sont dans **`src/i18n/en.json`**, sous la forme
+`"texte français": "English text"`. Quand un texte français est ajouté ou
+modifié, `npm run build` liste les textes sans traduction : il suffit de
+les ajouter à ce fichier (tant qu'ils manquent, ils restent en français sur
+la version anglaise). Les textes générés par le script (menu, erreurs
+d'envoi…) sont traduits dans `src/assets/js/site.js`.
+
 ## Animations
 
 Définies dans `src/assets/css/motion.css` et `src/assets/js/site.js` :
@@ -110,7 +127,7 @@ effacé et régénéré à chaque `npm run build`.
    `f-plomberie.png`) : elles sont reconnues automatiquement. Sinon,
    indiquez l'affectation dans la table `AFFECTATIONS` de
    `scripts/optimiser-photos.js`.
-2. Lancez `node scripts/optimiser-photos.js` (Edge ou Chrome requis) : les
+2. Lancez `npm run photos` (Edge ou Chrome requis) : les
    images sont redimensionnées et converties en WebP dans
    `src/assets/photos/`.
 3. Lancez `npm run build`. La liste des emplacements encore vides s'affiche.
@@ -118,6 +135,37 @@ effacé et régénéré à chaque `npm run build`.
 Si un recadrage coupe un visage, ajustez son point focal dans
 `src/data/photos.js` (ex. `'hero-couture': '72% 35%'` = 72 % depuis la
 gauche, 35 % depuis le haut).
+
+## Référencement (SEO)
+
+Géré automatiquement par `scripts/seo.js` à chaque `npm run build` :
+
+- **Titre et description** de chaque page : en tête du fichier
+  `src/pages/<page>.html` (`title:` / `description:`). Visez environ 60
+  caractères pour le titre et 150 pour la description, avec le métier et la
+  ville. La traduction anglaise se met dans `src/i18n/en.json` comme le reste.
+- **Adresse canonique** et **hreflang** FR / EN sur chaque page.
+- **Open Graph** : titre, description et image affichés quand un lien est
+  partagé sur WhatsApp, Facebook, LinkedIn…
+- **Données structurées** (schema.org) : l'établissement sur toutes les pages,
+  une fiche `Course` et un fil d'Ariane sur chaque formation, la liste des
+  formations sur le catalogue.
+- **`sitemap.xml`** (pages FR et EN) et **`robots.txt`**.
+- **Page 404** (`src/pages/404.html`), exclue de l'indexation.
+
+L'adresse du site utilisée dans ces balises est, par ordre de priorité : la
+variable d'environnement `SITE_URL`, le domaine de production détecté par
+Vercel, puis le champ `url` de `src/data/site.js`.
+
+**Images de partage** (1200 × 630, dans `src/assets/partage/`) : une image
+générale et une par formation, en français et en anglais. Après un changement
+de photo, de nom ou de durée d'une formation, relancez :
+
+```bash
+npm run partage
+```
+
+Une page se retire de l'indexation en ajoutant `noindex: oui` dans son en-tête.
 
 ## Formulaires
 

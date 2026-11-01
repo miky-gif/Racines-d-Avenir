@@ -1,4 +1,5 @@
 const { ouvertes } = require('./formations');
+const { niveaux } = require('./nos-formations');
 
 const bySlug = slug => ouvertes.find(f => f.slug === slug);
 
@@ -16,17 +17,17 @@ module.exports = {
       fallback: 'qui-hero', fallbackFocus: '72% 40%'
     },
     {
-      slot: 'hero-couture', formation: 'couture-africaine', label: 'Couture africaine', tag: 'COUTURE AFRICAINE',
+      slot: 'hero-couture', formation: 'couture-africaine', label: 'Couture & stylisme', tag: 'COUTURE · STYLISME',
       titre: ['De vos ambitions', 'à votre métier.'],
-      texte: 'Pagne, kaba, tenues de cérémonie : transformez votre créativité en un véritable atelier de couture.',
-      photo: 'Photo plein cadre — couturière africaine dans son atelier, tissus wax en arrière-plan',
+      texte: 'Création, stylisme et couture africaine haut de gamme : concevez vos collections dans un atelier moderne et parfaitement équipé.',
+      photo: 'Photo plein cadre — styliste dans un atelier de couture haut de gamme, collection de tenues africaines',
       fallback: 'parcours-hero', fallbackFocus: '80% 22%'
     },
     {
-      slot: 'hero-esthetique', formation: 'esthetique', label: 'Esthétique & beauté', tag: 'ESTHÉTIQUE · COSMÉTIQUE',
+      slot: 'hero-esthetique', formation: 'esthetique', label: 'Esthétique & bien-être', tag: 'ESTHÉTIQUE · BIEN-ÊTRE',
       titre: ['Vos talents, vos compétences.', 'Votre avenir.'],
-      texte: 'Soins, onglerie, maquillage, coiffure, cosmétique naturelle : des métiers de la beauté en pleine croissance.',
-      photo: 'Photo plein cadre — esthéticienne réalisant un soin du visage en institut',
+      texte: 'Soins du visage et du corps, onglerie, maquillage, cosmétique : des métiers de la beauté en pleine croissance, ouverts aux femmes comme aux hommes.',
+      photo: 'Photo plein cadre — esthéticien réalisant un soin du visage en institut',
       fallback: 'f-coiffure', fallbackFocus: '50% 30%'
     },
     {
@@ -45,6 +46,9 @@ module.exports = {
       meta: `${f.duree.toUpperCase()}${f.cqp ? ' · CQP' : ''}`
     };
   }),
+
+  // Bloc « Trois niveaux de formation »
+  niveaux,
 
   // Carrousel « Choisissez votre métier »
   filieres: ouvertes

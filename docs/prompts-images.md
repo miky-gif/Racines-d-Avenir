@@ -1,4 +1,4 @@
-# Prompts de génération des images — Racines d'Avenir (version 2)
+# Prompts de génération des images — Racines d'Avenir (version 3 — cahier des modifications)
 
 **Mode d'emploi**
 
@@ -35,20 +35,27 @@ flag, national flag, text, letters, sign, signboard, logo, watermark, distorted 
 
 ---
 
-## 2. Bannière d'accueil — 4 visuels (16:9, 2400 × 1350 px) — PRIORITÉ 1
+## 2. Bannière d'accueil (16:9, 2400 × 1350 px) — PRIORITÉ 1
 
 > Composition impérative : la photo occupe tout l'écran et le texte du site
 > est posé sur **la moitié gauche**, assombrie par un dégradé vert foncé. La
 > personne doit se trouver **dans la moitié droite**, visage bien visible ; la
 > moitié gauche doit rester calme (mur, flou, atelier) et plutôt sombre.
-> Tant que ces photos manquent, le site affiche une photo provisoire.
 
-| Fichier | Prompt |
-| --- | --- |
-| `hero-carrelage.png` | A confident young African woman tiler kneeling on a bright construction site, laying large floor tiles with a rubber mallet and a spirit level, tile spacers visible, she smiles at the camera, she is placed in the RIGHT half of the frame, calm blurred background on the left, wide 16:9 shot |
-| `hero-couture.png` | A young African woman seamstress in her sewing workshop, guiding colourful wax-print fabric under a sewing machine, rolls of African fabrics and a dress form behind her, she is placed in the RIGHT half of the frame, soft empty wall on the left, wide 16:9 shot |
-| `hero-esthetique.png` | A young African beautician in a clean, modern beauty institute performing a facial treatment on a smiling client lying on a treatment bed, skincare products on a trolley, the beautician is in the RIGHT half of the frame, calm background on the left, wide 16:9 shot |
-| `hero-comptabilite.png` | A young African man accountant at a bright office desk, working on a laptop with a calculator and neat invoices, looking at the camera with a confident smile, he is placed in the RIGHT half of the frame, soft blurred office on the left, wide 16:9 shot |
+Ce que le client a demandé : on garde la 1ʳᵉ image (femme qui pose du
+carrelage) et le principe du carrousel. La couture « trop classique » est
+remplacée par du **stylisme haut de gamme**, et on ajoute de la **diversité
+masculine**, de préférence un **homme en esthétique**.
+
+| Fichier | État | Prompt |
+| --- | --- | --- |
+| `hero-carrelage.png` | ✅ gardée | — |
+| `hero-couture.png` | ✅ en place | A young African fashion designer in a high-end, modern couture studio, adjusting an elegant contemporary African evening gown on a dress form, luxurious wax-print and silk fabrics, large cutting table, professional sewing machines, mood boards and sketches on the wall, refined lighting, premium fashion-house atmosphere, the designer is placed in the RIGHT half of the frame, calm darker background on the left, wide 16:9 shot |
+| `hero-esthetique.png` | ✅ en place | A young African MAN beautician in a clean, modern beauty institute performing a facial treatment on a relaxed client lying on a treatment bed, skincare products neatly arranged on a trolley, professional and caring gesture, he is placed in the RIGHT half of the frame, calm background on the left, wide 16:9 shot |
+| `hero-comptabilite.png` | ✅ gardée | — |
+
+Variante facultative pour la couture, si le client préfère un homme à cet
+endroit : `A young African MAN fashion designer and tailor in a high-end modern couture studio, draping fabric on a dress form…` (même suite).
 
 ---
 
@@ -57,64 +64,90 @@ flag, national flag, text, letters, sign, signboard, logo, watermark, distorted 
 > Utilisée en carte (catalogue, carrousel) et en arche sur la fiche :
 > sujet **centré**, visage visible, geste métier au premier plan.
 
-### Photos manquantes — PRIORITÉ 2
+### Santé & paramédical — PRIORITÉ 1
 
-| Fichier | Prompt |
-| --- | --- |
-| `f-carrelage.png` | A young African woman tiler applying tile adhesive with a notched trowel on a bathroom wall, laying white wall tiles, vertical framing |
-| `f-plomberie.png` | A young African plumber installing a washbasin and connecting PPR water pipes under a sink, pipe cutter and wrench nearby, vertical framing |
-| `f-menuiserie-metallique.png` | A young African metalworker wearing a welding helmet lifted up, welding a decorative steel gate in a metal workshop, sparks, protective gloves, vertical framing |
-| `f-menuiserie-aluminium.png` | A young African technician assembling an aluminium sliding window frame on a workbench, aluminium profiles and glass panel nearby, vertical framing |
-| `f-couture-africaine.png` | A young African woman tailor taking measurements of a client with a tape measure in a bright sewing workshop full of wax-print fabrics, vertical framing |
-| `f-esthetique.png` | A young African beautician doing a manicure in a clean nail salon, nail polish bottles neatly arranged, vertical framing |
-| `f-cosmetique.png` | A young African woman preparing natural shea butter cream in a small clean cosmetics lab, glass jars, scale, natural ingredients, wearing gloves and hair cap, vertical framing |
-| `f-developpement-web.png` | A young African developer coding on a laptop and a second screen showing a website, in a modern bright computer room, vertical framing |
+Le client veut des **visuels médicaux professionnels**, avec des personnes en
+**blouse médicale**. Pour ces quatre fiches, ajoutez au bloc de style :
+`wearing a clean white medical coat (or green scrubs) with golden-yellow trim`.
 
-### Photos existantes à régénérer pour harmoniser les tenues — PRIORITÉ 3
-
-Même cadrage, en appliquant la tenue vert/jaune-or :
-
-| Fichier | Prompt |
-| --- | --- |
-| `f-electricite.png` | A young African woman electrician wiring a residential electrical panel, multimeter in hand, safety gloves, vertical framing |
-| `f-maconnerie.png` | A young African mason building a brick wall with a trowel on a construction site, yellow safety helmet, vertical framing |
-| `f-coiffure.png` | A young African hairdresser braiding a client's hair in a modern hair salon, combs and hair products on the counter, mirror, vertical framing |
-| `f-restauration.png` | A young African cook in a professional kitchen plating a Cameroonian dish, stainless steel kitchen, vertical framing |
-| `f-comptabilite.png` | A young African accounting student working with a calculator, ledger and laptop at a tidy desk, vertical framing |
-| `f-secretariat-bureautique.png` | A young African administrative assistant filing documents and answering the phone in a bright office, vertical framing |
-| `f-sante.png` | A young African nursing assistant in green scrubs with golden-yellow trim, taking a patient's blood pressure in a clean care room, vertical framing |
-| `f-maintenance-informatique.png` | A young African IT technician repairing an open desktop computer, screwdriver in hand, network cables on the bench, vertical framing |
-| `f-numerique-ia.png` | A young African woman entrepreneur using a smartphone and a laptop to create social media posts for her small business, vertical framing |
-
----
-
-## 4. Autres pages
-
-| Fichier | Format | Prompt |
+| Fichier | État | Prompt |
 | --- | --- | --- |
-| `form-hero.png` | 16:9 | A diverse group of young African learners in the institute uniform walking through a bright training workshop with sewing machines, tiles and electrical panels, smiling, group placed on the right half, wide shot |
-| `qui-equipe.png` | 1:1 | The teaching and administrative team of a vocational training institute, eight men and women of various ages, some in the green uniform with golden-yellow collars, standing together in a sunny courtyard, no sign, no flag |
-| `parcours-3.png` | 4:5 | A proud young African woman in her own small sewing workshop, finished dresses on hangers, serving a client, vertical framing |
-| `actu-1.png` | 4:3 | Graduation ceremony at a vocational institute: young African graduates in green and golden-yellow holding their certificates, families applauding |
-| `actu-4.png` | 4:3 | A young African woman entrepreneur in her sewing workshop with two employees working on sewing machines behind her |
-| `actu-6.png` | 4:3 | Young African learners receiving tool kits from a foundation representative in a bright workshop, smiling |
+| `f-aide-soignant.png` | ✅ en place | — |
+| `f-auxiliaire-vie.png` | ✅ en place | A young African care assistant in a medical coat helping an elderly woman walk with a cane in a bright, clean living room, kind and reassuring gesture, both smiling, vertical framing |
+| `f-vendeur-pharmacie.png` | ✅ en place | A young African pharmacy sales assistant in a white medical coat behind the counter of a modern, well-lit pharmacy, advising a customer and holding a box of medicine, neat shelves of health products behind, vertical framing |
+| `f-delegue-medical.png` | ✅ en place | A young African medical sales representative in a smart suit, presenting a medicine on a tablet to a doctor in a white coat in a modern medical office, professional handshake atmosphere, vertical framing |
+
+### Informatique — PRIORITÉ 2
+
+| Fichier | État | Prompt |
+| --- | --- | --- |
+| `f-creation-sites-internet.png` | ✅ en place | A young African woman web designer building a website on a large screen showing a page layout and colour palette, laptop and sketches of wireframes on the desk, modern bright computer room, vertical framing |
+| `f-programmation.png` | ✅ en place — ⚠️ logo « VITRE TECH » sur le polo/la tasse, à retoucher | A young African programmer writing code on two screens (code editor and database diagram), focused, notebook with algorithm drawings, modern computer lab, vertical framing |
+| `f-developpement-applications.png` | ✅ en place | A young African mobile app developer testing an application on a smartphone next to a laptop showing app interface designs and code, modern tech workspace, vertical framing |
+| `f-reseaux-cybersecurite.png` | ✅ en place — ⚠️ logo « VITRE TECH » sur le polo/la tasse, à retoucher | (amélioration possible : technician in a server room in front of a network rack, monitoring screens with security dashboards) |
+
+### Autres formations
+
+| Fichier | État | Prompt |
+| --- | --- | --- |
+| `f-menuiserie-aluminium.png` | ✅ en place — ⚠️ logo « VITRE TECH » sur le polo/la tasse, à retoucher | A young African technician assembling an aluminium sliding window frame on a workbench, aluminium profiles and glass panel nearby, vertical framing |
+
+Les autres fiches ont déjà leur photo.
 
 ---
 
-## 5. À ne PAS générer
+## 3 bis. Qui sommes-nous — section « Notre équipe » — ✅ en place
+
+Image intégrée : `Équipe professionnelle africaine en formation.png` (formateurs
+uniquement). Prompt conservé ci-dessous pour une éventuelle régénération.
+
+Fichier : **`qui-equipe.png`**, format **carré 1:1 (2048 × 2048 px)**. La photo
+occupe la moitié gauche de la section sur ordinateur et toute la largeur sur
+mobile, où elle est recadrée : le groupe doit être **centré**, avec de la marge
+autour.
+
+L'image actuelle mélange des formateurs et des apprenants. La nouvelle doit
+montrer **uniquement l'équipe** : des adultes expérimentés, sans aucun jeune en
+polo d'apprenant. Pour qu'on ne les confonde pas avec les élèves, les formateurs
+**ne portent pas le polo vert à col jaune des apprenants** : chacun porte la
+tenue de son métier.
+
+⚠️ N'ajoutez **pas** le bloc de style commun du §1 : sa phrase sur l'uniforme
+ferait réapparaître le polo des apprenants. Le prompt ci-dessous est complet.
+
+```
+Group portrait of the teaching staff of a modern vocational training institute in Africa: eight experienced African trainers and staff members, men and women aged 35 to 60, standing together in two relaxed rows and smiling with confidence and warmth. They are professionals, clearly adults, not students. Each trainer wears the professional attire of the trade they teach: a white chef jacket (cooking), a white medical coat with a stethoscope (healthcare), a work vest with a safety helmet held under the arm (construction), an electrician's work shirt with a multimeter clipped on, a tailor with a tape measure around the neck and an elegant African-print outfit, a beautician in a clean grooming tunic, an IT trainer in a smart shirt holding a laptop, and a female director in a dark forest-green (#0F4D35) blazer with a discreet golden-yellow (#F2B134) pocket square. Accents of forest green and golden yellow in their clothes, no uniforms with polo shirts. Setting: bright, tidy training workshop softly blurred behind them, with hints of sewing machines, tiles and electrical panels. The group is centred in a square frame with space around it. Authentic documentary photography, real African people with natural expressions, soft natural daylight, warm and hopeful mood, cream and sage-green tones, gentle film grain, 50mm lens. No flags, no signs, no text, no logos, no watermark.
+```
+
+**Prompt négatif** :
+
+```
+students, learners, teenagers, young people, children, school uniform, polo shirt with yellow collar, crowd, flag, national flag, text, letters, sign, signboard, logo, brand, watermark, distorted hands, extra fingers, deformed faces, plastic skin, oversaturated, cartoon, 3D render, dark lighting, people cut off at the edges
+```
+
+Variante possible si le générateur gère mal huit personnes : *« six experienced
+African trainers… »*, en retirant deux tenues de la liste.
+
+Une fois l'image produite, déposez-la dans `nouveaux images/` (ou directement
+dans `images-originales/qui-equipe.png`) et demandez l'intégration.
+
+---
+
+## 4. À ne PAS générer
 
 - **Logos partenaires** (`logo-1` à `logo-6`) : vrais logos fournis par les entreprises.
 - **Témoignages** (`temoin-1` à `temoin-3`) et, idéalement, **photo d'équipe** :
   ils représentent de vraies personnes de l'institut. Des visages générés par IA
   laisseraient croire aux visiteurs qu'il s'agit de vraies personnes : utilisez
   de vraies photos (même prises au smartphone, en lumière naturelle).
+  L'image d'équipe du §3 bis sert de **visuel provisoire** jusqu'à la photo réelle.
 
 ## Récapitulatif
 
+Toutes les photos de formations et de la bannière sont en place (images du
+1ᵉʳ novembre 2026). Reste à faire :
+
 | Priorité | Contenu | Nombre |
 | --- | --- | --- |
-| 1 | Bannière d'accueil | 4 |
-| 2 | Formations sans photo | 8 |
-| 3 | Formations à harmoniser | 9 |
-| — | Autres pages | 6 |
-| **Total** | | **27** |
+| 1 | Retirer le logo « VITRE TECH » (polo, tasse) : programmation, menuiserie aluminium, réseaux et cybersécurité — retouche (gomme / inpainting) ou régénération en ajoutant « plain polo shirt, no logo, no brand » | 3 |
+| 2 | Logos partenaires et portraits des témoignages : vraies images à fournir | 9 |

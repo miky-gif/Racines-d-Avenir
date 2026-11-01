@@ -29,14 +29,14 @@ const MAX_OTHER = 1100;  // plus grand côté des autres photos
 const AFFECTATIONS = {
   // Bannière d'accueil (paysage, personne dans la moitié droite)
   'hero-carrelage': 'Smiling Tiler Laying Floor Tiles.png',
-  'hero-couture': 'Creative Sewing Studio with Colorful Fabrics.png',
-  'hero-esthetique': 'Relaxing Spa Facial Treatment.png',
+  'hero-couture': 'Atelier africain aux motifs ndop indigo.png',
+  'hero-esthetique': 'Soin facial relaxant en spa moderne.png',
   'hero-comptabilite': 'Étudiante en comptabilité au travail.png',
 
   // Photos plein cadre du haut des autres pages (format paysage)
   'qui-hero': 'Formation pratique en électrotechnique.png',
   'form-hero': 'Atelier de formation aux métiers d’avenir.png',
-  'parcours-hero': 'Atelier de couture inspirant et coloré.png',
+  'parcours-hero': 'Boutique artisanale chaleureuse et accueillante.png',
   'part-hero': 'Poignée de main au garage automobile.png',
   'actu-une': 'Atelier de formation aux métiers d’avenir.png',
 
@@ -56,11 +56,19 @@ const AFFECTATIONS = {
   'f-comptabilite': 'Étudiante en comptabilité au travail.png',
   'f-secretariat-bureautique': 'Professionnelle au téléphone au bureau.png',
   'f-restauration': 'Cheffe africaine dressant un plat traditionnel.png',
-  'f-sante': 'Contrôle de tension en clinique africaine.png',
+  'f-aide-soignant': 'Contrôle de tension en clinique africaine.png',
+  'f-auxiliaire-vie': 'Soutien chaleureux à domicile.png',
+  'f-reseaux-cybersecurite': 'Opératrice réseau au cœur du datacenter.png',
+  'f-menuiserie-aluminium': 'Fabrication aluminium en atelier.png',
+  'f-developpement-applications': 'Développeuse africaine au travail.png',
+  'f-programmation': 'Développeur africain dans son espace tech.png',
+  'f-creation-sites-internet': 'Créativité africaine en studio web.png',
+  'f-delegue-medical': 'Consultation médicale autour d’une tablette.png',
+  'f-vendeur-pharmacie': 'Conseils officinaux chaleureux en pharmacie.png',
 
   // Accueil, Qui sommes-nous, Parcours
   'accueil-qui': 'Électricienne inspectant un tableau électrique.png',
-  'qui-equipe': 'Équipe professionnelle diversifiée en plein air.png',
+  'qui-equipe': 'Équipe professionnelle africaine en formation.png',
   'parcours-1': 'Atelier de formation aux métiers d’avenir.png',
   'parcours-2': 'Formation pratique en mécanique automobile.png',
   'parcours-3': 'Créations africaines au cœur de l’atelier.png',
