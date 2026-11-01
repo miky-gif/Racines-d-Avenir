@@ -2,10 +2,8 @@
  * Référencement (SEO) : balises <head>, données structurées, sitemap, robots.
  *
  * Utilisé par scripts/build.js. Les adresses absolues dépendent de l'URL du
- * site, choisie dans cet ordre :
- *   1. variable d'environnement SITE_URL (ex. https://www.racinesdavenir.org) ;
- *   2. domaine de production détecté par Vercel (VERCEL_PROJECT_PRODUCTION_URL) ;
- *   3. champ `url` de src/data/site.js.
+ * site : champ `url` de src/data/site.js (https://racinesdavenir.com), sauf si
+ * la variable d'environnement SITE_URL est définie (ex. pour un site de test).
  *
  * Les balises sont écrites en français avec des jetons remplacés par langue
  * dans writePage() :
@@ -21,9 +19,7 @@ const path = require('path');
 
 const site = require('../src/data/site.js');
 
-const SITE_URL = (process.env.SITE_URL
-  || (process.env.VERCEL_PROJECT_PRODUCTION_URL && 'https://' + process.env.VERCEL_PROJECT_PRODUCTION_URL)
-  || site.url).replace(/\/+$/, '');
+const SITE_URL = (process.env.SITE_URL || site.url).replace(/\/+$/, '');
 
 // Adresse publique d'une page (Vercel « cleanUrls » : sans .html)
 function absUrl(file, lang) {

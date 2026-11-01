@@ -153,9 +153,9 @@ Géré automatiquement par `scripts/seo.js` à chaque `npm run build` :
 - **`sitemap.xml`** (pages FR et EN) et **`robots.txt`**.
 - **Page 404** (`src/pages/404.html`), exclue de l'indexation.
 
-L'adresse du site utilisée dans ces balises est, par ordre de priorité : la
-variable d'environnement `SITE_URL`, le domaine de production détecté par
-Vercel, puis le champ `url` de `src/data/site.js`.
+L'adresse du site utilisée dans ces balises est le champ `url` de
+`src/data/site.js` (`https://racinesdavenir.com`). La variable d'environnement
+`SITE_URL` la remplace si besoin (par exemple pour un site de test).
 
 **Images de partage** (1200 × 630, dans `src/assets/partage/`) : une image
 générale et une par formation, en français et en anglais. Après un changement

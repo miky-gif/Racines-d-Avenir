@@ -26,7 +26,7 @@ Toutes ces informations se modifient en un seul endroit :
 | --- | --- | --- |
 | Téléphone | +237 6 12 34 56 78 | |
 | Numéro WhatsApp | +237 6 12 34 56 78 | |
-| E-mail | contact@racinesdavenir.org | |
+| E-mail | contact@racinesdavenir.com | |
 | Adresse précise (quartier, repère) | Yaoundé, Cameroun | |
 | Point exact pour la carte Google Maps | Yaoundé (centre-ville) | |
 | Horaires lundi – jeudi | 8 h – 17 h | |
@@ -162,8 +162,8 @@ structurées, images de partage). Pour qu'il soit trouvé sur Google :
 
 | Action | Qui | Fait |
 | --- | --- | --- |
-| **Nom de domaine** définitif (proposé : `www.racinesdavenir.org`) relié au projet Vercel | client + prestataire | ☐ domaine : ________ |
-| Si le domaine diffère : mettre à jour `url` dans `src/data/site.js` (ou la variable `SITE_URL` sur Vercel) | prestataire | ☐ |
+| **Nom de domaine** `racinesdavenir.com` relié au projet Vercel (Settings → Domains), avec `www.racinesdavenir.com` redirigé vers `racinesdavenir.com` | client + prestataire | ☑ domaine validé · ☐ relié à Vercel |
+| Adresse e-mail `contact@racinesdavenir.com` créée chez l'hébergeur du domaine (elle est affichée sur le site) | client | ☐ |
 | **Google Search Console** : vérifier la propriété du domaine, puis soumettre `https://<domaine>/sitemap.xml` | prestataire | ☐ |
 | **Fiche Google Business Profile** (Google Maps) : nom, adresse exacte, horaires, téléphone, photos, lien vers le site — c'est le levier n° 1 pour les recherches « formation … Yaoundé » | client | ☐ |
 | Vrais liens des **réseaux sociaux** dans `src/data/site.js` : ils sont repris dans les données structurées | client | ☐ |

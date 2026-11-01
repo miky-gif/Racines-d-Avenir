@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.racinesdavenir.org/sitemap.xml
+Sitemap: https://racinesdavenir.com/sitemap.xml
